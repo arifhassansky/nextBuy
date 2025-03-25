@@ -1,6 +1,7 @@
 import { ProductApi } from '@/redux/ProductApi';
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import ProductReducer from './features/ProductSlice';
+
 export const store = configureStore({
    reducer: {
       productsR: ProductReducer,
