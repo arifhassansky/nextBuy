@@ -8,18 +8,15 @@ importers:
 
   .:
     dependencies:
-<<<<<<< HEAD
+      '@reduxjs/toolkit':
+        specifier: ^2.6.1
+        version: 2.6.1(react-redux@9.2.0(@types/react@18.3.20)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
       '@tailwindcss/postcss':
         specifier: ^4.0.15
         version: 4.0.15
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
-=======
-      '@reduxjs/toolkit':
-        specifier: ^2.6.1
-        version: 2.6.1(react-redux@9.2.0(@types/react@18.3.20)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
->>>>>>> 48bda8a0baf6bbc740ba4ba549d0fbfe6f877641
       next:
         specifier: 14.2.26
         version: 14.2.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1415,14 +1412,6 @@ packages:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
-<<<<<<< HEAD
-  read-cache@1.0.0:
-    resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
-
-  readdirp@3.6.0:
-    resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
-    engines: {node: '>=8.10.0'}
-
   redux-thunk@3.1.0:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
@@ -1431,8 +1420,6 @@ packages:
   redux@5.0.1:
     resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
 
-=======
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
   reflect.getprototypeof@1.0.10:
     resolution: {integrity: sha512-00o4I+DVrefhv+nX0ulyi3biSHCPDe+yLv5o/p6d/UVlirijB8E16FtfwSAi4g3tcqrQ4lRAqQSoFEZJehYEcw==}
     engines: {node: '>= 0.4'}
@@ -1693,17 +1680,11 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-<<<<<<< HEAD
   use-sync-external-store@1.4.0:
     resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  util-deprecate@1.0.2:
-    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-=======
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
     engines: {node: '>= 0.4'}
@@ -3250,23 +3231,12 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-<<<<<<< HEAD
-  read-cache@1.0.0:
-    dependencies:
-      pify: 2.3.0
-
-  readdirp@3.6.0:
-    dependencies:
-      picomatch: 2.3.1
-
   redux-thunk@3.1.0(redux@5.0.1):
     dependencies:
       redux: 5.0.1
 
   redux@5.0.1: {}
 
-=======
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
   reflect.getprototypeof@1.0.10:
     dependencies:
       call-bind: 1.0.8
@@ -3593,15 +3563,10 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-<<<<<<< HEAD
   use-sync-external-store@1.4.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
-  util-deprecate@1.0.2: {}
-
-=======
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
   which-boxed-primitive@1.1.1:
     dependencies:
       is-bigint: 1.1.0

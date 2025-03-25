@@ -9,22 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@tailwindcss/postcss": "^4.0.15",
     "autoprefixer": "^10.4.21",
-=======
-<<<<<<< HEAD
     "@reduxjs/toolkit": "^2.6.1",
     "next": "14.2.26",
     "react": "^18",
-    "react-dom": "^18",
-    "react-redux": "^9.2.0"
-=======
->>>>>>> 48bda8a0baf6bbc740ba4ba549d0fbfe6f877641
-    "next": "14.2.26",
-    "react": "^18",
+    "react-redux": "^9.2.0",
     "react-dom": "^18"
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -33,11 +24,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.26",
     "postcss": "^8",
-<<<<<<< HEAD
-    "tailwindcss": "^3.4.1",
-=======
     "tailwindcss": "^4.0.15",
->>>>>>> 26a4e4cb1534120de1c66c216d66e14a0047226e
     "typescript": "^5"
   }
 }
