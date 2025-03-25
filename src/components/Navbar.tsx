@@ -7,6 +7,7 @@ const Navbar = () => {
     <div>
       <h3>Navbar</h3>
       <Button>Button</Button>
+      <Button variant="destructive">Destructive</Button>
     </div>
   );
 };
