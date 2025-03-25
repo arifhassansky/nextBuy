@@ -95,6 +95,8 @@ export default function Home() {
           />
           Go to nextjs.org →
         </a>
+
+        <button className="my-4 text-6xl">Close</button>
       </footer>
     </div>
   );
