@@ -1,3 +1,4 @@
+import { dbConnect } from "@/lib/DbConnect";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 export const dbName = {
