@@ -1,0 +1,322 @@
+[
+  {
+    "category": "Smartphone",
+    "brand": "Samsung",
+    "model": "Samsung Galaxy S23 Ultra",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003622/jfmdidbbt5pj3fpk1eaw.avif",
+      "https://example.com/images/s23-ultra-back.jpg",
+      "https://example.com/images/s23-ultra-side.jpg",
+      "https://example.com/images/s23-ultra-box.jpg"
+    ],
+    "price": 1199,
+    "rating": 4.9,
+    "colors": ["Phantom Black", "Green", "Lavender"],
+    "ram": ["8GB", "12GB"],
+    "rom": ["256GB", "512GB", "1TB"],
+    "screen_size": "6.8 inches",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "200MP + 12MP + 10MP + 10MP",
+    "battery": "5000mAh",
+    "description": "Samsung Galaxy S23 Ultra is a premium flagship device designed for tech enthusiasts and professional users who demand top-tier performance. The phone features a massive 6.8-inch AMOLED display with a 120Hz refresh rate, delivering stunning visuals and smooth interactions. Powered by the latest Snapdragon 8 Gen 2 chipset, this device ensures ultra-fast performance and enhanced power efficiency. The 200MP primary camera redefines mobile photography, allowing users to capture intricate details with outstanding clarity. The quad-camera system, combined with AI enhancements, supports 8K video recording, night mode, and pro-grade shooting capabilities. The 5000mAh battery ensures all-day endurance, while 45W fast charging enables quick top-ups. Additionally, the S Pen integration enhances productivity by enabling precise note-taking and sketching, making this phone an ideal choice for professionals and creatives."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Apple",
+    "model": "iPhone 14 Pro Max",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003686/oyfalwnbp5ar47nbxldi.webp",
+      "https://example.com/images/iphone14pro-back.jpg",
+      "https://example.com/images/iphone14pro-side.jpg",
+      "https://example.com/images/iphone14pro-box.jpg"
+    ],
+    "price": 1299,
+    "rating": 4.8,
+    "colors": ["Deep Purple", "Silver", "Gold", "Space Black"],
+    "ram": ["6GB"],
+    "rom": ["128GB", "256GB", "512GB", "1TB"],
+    "screen_size": "6.7 inches",
+    "cpu": "A16 Bionic",
+    "camera": "48MP + 12MP + 12MP",
+    "battery": "4323mAh",
+    "description": "The iPhone 14 Pro Max is Apple's most advanced smartphone, featuring a stunning 6.7-inch Super Retina XDR display with ProMotion technology and an Always-On display. Powered by the A16 Bionic chip, this device offers unmatched efficiency, gaming performance, and computational photography capabilities. The 48MP main camera introduces an advanced quad-pixel sensor, allowing users to capture professional-grade shots with remarkable detail and dynamic range. Cinematic mode now supports 4K at 24fps, making it perfect for videographers. With iOS 16, the device includes a customizable lock screen, safety features like Crash Detection, and deep integration with Apple's ecosystem. Battery life is optimized for all-day use, and MagSafe technology enables seamless wireless charging. Designed with a surgical-grade stainless steel frame and Ceramic Shield protection, the iPhone 14 Pro Max is both stylish and durable."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Google",
+    "model": "Google Pixel 7 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003748/mvdalgxnmsy6v17umhmh.webp",
+      "https://example.com/images/pixel7pro-back.jpg",
+      "https://example.com/images/pixel7pro-side.jpg",
+      "https://example.com/images/pixel7pro-box.jpg"
+    ],
+    "price": 899,
+    "rating": 4.7,
+    "colors": ["Obsidian", "Snow", "Hazel"],
+    "ram": ["8GB", "12GB"],
+    "rom": ["128GB", "256GB", "512GB"],
+    "screen_size": "6.7 inches",
+    "cpu": "Google Tensor G2",
+    "camera": "50MP + 48MP + 12MP",
+    "battery": "5000mAh",
+    "description": "The Google Pixel 7 Pro brings AI-driven photography to the next level with its revolutionary Tensor G2 chipset. Featuring a 6.7-inch LTPO AMOLED display with a 120Hz refresh rate, the Pixel 7 Pro delivers a smooth and immersive viewing experience. The camera system is designed for photography lovers, with a 50MP main sensor, a 48MP telephoto lens supporting 5x optical zoom, and a 12MP ultra-wide sensor. Google's AI enhancements improve night photography, portrait shots, and real-time video processing. The Pixel 7 Pro's 5000mAh battery supports 30W fast charging and 23W wireless charging. Running on pure Android with exclusive Pixel features, this smartphone offers a seamless and intelligent user experience."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "OnePlus",
+    "model": "OnePlus 11 5G",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003800/sbnimjwjlbvt63hjdg69.jpg",
+      "https://example.com/images/oneplus11-back.jpg",
+      "https://example.com/images/oneplus11-side.jpg",
+      "https://example.com/images/oneplus11-box.jpg"
+    ],
+    "price": 799,
+    "rating": 4.6,
+    "colors": ["Titan Black", "Eternal Green"],
+    "ram": ["8GB", "16GB"],
+    "rom": ["128GB", "256GB", "512GB"],
+    "screen_size": "6.7 inches",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "50MP + 48MP + 32MP",
+    "battery": "5000mAh",
+    "description": "The OnePlus 11 5G is a performance-oriented flagship smartphone, featuring the latest Snapdragon 8 Gen 2 chipset for exceptional speed and efficiency. The device boasts a 6.7-inch AMOLED display with a 120Hz refresh rate and HDR10+ support, providing a smooth and immersive viewing experience. The triple-camera system, co-engineered with Hasselblad, includes a 50MP main sensor, a 48MP ultra-wide camera, and a 32MP telephoto lens, delivering professional-grade photography. With a massive 5000mAh battery and 100W SuperVOOC fast charging, users can enjoy extended usage with minimal downtime. OxygenOS offers a clean and customizable Android experience, making the OnePlus 11 5G an excellent choice for tech enthusiasts."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Samsung",
+    "model": "Samsung Galaxy S24 Ultra",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003889/rl9hevhwk4j1iyougdui.webp",
+      "https://example.com/images/s24-ultra-back.jpg",
+      "https://example.com/images/s24-ultra-side.jpg",
+      "https://example.com/images/s24-ultra-box.jpg"
+    ],
+    "price": 1299,
+    "rating": 4.9,
+    "colors": ["Titanium Gray", "Cobalt Violet", "Amber Yellow"],
+    "ram": ["12GB", "16GB"],
+    "rom": ["256GB", "512GB", "1TB"],
+    "screen_size": "6.8 inches",
+    "cpu": "Snapdragon 8 Gen 3",
+    "camera": "200MP + 50MP + 10MP + 10MP",
+    "battery": "5000mAh",
+    "description": "The Samsung Galaxy S24 Ultra redefines mobile innovation with a refined titanium frame and an enhanced S Pen experience. Featuring a stunning 6.8-inch Dynamic AMOLED 2X display with a peak brightness of 2500 nits and an adaptive 120Hz refresh rate, this device delivers an immersive experience. The powerful Snapdragon 8 Gen 3 chip ensures ultra-smooth multitasking and gaming. The advanced 200MP primary camera now supports AI-enhanced computational photography, making low-light shots more detailed than ever. With improved periscope zoom capabilities, users can capture distant objects with crystal clarity. The S24 Ultra supports 45W fast charging, wireless charging, and reverse charging, making it a powerhouse for professionals."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Google",
+    "model": "Google Pixel 8 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743003967/cdp11asvshke7sozfric.jpg",
+      "https://example.com/images/pixel8pro-back.jpg",
+      "https://example.com/images/pixel8pro-side.jpg",
+      "https://example.com/images/pixel8pro-box.jpg"
+    ],
+    "price": 999,
+    "rating": 4.8,
+    "colors": ["Obsidian", "Porcelain", "Bay"],
+    "ram": ["12GB"],
+    "rom": ["128GB", "256GB", "512GB"],
+    "screen_size": "6.7 inches",
+    "cpu": "Google Tensor G3",
+    "camera": "50MP + 48MP + 48MP",
+    "battery": "5050mAh",
+    "description": "The Google Pixel 8 Pro is designed for AI-driven photography and a seamless user experience. Equipped with the new Tensor G3 chip, it offers improved performance, better power efficiency, and next-gen AI capabilities. The 6.7-inch LTPO OLED display features a 120Hz refresh rate, providing smooth scrolling and high responsiveness. The triple-camera system, featuring a 50MP main sensor and dual 48MP lenses for ultra-wide and telephoto shots, ensures industry-leading image processing. The Pixel-exclusive AI features include Magic Eraser, Real Tone, and enhanced Night Sight. Running on pure Android, the Pixel 8 Pro guarantees years of software updates and Pixel-first features."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Apple",
+    "model": "iPhone 15 Pro Max",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004069/tdweqdgqujjs6u64bk7p.webp",
+      "https://example.com/images/iphone15promax-back.jpg",
+      "https://example.com/images/iphone15promax-side.jpg",
+      "https://example.com/images/iphone15promax-box.jpg"
+    ],
+    "price": 1599,
+    "rating": 4.9,
+    "colors": [
+      "Black Titanium",
+      "White Titanium",
+      "Blue Titanium",
+      "Natural Titanium"
+    ],
+    "ram": ["8GB"],
+    "rom": ["256GB", "512GB", "1TB"],
+    "screen_size": "6.7 inches",
+    "cpu": "A17 Pro",
+    "camera": "48MP + 12MP + 12MP",
+    "battery": "4441mAh",
+    "description": "The iPhone 15 Pro Max is Apple's most advanced flagship smartphone, featuring a sleek titanium build for durability and reduced weight. The device boasts a stunning 6.7-inch Super Retina XDR display with ProMotion technology, ensuring ultra-smooth performance with a 120Hz refresh rate. Powered by the new A17 Pro chip, the iPhone 15 Pro Max delivers groundbreaking speed and efficiency, ideal for gaming, video editing, and demanding tasks. The camera system is significantly enhanced, with a 48MP main sensor and a new 5X telephoto zoom, offering unparalleled detail and clarity. The device supports ProRAW photography, 4K cinematic video recording, and improved Night Mode for low-light photography. With a 4441mAh battery, USB-C connectivity, and MagSafe support, the iPhone 15 Pro Max ensures all-day power and seamless wireless charging. Advanced security features like Face ID and iOS 17 integration make this smartphone the ultimate choice for professionals and enthusiasts alike."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Xiaomi",
+    "model": "Xiaomi 13 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004136/b3zkeotrrwrdiqzdtjdr.jpg",
+      "https://example.com/images/xiaomi13pro-back.jpg",
+      "https://example.com/images/xiaomi13pro-side.jpg",
+      "https://example.com/images/xiaomi13pro-box.jpg"
+    ],
+    "price": 999,
+    "rating": 4.8,
+    "colors": ["Ceramic White", "Ceramic Black", "Alpine Green"],
+    "ram": ["8GB", "12GB"],
+    "rom": ["128GB", "256GB", "512GB"],
+    "screen_size": "6.73 inches",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "50MP + 50MP + 50MP",
+    "battery": "4820mAh",
+    "description": "The Xiaomi 13 Pro is a premium flagship device with a sleek design and exceptional performance. It features a 6.73-inch AMOLED display with a 120Hz refresh rate and HDR10+ support, providing vibrant and smooth visuals. Powered by the latest Snapdragon 8 Gen 2 chipset, the 13 Pro ensures smooth multitasking, fast app launches, and enhanced gaming performance. The triple 50MP camera system, co-engineered with Leica, captures stunning images with remarkable detail, dynamic range, and color accuracy. The device also supports 8K video recording and enhanced low-light photography. With a 4820mAh battery and 120W fast charging, the Xiaomi 13 Pro offers long-lasting power and quick top-ups. The device runs MIUI based on Android 13 and comes with a range of premium features, including an in-display fingerprint sensor and 5G connectivity."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Samsung",
+    "model": "Samsung Galaxy Z Fold 5",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004177/tyxjhrznq7gmfggoyo5t.webp",
+      "https://example.com/images/galaxyzfold5-back.jpg",
+      "https://example.com/images/galaxyzfold5-side.jpg",
+      "https://example.com/images/galaxyzfold5-box.jpg"
+    ],
+    "price": 1799,
+    "rating": 4.9,
+    "colors": ["Phantom Black", "Icy Blue", "Cream"],
+    "ram": ["12GB"],
+    "rom": ["256GB", "512GB", "1TB"],
+    "screen_size": "7.6 inches (Folded) / 6.2 inches (Unfolded)",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "50MP + 12MP + 10MP",
+    "battery": "4400mAh",
+    "description": "The Samsung Galaxy Z Fold 5 is a cutting-edge foldable smartphone that offers a truly versatile experience. It features a stunning 7.6-inch Dynamic AMOLED 2X display when unfolded, providing a tablet-like experience, while the 6.2-inch cover display is perfect for one-handed use when folded. Powered by the Snapdragon 8 Gen 2 chipset and 12GB of RAM, this device delivers fast performance and multitasking capabilities. The camera system includes a 50MP main sensor, a 12MP ultra-wide sensor, and a 10MP telephoto lens, enabling users to capture high-quality photos and 4K videos. The 4400mAh battery supports fast charging and all-day use, while the foldable design adds a new level of functionality. With a premium design, the Z Fold 5 is perfect for users seeking the latest in smartphone technology, combining power, flexibility, and innovation."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Apple",
+    "model": "iPhone 14 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004221/xpac3mi6ney41qchmnhx.webp",
+      "https://example.com/images/iphone14pro-back.jpg",
+      "https://example.com/images/iphone14pro-side.jpg",
+      "https://example.com/images/iphone14pro-box.jpg"
+    ],
+    "price": 999,
+    "rating": 4.8,
+    "colors": ["Deep Purple", "Silver", "Gold", "Space Black"],
+    "ram": ["6GB"],
+    "rom": ["128GB", "256GB", "512GB", "1TB"],
+    "screen_size": "6.1 inches",
+    "cpu": "A16 Bionic",
+    "camera": "48MP + 12MP + 12MP",
+    "battery": "3200mAh",
+    "description": "The Apple iPhone 14 Pro is a premium smartphone that brings cutting-edge technology and design to the forefront. Featuring a 6.1-inch Super Retina XDR display with ProMotion technology, it offers vibrant colors and smooth interactions with a 120Hz refresh rate. Powered by the A16 Bionic chip, it delivers blazing-fast performance and enhanced power efficiency. The 48MP main camera with a quad-pixel sensor ensures professional-grade photography with incredible detail, dynamic range, and color accuracy. The iPhone 14 Pro also introduces the Dynamic Island, a new interactive feature that provides a more immersive experience. With the latest iOS 16, the iPhone 14 Pro is designed to provide a seamless and intuitive user experience, and its Ceramic Shield front cover ensures durability. Its all-day battery life and 5G connectivity make it the perfect device for tech enthusiasts and professionals alike."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Realme",
+    "model": "Realme GT 2 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004264/xijuckr2ap9n2meisgfn.jpg",
+      "https://example.com/images/gt2pro-back.jpg",
+      "https://example.com/images/gt2pro-side.jpg",
+      "https://example.com/images/gt2pro-box.jpg"
+    ],
+    "price": 749,
+    "rating": 4.7,
+    "colors": ["Steel Black", "Paper White", "Eco Green"],
+    "ram": ["8GB", "12GB"],
+    "rom": ["128GB", "256GB"],
+    "screen_size": "6.7 inches",
+    "cpu": "Snapdragon 8 Gen 1",
+    "camera": "50MP + 50MP + 3MP",
+    "battery": "5000mAh",
+    "description": "The Realme GT 2 Pro is an impressive flagship smartphone designed for users who seek performance and cutting-edge technology. It boasts a 6.7-inch AMOLED display with a 120Hz refresh rate, delivering vibrant colors and smooth visuals. Powered by the Snapdragon 8 Gen 1 chipset, it provides lightning-fast performance and efficiency for gaming, multitasking, and content creation. The rear camera setup includes a 50MP primary sensor, a 50MP ultra-wide sensor, and a 3MP macro lens, offering versatile photography options and stunning image quality. The 5000mAh battery supports 65W SuperDart fast charging, allowing the device to be charged to full capacity in under 35 minutes. The Realme GT 2 Pro is a premium smartphone with a durable design, making it ideal for power users who demand exceptional performance and camera quality."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Oppo",
+    "model": "Oppo Find X6 Pro",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004304/xnnviaatneqc1jxj80e2.jpg",
+      "https://example.com/images/findx6pro-back.jpg",
+      "https://example.com/images/findx6pro-side.jpg",
+      "https://example.com/images/findx6pro-box.jpg"
+    ],
+    "price": 1199,
+    "rating": 4.8,
+    "colors": ["Black", "Green", "Gold"],
+    "ram": ["12GB", "16GB"],
+    "rom": ["256GB", "512GB"],
+    "screen_size": "6.8 inches",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "50MP + 50MP + 13MP",
+    "battery": "5000mAh",
+    "description": "The Oppo Find X6 Pro is a flagship smartphone that delivers an unparalleled combination of performance, design, and camera capabilities. It features a 6.8-inch AMOLED display with a 120Hz refresh rate, providing smooth visuals and vibrant colors. Powered by the Snapdragon 8 Gen 2 chipset, the phone offers exceptional performance for gaming, multitasking, and heavy apps. The camera system includes a 50MP primary sensor, a 50MP ultra-wide lens, and a 13MP telephoto lens, ensuring high-quality photography in all conditions. The 5000mAh battery with 100W SuperVOOC fast charging ensures all-day usage with quick recharging. The Oppo Find X6 Pro is a premium device for users who demand the best in performance and photography."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Nothing",
+    "model": "Nothing Phone 2",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004355/twemo0gi4y5l3kcpho4m.jpg",
+      "https://example.com/images/nothing-phone2-back.jpg",
+      "https://example.com/images/nothing-phone2-side.jpg",
+      "https://example.com/images/nothing-phone2-box.jpg"
+    ],
+    "price": 599,
+    "rating": 4.5,
+    "colors": ["Black", "White"],
+    "ram": ["8GB", "12GB"],
+    "rom": ["128GB", "256GB", "512GB"],
+    "screen_size": "6.7 inches",
+    "cpu": "Snapdragon 8+ Gen 1",
+    "camera": "50MP + 50MP",
+    "battery": "4700mAh",
+    "description": "The Nothing Phone (2) is designed to offer a unique, minimalist experience with cutting-edge technology. It features a 6.7-inch AMOLED display with a 120Hz refresh rate for fluid visuals and vibrant colors. Powered by the Snapdragon 8+ Gen 1 chipset, the phone offers fast performance for multitasking, gaming, and content consumption. The dual 50MP rear cameras deliver sharp and detailed photos, even in low-light conditions. The 4700mAh battery supports 45W fast charging, allowing users to charge up quickly and enjoy all-day use. The Nothing Phone (2) stands out with its sleek, transparent design and innovative LED light patterns, offering both style and substance."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Xiaomi",
+    "model": "Mi 13 Ultra",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004412/h6vq3eidnbrfcma1lwbj.webp",
+      "https://example.com/images/mi13ultra-back.jpg",
+      "https://example.com/images/mi13ultra-side.jpg",
+      "https://example.com/images/mi13ultra-box.jpg"
+    ],
+    "price": 1499,
+    "rating": 4.9,
+    "colors": ["Black", "White", "Green"],
+    "ram": ["12GB", "16GB"],
+    "rom": ["256GB", "512GB"],
+    "screen_size": "6.73 inches",
+    "cpu": "Snapdragon 8 Gen 2",
+    "camera": "50MP + 50MP + 50MP",
+    "battery": "5000mAh",
+    "description": "The Xiaomi Mi 13 Ultra is a premium flagship smartphone designed to deliver the best performance, photography, and display quality. It features a stunning 6.73-inch AMOLED display with a 120Hz refresh rate and 3200 x 1440 resolution, ensuring ultra-crisp visuals. Powered by the Snapdragon 8 Gen 2 chipset, it provides top-tier performance for any task. The camera system is the standout feature, with a 50MP primary sensor, a 50MP ultra-wide lens, and a 50MP telephoto lens, offering versatility and exceptional photography. The 5000mAh battery ensures long-lasting usage, while the 90W fast charging allows for rapid battery replenishment. The Mi 13 Ultra offers a refined and polished design, making it a top choice for tech enthusiasts."
+  },
+  {
+    "category": "Smartphone",
+    "brand": "Nokia",
+    "model": "Nokia X30 5G",
+    "images": [
+      "http://res.cloudinary.com/dl1zmxord/image/upload/v1743004456/iehmsjjyktf3j4amrqcv.jpg",
+      "https://example.com/images/nokia-x30-5g-back.jpg",
+      "https://example.com/images/nokia-x30-5g-side.jpg",
+      "https://example.com/images/nokia-x30-5g-box.jpg"
+    ],
+    "price": 699,
+    "rating": 4.5,
+    "colors": ["Cloudy Blue", "Silver"],
+    "ram": ["6GB", "8GB"],
+    "rom": ["128GB", "256GB"],
+    "screen_size": "6.43 inches",
+    "cpu": "Snapdragon 695",
+    "camera": "50MP + 13MP",
+    "battery": "4200mAh",
+    "description": "The Nokia X30 5G is an environmentally friendly and feature-rich smartphone designed to provide a smooth user experience. It boasts a 6.43-inch AMOLED display with a 90Hz refresh rate for fluid visuals and vibrant colors. The Snapdragon 695 chipset ensures efficient performance for everyday tasks, and the device supports 5G connectivity for faster data speeds. The camera setup includes a 50MP primary sensor and a 13MP ultra-wide lens, offering high-quality photos and wide-angle shots. The 4200mAh battery offers all-day usage with 33W fast charging support. With its sustainable materials and robust build, the Nokia X30 5G is an ideal choice for environmentally conscious users looking for a reliable smartphone."
+  }
+]
