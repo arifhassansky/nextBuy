@@ -3,6 +3,7 @@ import dbConnect, { dbName } from "@/lib/DbConnect";
 import bcrypt from "bcryptjs";
 
 const registerUser = async (payload) => {
+  console.log(payload)
   const userCollection = await dbConnect(dbName.usersCollection);
 
   //   validation for frontend
