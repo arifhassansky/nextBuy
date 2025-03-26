@@ -3,6 +3,7 @@ import LatestArticlesSlider from '@/components/LatestArticlesSlider/LatestArticl
 import Navbar from '@/components/Navbar';
 import Slider from '@/components/Slider';
 import TechnicalSpecifications from '@/components/TechnicalSpecifications/TechnicalSpecifications';
+import Card from '@/components/ui/Card/Card';
 
 export default function Home() {
    return (
@@ -11,6 +12,7 @@ export default function Home() {
          <Slider />
          <TechnicalSpecifications/>
          <LatestArticlesSlider/>
+         <Card />
          <Footer />
       </>
    );
