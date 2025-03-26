@@ -58,16 +58,28 @@ export async function GET(req: Request) {
   try {
     await connectDB();
 
-    // Extract query parameters correctly
+    // Extract query parameters correctly from the request URL
     const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("page") || "1", 1);
-    const limit = parseInt(searchParams.get("limit") || "6", 6);
 
+    // Parse pagination values properly
+    const page = parseInt(searchParams.get("page") || "1", 10); // Default to 1
+    const limit = parseInt(searchParams.get("limit") || "6", 10); // Default to 6
+
+    // Ensure valid pagination values
+    const currentPage = Math.max(page, 1); // Ensure page is at least 1
+    const perPage = Math.max(limit, 1); // Ensure limit is at least 1
+
+    console.log(`Page: ${currentPage}, Limit: ${perPage}`);
+
+    // Fetch products with pagination
     const products = await Product.find()
-      .skip((page - 1) * limit) // Corrected pagination logic
-      .limit(limit)
+      .skip((currentPage - 1) * perPage) // Correct pagination calculation
+      .limit(perPage)
       .sort({ createdAt: -1 })
       .populate("category");
+
+    // Get total count of products (for pagination metadata)
+    const totalProducts = await Product.countDocuments();
 
     return NextResponse.json(
       {
@@ -75,6 +87,12 @@ export async function GET(req: Request) {
         success: true,
         message: "Products retrieved successfully",
         data: products,
+        pagination: {
+          totalItems: totalProducts,
+          totalPages: Math.ceil(totalProducts / perPage),
+          currentPage,
+          perPage,
+        },
       },
       { status: 200 }
     );
