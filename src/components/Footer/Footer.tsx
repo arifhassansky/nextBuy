@@ -6,28 +6,6 @@ import Spark from "../../../public/assets/Spark-Pro.jpg";
 import pexels from "../../../public/assets/pexels.jpg";
 
 const Footer = () => {
-<<<<<<< HEAD
-   return (
-      <footer className='bg-white text-black border-t border-gray-300'>
-         <div className='w-11/12 mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8'>
-            {/* Brand & Contact */}
-            <div>
-               <h2 className='text-2xl md:text-4xl font-bold text-black'>NextBuy</h2>
-               <p className='mt-2 text-gray-600'>
-                  Condimentum adipiscing vel neque dis nam parturient orci at scelerisque neque dis
-                  nam parturient.
-               </p>
-               <p className='mt-4 text-gray-600 flex items-center'>
-                  📍 <span className='font-bold'>451 Wall Street, London, UK</span>
-               </p>
-               <p className='text-gray-600'>
-                  📞 <span className='font-bold'>(064) 332-1233</span>
-               </p>
-               <p className='text-gray-600'>
-                  📠 <span className='font-bold'>Fax: (099) 453-1357</span>
-               </p>
-            </div>
-=======
   return (
     <footer className="bg-white text-black border-t border-gray-300">
       <div className="max-w-10/12 mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -48,7 +26,6 @@ const Footer = () => {
             📠 <span className="font-bold">Fax: (099) 453-1357</span>
           </p>
         </div>
->>>>>>> 61fc69e5a1f494987d96ed82a4bd334699aa153e
 
         {/* Recent Posts */}
         <div>
