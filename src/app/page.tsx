@@ -24,8 +24,8 @@ export default function Home() {
 import Category from "@/components/Category/Category";
 import Footer from "@/components/Footer/Footer";
 import LatestArticlesSlider from "@/components/LatestArticlesSlider/LatestArticlesSlider";
-import Navbar from "@/components/Navbar/Navbar";
-import ProductsCard from "@/components/productsCard/productsCard";
+import NewsletterSection from "@/components/NewsletterSection/NewsletterSection";
+import ProductsCard from "@/components/productsCard/ProductsCard";
 import Quality from "@/components/Quality/Quality";
 import Slider from "@/components/Slider/Slider";
 import TechnicalSpecifications from "@/components/TechnicalSpecifications/TechnicalSpecifications";
@@ -33,13 +33,13 @@ import TechnicalSpecifications from "@/components/TechnicalSpecifications/Techni
 export default function Home() {
   return (
     <>
-      <Navbar />
       <Slider />
       <Category />
       <Quality />
       <TechnicalSpecifications />
       <ProductsCard />
       <LatestArticlesSlider />
+      <NewsletterSection/>
       {/* <ProductsCard /> */}
       <Footer />
     </>
