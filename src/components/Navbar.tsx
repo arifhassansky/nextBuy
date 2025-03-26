@@ -37,7 +37,7 @@ const Navbar = () => {
             <Link href="/contact">Contact Us</Link>
             <Link href="/faq">Faq</Link>
             <Link href="/wishlist">Wishlist</Link>
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
             <Link
               href="/subscribe"
               className="flex items-center px-2 py-4 rounded-3xl text-white bg-[#43B02A]"
