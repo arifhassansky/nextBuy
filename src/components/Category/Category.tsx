@@ -15,6 +15,7 @@ const Category = () => {
             width={100}
             height={100}
             src={phone}
+            alt=""
             className="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
           />
         </div>
@@ -29,6 +30,7 @@ const Category = () => {
             width={100}
             height={100}
             src={charger}
+            alt=""
             className="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
           />
         </div>
@@ -43,6 +45,7 @@ const Category = () => {
           <Image
             width={100}
             height={100}
+            alt=""
             src={battery}
             className="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
           />
@@ -58,6 +61,7 @@ const Category = () => {
           <Image
             width={100}
             height={100}
+            alt=""
             src={headphone}
             className="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
           />
@@ -72,6 +76,7 @@ const Category = () => {
           <Image
             width={100}
             height={100}
+            alt=""
             src={tablet}
             className="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
           />
