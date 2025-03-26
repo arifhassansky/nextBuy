@@ -3,8 +3,15 @@ import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import { Card } from "@/components/ui/Card/Card";
 import { useGetProductsQuery } from "@/redux/ProductApi";
 
+type Product = {
+  _id: string;
+  title: string;
+  price: number;
+  image: string;
+};
+
 const ProductsCard = () => {
-  const { data, error, isLoading } = useGetProductsQuery();
+  const { data, error, isLoading }: Product = useGetProductsQuery();
   const products = data?.data || [];
 
   if (isLoading) return <LoadingSpinner />;
