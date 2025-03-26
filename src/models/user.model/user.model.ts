@@ -13,7 +13,15 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+    },
+    image: {
+      type: String,
+    },
+    provider: {
+      type: String,
+    },
+    providerAccountId: {
+      type: String,
     },
     role: {
       type: String,
