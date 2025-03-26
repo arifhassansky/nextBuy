@@ -12,6 +12,7 @@ import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
 import logo2 from "../../public/assets/logo-2.png";
 import logo from "../../public/assets/logo.jpg";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 
@@ -28,7 +29,7 @@ const Navbar = () => {
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-5">
       <div className="container mx-auto px-4">
         {/* Top Information Bar */}
-        <div className="hidden md:flex justify-between items-center py-2 border-b border-gray-200">
+        <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
           <div className="flex items-center space-x-4 text-sm text-gray-600">
             <span className="flex items-center gap-1">
               <FaPhone color="#43b02a" /> +1 (234) 567-890
@@ -72,11 +73,16 @@ const Navbar = () => {
           <nav className="hidden md:flex space-x-6 uppercase font-medium">
             <Link
               href="/"
-              className="hover:text-[#43b02a] transition"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
             >
               Home
+              <IoIosArrowUp
+                className={`${
+                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
+                } transition-all duration-300`}
+              />
             </Link>
 
             <div
@@ -222,33 +228,53 @@ const Navbar = () => {
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
               href="/shop"
-              className="hover:text-[#43b02a] transition"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Shop
+              <IoIosArrowUp
+                className={`${
+                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
+                } transition-all duration-300`}
+              />
             </Link>
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
               href="/categories"
-              className="hover:text-[#43b02a] transition"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Categories
+              <IoIosArrowUp
+                className={`${
+                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
+                } transition-all duration-300`}
+              />
             </Link>
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
               href="/blog"
-              className="hover:text-[#43b02a] transition"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Blog
+              <IoIosArrowUp
+                className={`${
+                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
+                } transition-all duration-300`}
+              />
             </Link>
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
               href="/contact"
-              className="hover:text-[#43b02a] transition"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Contact
+              <IoIosArrowUp
+                className={`${
+                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
+                } transition-all duration-300`}
+              />
             </Link>
           </nav>
 
