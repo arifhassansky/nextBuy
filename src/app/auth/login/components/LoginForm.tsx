@@ -3,14 +3,43 @@ import React from 'react';
 import Link from "next/link";
 
 import Sociallogin from './Sociallogin';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 
 
 const LoginForm = () => {
-  
-  const handleLogin = (e: React.FormEvent) => {
+  const router = useRouter()
+
+  const handleLogin = async(e: React.FormEvent) => {
+    
     e.preventDefault();
    
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email,password)
+
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        callbackUrl: "/",
+        redirect: false,
+      });
+      if (res?.ok) {
+        router.push('/')
+        form.reset();
+        toast.success("Log in Successfully");
+
+      }
+      // console.log({ email, password });
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to Log in");
+    }
+  
 
   };
 
