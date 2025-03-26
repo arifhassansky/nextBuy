@@ -2,32 +2,32 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define Type for Product
 interface Product {
-   id: number;
+   _id: string;
    title: string;
    price: number;
    description: string;
    category: string;
    image: string;
-   rating: {
-      rate: number;
-      count: number;
-   };
+   quantity: number;
+   createdAt: string;
+   updatedAt: string;
+   __v: number;
 }
 
 // Create API
 export const ProductApi = createApi({
    reducerPath: 'ProductApi',
    baseQuery: fetchBaseQuery({
-      baseUrl: 'https://fakestoreapi.com/',
+      baseUrl: 'http://localhost:3000/',
    }),
    tagTypes: ['Product'],
    endpoints: builder => ({
       getProducts: builder.query<Product[], void>({
-         query: () => 'products',
+         query: () => 'api/products',
          providesTags: result =>
-            result
+            Array.isArray(result)
                ? [
-                    ...result.map(product => ({ type: 'Product' as const, id: product.id })),
+                    ...result.map(product => ({ type: 'Product' as const, id: product._id })),
                     { type: 'Product', id: 'LIST' },
                  ]
                : [{ type: 'Product', id: 'LIST' }],

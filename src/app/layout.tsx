@@ -1,7 +1,11 @@
-import Providers from "@/lib/Providers";
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+import Providers from '@/lib/Providers';
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import { Toaster } from 'react-hot-toast';
+import './globals.css';
+import NextAuthProvider from './providers/NextAuthProvider';
+import Navbar from "@/components/Navbar/Navbar";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,15 +28,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-     <Providers>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-      </html>
-     </Providers>
-  );
+   return (
+      <Providers>
+         <html lang='en'>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+               <NextAuthProvider>
+                <Navbar />
+                  <Toaster position='top-right' />
+                  {children}
+               </NextAuthProvider>
+            </body>
+         </html>
+      </Providers>
+   );
 }
