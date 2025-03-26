@@ -13,7 +13,6 @@ export default function Home() {
       <TechnicalSpecifications />
       <ProductsCard />
       <LatestArticlesSlider />
-      <ProductsCard />
       <Footer />
     </>
   );
