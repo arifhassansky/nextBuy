@@ -1,129 +1,154 @@
 "use client";
 import React, { useState } from "react";
-
-// react icons
-import { IoIosClose, IoIosSearch } from "react-icons/io";
-import { CiMenuFries, CiSearch } from "react-icons/ci";
-
-import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
+
+// Icons
+import { CiSearch } from "react-icons/ci";
+import { IoCartOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
+import { FaPhone, FaRegUser } from "react-icons/fa";
+
+// Logo import - replace with your actual logo path
 import logo from "../../public/assets/logo.jpg";
-import { FiMenu } from "react-icons/fi";
-import { IoCartOutline } from "react-icons/io5";
+import { MdEmail } from "react-icons/md";
 
 const Navbar = () => {
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
+
   return (
-    <div>
-      <nav className="flex items-center justify-between w-full relative bg-white rounded-full px-[10px] py-0">
-        {/* logo */}
-        <Image
-          src={logo}
-          alt="logo"
-          // className="w-[55px]"
-          className="bg-cover"
-          width={200}
-          height={150}
-        />
-
-        {/* nav links */}
-        <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            home
-          </li>
-
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            shop
-          </li>
-
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            blog
-          </li>
-
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            pages
-          </li>
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            elements
-          </li>
-          <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-            buy
-          </li>
-        </ul>
-
-        {/* action buttons */}
-        <div className="gap-[10px] flex ">
-          {/* <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize hover:text-[#3B9DF8] transition-all duration-300 sm:flex hidden">
-            Sign in
-          </button>
-          <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">
-            Sign up
-          </button> */}
-
-          {/* <CiMenuFries
-            className="text-[1.8rem] mr-1 text-[#424242]c cursor-pointer md:hidden flex"
-            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          /> */}
-          <FiMenu
-            // className="w-[150px]"
-            className="text-[40px] -mr-0 mb-4 text-[#424242]c cursor-pointer md:hidden flex"
-            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          />
-        </div>
-
-        <div className="hidden md:flex  items-center gap-5">
-          <CiSearch size={30} />
-          <IoCartOutline size={30} />
-        </div>
-
-        {/* mobile sidebar */}
-        <aside
-          className={` ${
-            mobileSidebarOpen
-              ? "translate-x-0 opacity-100 z-20"
-              : "translate-x-[200px] opacity-0 z-[-1]"
-          } md:hidden bg-white p-4 text-center absolute top-[65px] right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}
-        >
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => setMobileSidebarOpen(false)}
-              className="text-gray-600 hover:text-[#3B9DF8] transition-all duration-300"
+    <header className="fixed top-0 left-0 w-full z-50 bg-white ">
+      <div className="container mx-auto px-4">
+        {/* Top Information Bar */}
+        <div className="hidden md:flex justify-between items-center py-2 border-b border-gray-200">
+          <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <span className="flex items-center gap-2">
+              <FaPhone /> +1 (234) 567-890
+            </span>
+            <span className="flex items-center gap-2">
+              <MdEmail /> XTEMOS@EMAIL.COM
+            </span>
+          </div>
+          <div className="flex items-center space-x-4 text-sm text-gray-600 uppercase">
+            <Link href="/newsletter">Newsletter</Link>
+            <Link href="/contact">Contact Us</Link>
+            <Link href="/faq">Faq</Link>
+            <Link href="/wishlist">Wishlist</Link>
+            <Link href="/login">Login</Link>
+            <Link
+              href="/subscribe"
+              className="flex items-center px-2 py-4 rounded-3xl text-white bg-[#43B02A]"
             >
-              <IoIosClose className="text-[40px]" />
-            </button>
+              Subscribe Us
+            </Link>
           </div>
+        </div>
 
-          <div className="relative mb-5">
-            <input
-              className="py-1.5 pr-4 w-full pl-10 rounded-full border border-gray-200 outline-none focus:border-[#3B9DF8]"
-              placeholder="Search..."
+        {/* Main Navigation */}
+        <div className="flex items-center justify-between">
+          {/* Mobile Menu Toggle */}
+          <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
+            {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
+          </button>
+
+          {/* Logo */}
+          <Link href="/" className="mx-auto md:mx-0">
+            <Image
+              src={logo}
+              alt="Logo"
+              width={200}
+              height={50}
+              className="bg-transparent"
             />
-            {/* <IoIosSearch className="absolute top-[8px] left-3 text-gray-500 text-[1.3rem]" /> */}
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6 uppercase font-medium">
+            <Link href="/" className="hover:text-blue-600 transition">
+              Home
+            </Link>
+            <Link href="/shop" className="hover:text-blue-600 transition">
+              Shop
+            </Link>
+            <Link href="/categories" className="hover:text-blue-600 transition">
+              Categories
+            </Link>
+            <Link href="/blog" className="hover:text-blue-600 transition">
+              Blog
+            </Link>
+            <Link href="/contact" className="hover:text-blue-600 transition">
+              Contact
+            </Link>
+          </nav>
+
+          {/* Action Icons */}
+          <div className="flex items-center space-x-4">
+            <button onClick={toggleSearch} className="text-2xl">
+              <CiSearch />
+            </button>
+            <Link href="/account" className="text-2xl md:hidden">
+              <FaRegUser />
+            </Link>
+            <Link href="/cart" className="text-2xl relative">
+              <IoCartOutline />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                0
+              </span>
+            </Link>
           </div>
-          <ul className="items-center gap-[20px] text-[1rem] text-gray-600 flex flex-col">
-            <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-              home
-            </li>
+        </div>
 
-            <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-              features
-            </li>
-
-            <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-              blogs
-            </li>
-
-            <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-              shop
-            </li>
-          </ul>
-          <div className="flex flex-col mt-5 justify-center items-center mx-auto">
-            <CiSearch size={30} />
-            <IoCartOutline size={30} />
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg">
+            <nav className="flex flex-col divide-y">
+              <Link href="/" className="p-4 hover:bg-gray-100">
+                Home
+              </Link>
+              <Link href="/shop" className="p-4 hover:bg-gray-100">
+                Shop
+              </Link>
+              <Link href="/categories" className="p-4 hover:bg-gray-100">
+                Categories
+              </Link>
+              <Link href="/blog" className="p-4 hover:bg-gray-100">
+                Blog
+              </Link>
+              <Link href="/contact" className="p-4 hover:bg-gray-100">
+                Contact
+              </Link>
+            </nav>
           </div>
-        </aside>
-      </nav>
-    </div>
+        )}
+
+        {/* Search Overlay */}
+        {isSearchOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg w-full max-w-md">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Search</h2>
+                <button onClick={toggleSearch} className="text-2xl">
+                  <IoCloseOutline />
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="w-full p-3 border rounded-lg pr-10"
+                />
+                <button className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <CiSearch className="text-2xl" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
 };
 
