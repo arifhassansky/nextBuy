@@ -4,7 +4,7 @@ import connectDB from "@/config/db/connectDB";
 import jwt from "jsonwebtoken";
 import User from "@/models/user.model/user.model";
 
-const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET || "";
 
 export async function POST(req: Request) {
   try {

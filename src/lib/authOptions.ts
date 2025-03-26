@@ -1,8 +1,8 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import dbConnect, { dbName } from "./DbConnect";
-import LoginUser from "@/app/actions/auth/loginUser";
+import connectDB from "@/config/db/connectDB";
+import User from "@/models/user.model/user.model";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -52,12 +52,16 @@ export const authOptions = {
         const { provider, providerAccountId } = account;
         const { name, email, image } = user;
 
-        const usersCollection = await dbConnect(dbName.usersCollection);
-        const dbUser = await usersCollection.findOne({ email });
+        await connectDB();
+        const findUser = await User.findOne({ email });
 
-        if (!dbUser) {
+        // const usersCollection = await dbConnect(dbName.usersCollection);
+        // const dbUser = await usersCollection.findOne({ email });
+
+        if (!findUser) {
           const payload = { provider, providerAccountId, name, email, image };
-          await usersCollection.insertOne(payload);
+          const newUser = new User(payload);
+          await newUser.save();
         }
       }
       return true;
