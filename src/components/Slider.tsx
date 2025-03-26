@@ -25,13 +25,13 @@ const Slider: React.FC = () => {
         mousewheel={true}
         keyboard={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-        className="mySwiper w-full h-auto"
+        className="mySwiper w-full h-auto [&>.swiper-pagination]:left-10 [&>.swiper-pagination]:text-left"
       >
         <SwiperSlide className="flex justify-center items-center">
           <Image
             src={monitor}
             width={1920}
-            height={600}
+            height={400}
             alt="Monitor"
             className="object-cover w-full"
           />
@@ -40,7 +40,7 @@ const Slider: React.FC = () => {
           <Image
             src={speaker}
             width={1920}
-            height={600}
+            height={400}
             alt="Speaker"
             className="object-cover w-full"
           />
@@ -49,7 +49,7 @@ const Slider: React.FC = () => {
           <Image
             src={mic}
             width={1920}
-            height={600}
+            height={400}
             alt="Microphone"
             className="object-cover w-full"
           />

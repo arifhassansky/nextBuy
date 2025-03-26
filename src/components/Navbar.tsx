@@ -9,7 +9,7 @@ import { IoCartOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { FaPhone, FaRegUser } from "react-icons/fa";
 
 // Logo import - replace with your actual logo path
-import logo from "../../public/assets/logo.jpg";
+import logo2 from "../../public/assets/logo-2.png";
 import { MdEmail } from "react-icons/md";
 
 const Navbar = () => {
@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* Main Navigation */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between ">
           {/* Mobile Menu Toggle */}
           <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
             {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
@@ -57,7 +57,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="mx-auto md:mx-0">
             <Image
-              src={logo}
+              src={logo2}
               alt="Logo"
               width={200}
               height={50}
