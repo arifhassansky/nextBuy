@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import slugify from "slugify";
 
 const productSchema = new Schema(
   {
@@ -24,11 +25,21 @@ const productSchema = new Schema(
     quantity: {
       type: Number,
     },
+    slug: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+productSchema.pre("save", async function (next) {
+  if (this.isModified("title")) {
+    this.slug = slugify(this.title);
+  }
+  next();
+});
 
 const Product = models.Product || model("Product", productSchema);
 
