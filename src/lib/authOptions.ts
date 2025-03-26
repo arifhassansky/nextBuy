@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -5,6 +6,13 @@ import GoogleProvider from 'next-auth/providers/google';
 // import LoginUser from "@/app/actions/auth/loginUser";
 import connectDB from '@/config/db/connectDB';
 import User from '@/models/user.model/user.model';
+=======
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+import connectDB from "@/config/db/connectDB";
+import User from "@/models/user.model/user.model";
+>>>>>>> 257534721e2273575ac3b570c5b1f5701f7c07ff
 
 export const authOptions = {
    // Configure one or more authentication providers
