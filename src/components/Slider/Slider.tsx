@@ -16,9 +16,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 // import "./styles.css";
 
-import mic from "../../public/assets/mic.jpg";
-import monitor from "../../public/assets/monitor.jpg";
-import speaker from "../../public/assets/speaker.jpg";
+import mic from "../../../public/assets/mic.jpg";
+import monitor from "../../../public/assets/monitor.jpg";
+import speaker from "../../../public/assets/speaker.jpg";
 
 const Slider: React.FC = () => {
   return (

@@ -11,7 +11,7 @@ import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
 // Logo import - replace with your actual logo path
 import logo2 from "../../public/assets/logo-2.png";
 import logo from "../../public/assets/logo.jpg";
-import nextbuy from "../../public/assets/nextbuy-logo.png";
+import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 
