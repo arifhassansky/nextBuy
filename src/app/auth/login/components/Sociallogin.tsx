@@ -10,7 +10,7 @@ const Sociallogin = () => {
   const session = useSession();
   console.log(session)
 
-  const handleSocialLogin = (provider) => {
+  const handleSocialLogin = (provider: string) => {
     signIn(provider, { redirect: false });
   };
 
