@@ -20,10 +20,6 @@ const Navbar = () => {
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
-<<<<<<< HEAD
-=======
-
->>>>>>> 078428757ed70b9033f33174ebe8e61b69c5ef90
     <header className="fixed top-0 left-0 w-full z-50 bg-white ">
       <div className="container mx-auto px-4">
         {/* Top Information Bar */}
