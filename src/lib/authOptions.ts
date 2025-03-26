@@ -1,53 +1,50 @@
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import connectDB from "@/config/db/connectDB";
 import User from "@/models/user.model/user.model";
 
-export const authOptions = {
-  // Configure one or more authentication providers
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         email: { label: "Email", type: "text", placeholder: "Your Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        // const user = await LoginUser(credentials);
-        // console.log(user);
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password are required");
+        }
 
-        if (user.email) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
+        // Connect to the database
+        await connectDB();
+
+        // Fetch the user from the database
+        const user = await User.findOne({ email: credentials.email });
+
+        if (user && user.password === credentials.password) {
+          return user; // Authentication successful
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          throw new Error("Invalid credentials");
         }
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
   pages: {
     signIn: "/login",
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account }) {
       if (account) {
         const { provider, providerAccountId } = account;
         const { name, email, image } = user;
@@ -55,12 +52,14 @@ export const authOptions = {
         await connectDB();
         const findUser = await User.findOne({ email });
 
-        // const usersCollection = await dbConnect(dbName.usersCollection);
-        // const dbUser = await usersCollection.findOne({ email });
-
         if (!findUser) {
-          const payload = { provider, providerAccountId, name, email, image };
-          const newUser = new User(payload);
+          const newUser = new User({
+            provider,
+            providerAccountId,
+            name,
+            email,
+            image,
+          });
           await newUser.save();
         }
       }

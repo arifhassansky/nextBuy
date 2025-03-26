@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { MdOutlineAssignmentReturn } from "react-icons/md";
