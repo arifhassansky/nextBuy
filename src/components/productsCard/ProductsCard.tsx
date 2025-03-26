@@ -8,6 +8,8 @@ const ProductsCard = () => {
    const products = data?.data || [];
 
    if (isLoading) return <LoadingSpinner />;
+
+   
    if (error) return <div>Error: {error?.message || 'Failed to load products.'}</div>;
 
    return (
