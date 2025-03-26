@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -17,19 +16,24 @@ import { FaAddressBook, FaHandshakeAngle, FaUsers } from "react-icons/fa6";
 import { FaHistory, FaHome, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(true);
   const pathname = usePathname();
 
+  const { data: session } = useSession();
+  console.log(session?.user);
+  const user = session?.user;
+
   // Helper function to check active link
-  const isActive = (href) => {
+  const isActive = (href: string) => {
     return pathname === href;
   };
 
   return (
     <aside
-      className={`bg-secondary transition-all duration-300 ease min-h-screen ${
+      className={`bg-[#061A3A] transition-all duration-300 ease min-h-screen ${
         isCollapse && "w-56 md:w-64 lg:w-72"
       }`}
     >
@@ -45,7 +49,7 @@ const Sidebar = () => {
             <div className="grid place-items-center">
               <Image
                 className="w-20 flex justify-center items-center"
-                src="/logo-2.png"
+                src="/public/assets/logo-2.png"
                 alt="Elite Travels Logo"
                 width={8}
                 height={8}
@@ -92,7 +96,7 @@ const Sidebar = () => {
       >
         <div className="flex items-center justify-center gap-2">
           <Image
-            src={user?.photo}
+            src={user?.image}
             alt="avatar"
             className={`${
               isCollapse ? "w-14 h-14" : "w-8"
@@ -670,7 +674,6 @@ const Sidebar = () => {
         {/* logot button */}
         <div className="mt-3 flex flex-col gap-[5px]">
           <button
-            onClick={handleLogout}
             className={`${
               isCollapse ? "justify-between" : "justify-center"
             } flex items-center w-full hover:bg-white text-gray-300 hover:text-black p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group`}

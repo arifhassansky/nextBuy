@@ -27,6 +27,7 @@
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
+    "slugify": "^1.6.6",
     "swiper": "^11.2.6",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4"

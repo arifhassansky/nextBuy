@@ -1,8 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-// import dbConnect, { dbName } from "./DbConnect";
-// import LoginUser from "@/app/actions/auth/loginUser";
+import GitHubProvider from "next-auth/providers/github";
 import connectDB from "@/config/db/connectDB";
 import User from "@/models/user.model/user.model";
 
