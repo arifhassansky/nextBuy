@@ -2,10 +2,28 @@
 import React from "react";
 import Sociallogin from "../../login/components/Sociallogin";
 import Link from "next/link";
+import registerUser from "@/app/actions/auth/registerUser";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
-  const handleSignUp = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSignUp = async(e: React.FormEvent) => {
     e.preventDefault();
+
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const image = form.image.value;
+        const password = form.password.value;
+        console.log(name,email,image, password)
+        const res = await registerUser({ name, email,image, password });
+        if (res) {
+          router.push('/')
+          form.reset()
+          toast.success("User registered successfully. Please login.");
+        }
   };
   return (
     <div className="w-1/2 p-28">
