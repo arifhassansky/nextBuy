@@ -4,24 +4,18 @@ import { Card } from '@/components/ui/Card/Card';
 import { useGetProductsQuery } from '@/redux/ProductApi';
 
 type Product = {
-  _id: string;
-  title: string;
-  price: number;
-  image: string;
+   _id: string;
+   title: string;
+   price: number;
+   image: string;
 };
 
 const ProductsCard = () => {
-<<<<<<< HEAD
-   const { data, error, isLoading } = useGetProductsQuery();
+   const { data, error, isLoading }: Product = useGetProductsQuery();
    const products = data?.data || [];
-=======
-  const { data, error, isLoading }: Product = useGetProductsQuery();
-  const products = data?.data || [];
->>>>>>> 61fc69e5a1f494987d96ed82a4bd334699aa153e
 
    if (isLoading) return <LoadingSpinner />;
 
-   
    if (error) return <div>Error: {error?.message || 'Failed to load products.'}</div>;
 
    return (
