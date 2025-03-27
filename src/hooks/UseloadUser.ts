@@ -10,6 +10,7 @@ interface User {
 const useLoadUser = () => {
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
+  console.log(userEmail);
 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

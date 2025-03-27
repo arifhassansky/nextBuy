@@ -18,14 +18,19 @@ import { FaHistory, FaHome, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import useLoadUser from "@/hooks/UseloadUser";
+import { useSession } from "next-auth/react";
 
 const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(true);
   const pathname = usePathname();
 
-  const { user } = useLoadUser();
-  console.log(user);
+  // const { user } = useLoadUser();
+  // console.log(user);
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  console.log(userEmail);
 
+  const user = "";
   // Helper function to check active link
   const isActive = (href: string) => {
     return pathname === href;
