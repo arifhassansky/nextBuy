@@ -72,7 +72,10 @@ const ProductsCard: FC = () => {
           </>
         )}
         {products?.map((product) => (
-          <Link key={product._id} href={`/products/${product.slug}`}>
+          <Link
+            key={product._id}
+            href={`${process.env.NEXTAUTH_URL}${product.slug}`}
+          >
             <Card key={product?._id} product={product} />
           </Link>
         ))}
