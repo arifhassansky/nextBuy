@@ -52,7 +52,7 @@ const articles = [
 
 export default function LatestArticlesSlider() {
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="w-11/12 mx-auto py-10 px-4">
       <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
         OUR LATEST ARTICLES
       </h2>
@@ -71,7 +71,7 @@ export default function LatestArticlesSlider() {
       >
         {articles.map((article, index) => (
           <SwiperSlide key={index}>
-            <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col">
+            <div className="rounded-lg overflow-hidden shadow-lg flex flex-col">
               <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72">
                 <Image
                   src={article.image}
