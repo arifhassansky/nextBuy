@@ -24,11 +24,27 @@ const SignupForm = () => {
     try {
       // Assuming registerUser is an API call that returns a response
       // const res = await registerUser({ name, email, image, password });
+      const res = await fetch("/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          image,
+          password,
+        }),
+      });
 
-      // if (res) {
-      router.push("/");
-      form.reset(); // Ensure form reset works correctly
-      toast.success("User registered successfully. Please login.");
+      if (res.ok) {
+        router.push("/");
+        form.reset(); // Ensure form reset works correctly
+        toast.success("User registered successfully. Please login.");
+      }
+      const data = await res.json();
+
+      console.log(data);
       // }
     } catch (error) {
       console.error(error);
