@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-1/2 p-28">
+    <div className="lg:w-1/2  lg:p-28 p-16  lg:mt-44 mt-40 ">
       <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
       <p className="text-sm text-gray-500 text-center">
         Please login to your account
@@ -61,7 +61,7 @@ const LoginForm = () => {
           name="password"
           required
         />
-        <button className="w-full bg-[#3C9E26] hover:bg-[#3C9E26] text-white py-2 rounded-md">
+        <button className="w-full bg-[#3C9E26] hover:bg-[#3C9E26] text-white py-2 rounded-md cursor-pointer">
           Login
         </button>
       </form>
