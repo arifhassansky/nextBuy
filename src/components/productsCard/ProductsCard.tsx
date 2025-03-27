@@ -1,8 +1,11 @@
 'use client';
+
 import LoadingSpinner from '@/components/loadingSpinner/LoadingSpinner';
 import { Card } from '@/components/ui/Card/Card';
 import { useGetProductsQuery } from '@/redux/ProductApi';
+import { FC } from 'react';
 
+// Define Product Type
 type Product = {
    _id: string;
    title: string;
@@ -10,22 +13,37 @@ type Product = {
    image: string;
 };
 
-const ProductsCard = () => {
-   const { data, error, isLoading }: Product = useGetProductsQuery();
-   const products = data?.data || [];
+// Define API Response Type
+type ApiResponse = {
+   data: Product[];
+};
 
+// ProductsCard Component
+const ProductsCard: FC = () => {
+   const { data, error, isLoading } = useGetProductsQuery<ApiResponse>();
+
+   // Handle loading state
    if (isLoading) return <LoadingSpinner />;
 
-   if (error) return <div>Error: {error?.message || 'Failed to load products.'}</div>;
+   // Handle error state
+   if (error) {
+      return (
+         <div className='flex justify-center items-center h-40 text-red-500 font-semibold'>
+            Error: {(error as { message?: string })?.message || 'Failed to load products.'}
+         </div>
+      );
+   }
+
+   const products = data?.data || [];
 
    return (
-      <div className='w-11/12 mx-auto px-4'>
+      <div className='md:w-11/12 mx-auto px-4'>
          {/* Grid layout for products */}
-         <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6  md:gap-8 place-items-center  justify-items-center'>
+         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8'>
             {products.length > 0 ? (
                products.map(product => <Card key={product._id} product={product} />)
             ) : (
-               <div>No products available.</div>
+               <div className='col-span-full text-center text-gray-500'>No products available.</div>
             )}
          </div>
       </div>
