@@ -81,11 +81,9 @@ export default function LatestArticlesSlider() {
                 <Image
                   src={article.image}
                   alt={article.title}
-                  // layout="fill"
-                  width={120}
-                  height={120}
-                  objectFit="cover"
-                  className="w-full h-full"
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute top-2 left-2 bg-white text-black px-3 py-1 text-sm font-bold">
                   {article.date}
