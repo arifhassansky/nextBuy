@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React from "react";
 import Link from "next/link";
 
 import Sociallogin from "./Sociallogin";
@@ -7,15 +7,17 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const LoginForm: FC = () => {
+const LoginForm = () => {
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
     console.log(email, password);
 
     try {
@@ -25,12 +27,12 @@ const LoginForm: FC = () => {
         callbackUrl: "/",
         redirect: false,
       });
+
       if (res?.ok) {
         router.push("/");
         form.reset();
         toast.success("Log in Successfully");
       }
-      // console.log({ email, password });
     } catch (error) {
       console.log(error);
       toast.error("Failed to Log in");

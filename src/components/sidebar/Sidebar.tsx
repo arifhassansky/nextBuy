@@ -17,7 +17,6 @@ import { FaAddressBook, FaHandshakeAngle, FaUsers } from "react-icons/fa6";
 import { FaHistory, FaHome, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import useLoadUser from "@/hooks/UseloadUser";
 
 const Sidebar = () => {
