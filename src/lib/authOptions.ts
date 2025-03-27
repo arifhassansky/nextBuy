@@ -1,9 +1,11 @@
+import jwt from "jsonwebtoken";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import connectDB from "@/config/db/connectDB";
 import User from "@/models/user.model/user.model";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -22,9 +24,26 @@ export const authOptions: NextAuthOptions = {
         await connectDB();
 
         // Fetch the user from the database
-        const user = await User.findOne({ email: credentials.email });
+        const user = await User.findOne({ email: credentials?.email });
 
-        if (user && user.password === credentials.password) {
+        const isMatch = await bcrypt.compare(
+          credentials?.password,
+          user?.password
+        );
+        const payload = {
+          userId: user._id,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          role: user.role,
+          provider: user.provider,
+          providerAccountId: user.providerAccountId,
+        };
+        if (isMatch) {
+          const token = jwt.sign(payload, process.env.JWT_SECRET || "", {
+            expiresIn: "1h",
+          });
+
           return user; // Authentication successful
         } else {
           throw new Error("Invalid credentials");
@@ -40,6 +59,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
+
   pages: {
     signIn: "/login",
   },
@@ -61,6 +81,7 @@ export const authOptions: NextAuthOptions = {
             image,
           });
           await newUser.save();
+          return newUser;
         }
       }
       return true;

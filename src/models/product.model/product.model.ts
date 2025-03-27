@@ -19,6 +19,8 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    images: [{ type: String }],
+
     category: {
       type: String,
     },
@@ -28,6 +30,10 @@ const productSchema = new Schema(
     slug: {
       type: String,
       lowercase: true,
+    },
+    status: {
+      type: String,
+      default: "active",
     },
   },
   {

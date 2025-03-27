@@ -24,6 +24,18 @@ const SignupForm = () => {
     try {
       // Assuming registerUser is an API call that returns a response
       // const res = await registerUser({ name, email, image, password });
+      const res = await fetch("/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          image,
+          password,
+        }),
+      });
 
       // if (res) {
       router.push("/");
@@ -37,7 +49,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-1/2 p-28">
+    <div className="w-1/2 p-28 pt-">
       <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
       <p className="text-sm text-gray-500 text-center">
         Please Sign Up to your account

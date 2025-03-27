@@ -2,14 +2,15 @@ import connectDB from "@/config/db/connectDB";
 import Product from "@/models/product.model/product.model";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
+import { nanoid } from "nanoid";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
 
-    const { title, price, description, image, category, quantity } =
+    const { title, price, description, image, images, category, quantity } =
       await req.json();
-
+    // console.log(images);
     if (!title || !price || !description || !image || !category || !quantity) {
       return NextResponse.json(
         {
@@ -25,10 +26,14 @@ export async function POST(req: Request) {
       price,
       description,
       image,
+      images,
       category,
       quantity,
-      slug: slugify(title).toLocaleLowerCase(),
+      slug: `${slugify(title).toLocaleLowerCase()}-${nanoid(
+        7
+      ).toLocaleLowerCase()}`,
     });
+    console.log(product);
 
     await product.save();
 
@@ -63,7 +68,7 @@ export async function GET(req: Request) {
 
     // Parse pagination values properly
     const page = parseInt(searchParams.get("page") || "1", 10); // Default to 1
-    const limit = parseInt(searchParams.get("limit") || "6", 10); // Default to 6
+    const limit = parseInt(searchParams.get("limit") || "10", 10); // Default to 6
 
     // Ensure valid pagination values
     const currentPage = Math.max(page, 1); // Ensure page is at least 1
