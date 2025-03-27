@@ -31,7 +31,7 @@ const Sidebar = () => {
   console.log(userEmail);
 
   const user = "";
-  console.log(session);
+
   // Helper function to check active link
   const isActive = (href: string) => {
     return pathname === href;
