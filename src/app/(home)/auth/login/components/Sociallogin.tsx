@@ -4,13 +4,14 @@ import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+
 const Sociallogin = () => {
   const router = useRouter();
   const session = useSession();
   console.log(session);
 
-  const handleSocialLogin = (provider: string) => {
-    signIn(provider, { redirect: false });
+  const handleSocialLogin = async(provider: string) => {
+   await signIn(provider, { redirect: false });
   };
 
   useEffect(() => {
