@@ -38,7 +38,6 @@ interface ApiResponse {
 const ProductsCard: FC = () => {
   const { data, error, isLoading } = useGetProductsQuery();
 
-  console.log(data);
   // Handle error state
   if (error) {
     const errorMessage =
@@ -51,8 +50,6 @@ const ProductsCard: FC = () => {
       </div>
     );
   }
-
-  console.log(process.env.NEXTAUTH_URL);
 
   // Safely handle the data type
   const products =
