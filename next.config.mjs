@@ -19,10 +19,14 @@ const nextConfig = {
         hostname: "lh3.googleusercontent.com",
       },
       {
-        protocol: 'https',
-        hostname: 'woodmart.xtemos.com',
-        port: '',
-        pathname: '/wp-content/uploads/**',
+        protocol: "https",
+        hostname: "woodmart.xtemos.com",
+        port: "",
+        pathname: "/wp-content/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.daisyui.com",
       },
     ],
   },
