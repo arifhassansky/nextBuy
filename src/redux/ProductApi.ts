@@ -18,7 +18,7 @@ interface Product {
 export const ProductApi = createApi({
    reducerPath: 'ProductApi',
    baseQuery: fetchBaseQuery({
-      baseUrl: 'http://localhost:3000/',
+      baseUrl: 'https://nextbuys.vercel.app/',
    }),
    tagTypes: ['Product'],
    endpoints: builder => ({

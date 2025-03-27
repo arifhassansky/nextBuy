@@ -3,7 +3,6 @@
 import LoadingSpinner from '@/components/loadingSpinner/LoadingSpinner';
 import { Card } from '@/components/ui/Card/Card';
 import { useGetProductsQuery } from '@/redux/ProductApi';
-import { FC } from 'react';
 
 // Define Product Type
 type Product = {
@@ -19,7 +18,7 @@ type ApiResponse = {
 };
 
 // ProductsCard Component
-const ProductsCard: FC = () => {
+const ProductsCard = () => {
    const { data, error, isLoading } = useGetProductsQuery<ApiResponse>();
 
    // Handle loading state
@@ -29,7 +28,7 @@ const ProductsCard: FC = () => {
    if (error) {
       return (
          <div className='flex justify-center items-center h-40 text-red-500 font-semibold'>
-            Error: {(error as { message?: string })?.message || 'Failed to load products.'}
+            Error: {(error as { message?: string })?.message || 'Failed to Load products.'}
          </div>
       );
    }
