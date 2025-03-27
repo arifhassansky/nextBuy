@@ -12,7 +12,7 @@ import {
 
 const TechnicalSpecifications = () => {
   return (
-    <section className="w-10/12 mx-auto py-20">
+    <section className="w-11/12 mx-auto py-20">
       <h2 className="text-3xl font-bold">
         TECHNICAL SPECIFICATIONS
       </h2>

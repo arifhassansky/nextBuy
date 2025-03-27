@@ -1,3 +1,4 @@
+import Branding from "@/components/Branding/Branding";
 import Category from "@/components/Category/Category";
 import Footer from "@/components/Footer/Footer";
 import LatestArticlesSlider from "@/components/LatestArticlesSlider/LatestArticlesSlider";
@@ -16,6 +17,7 @@ export default function Home() {
       <TechnicalSpecifications />
       <ProductsCard />
       <LatestArticlesSlider />
+      <Branding />
       <NewsletterSection />
       {/* <ProductsCard /> */}
       <Footer />
