@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card/Card";
 import { useGetProductsQuery } from "@/redux/ProductApi";
 import { FC } from "react";
 import CardSkeleton from "../ui/Skeletons/CardSkeleton/CardSkeleton";
+import Link from "next/link";
 
 // Define Product Type (matching the API or as a subset)
 interface Product {
@@ -68,7 +69,12 @@ const ProductsCard: FC = () => {
           </>
         )}
         {products?.map((product) => (
-          <Card key={product?._id} product={product} />
+          <Link
+            key={product._id}
+            href={`http://localhost:3000/products/${product.slug}`}
+          >
+            <Card key={product?._id} product={product} />
+          </Link>
         ))}
       </div>
     </div>
