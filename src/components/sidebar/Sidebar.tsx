@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import logo2 from "../../../public/assets/logo-2.png";
 
 // react icons
 import {
@@ -78,8 +79,10 @@ const Sidebar = () => {
           </div>
         ) : (
           <Image
-            src={logo}
+            src={logo2}
             alt="logo"
+            width={120}
+            height={120}
             className={`${
               isCollapse ? "w-16" : "w-12"
             } mx-auto cursor-pointer pt-8`}
@@ -97,6 +100,8 @@ const Sidebar = () => {
         <div className="flex items-center justify-center gap-2">
           <Image
             src={user?.image}
+            width={50}
+            height={50}
             alt="avatar"
             className={`${
               isCollapse ? "w-14 h-14" : "w-8"

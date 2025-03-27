@@ -1,18 +1,16 @@
 "use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { IoCartOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
+import { IoCartOutline, IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 
 // Logo import - replace with your actual logo path
-import logo2 from "../../public/assets/logo-2.png";
-import logo from "../../public/assets/logo.jpg";
+import { IoIosArrowUp } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 
@@ -66,7 +64,13 @@ const Navbar = () => {
 
           {/* Logo */}
           <Link href="/" className="w-48">
-            <Image src={nextbuy} alt="Logo" className="object-cover" />
+            <Image
+              src={nextbuy}
+              alt="Logo"
+              width={120}
+              height={120}
+              className="object-cover"
+            />
           </Link>
 
           {/* Desktop Navigation */}
