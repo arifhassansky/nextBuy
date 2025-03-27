@@ -34,6 +34,7 @@ const Sidebar = () => {
   const { data: session } = useSession();
   const user = session?.user as User | undefined;
 
+  console.log(session);
   // Helper function to check active link
   const isActive = (href: string): boolean => {
     return pathname === href;

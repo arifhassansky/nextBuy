@@ -34,7 +34,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <NextAuthProvider>
-            <Navbar />
+            {/* <Navbar /> */}
             <Toaster position="top-right" />
             {children}
           </NextAuthProvider>
