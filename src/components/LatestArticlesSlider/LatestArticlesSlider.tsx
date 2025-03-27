@@ -5,59 +5,81 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const articles = [
-  {
-    date: "23 JUL",
-    image: "https://i.ibb.co.com/prk4XmjK/pexels-kamo11235-667838.jpg",
-    category: ["DESIGN TRENDS", "INSPIRATION"],
-    title: "Reinterprets the classic bookshelf",
-    author: "S. Rogers",
-    excerpt:
-      "Discover how classic bookshelves are being reimagined with modern aesthetics and innovative functionality.",
-  },
-  {
-    date: "23 JUL",
-    image: "https://i.ibb.co.com/DPmkf0Yk/pexels-ivan-samkov-4899424.jpg",
-    category: ["DESIGN TRENDS", "FURNITURE"],
-    title: "Minimalist design furniture 2024",
-    author: "S. Rogers",
-    excerpt:
-      "Explore the latest minimalist furniture trends that blend simplicity, elegance, and sustainability.",
-  },
-  {
-    date: "23 JUL",
-    image: "https://i.ibb.co.com/Z6nZ2p1z/pexels-pixabay-459653.jpg",
-    category: ["DESIGN TRENDS", "HAND MADE"],
-    title: "Green interior design inspiration",
-    author: "S. Rogers",
-    excerpt:
-      "Uncover eco-friendly interior design ideas that harmonize sustainability with style.",
-  },
-  {
-    date: "24 JUL",
-    image:
-      "https://i.ibb.co.com/chzD05TR/pexels-eric-mufasa-578798-1350789.jpg",
-    category: ["INTERIOR", "MODERN"],
-    title: "The rise of modern interior aesthetics",
-    author: "J. Doe",
-    excerpt:
-      "Learn how modern interior design is evolving to embrace functionality and artistic expression.",
-  },
-  {
-    date: "25 JUL",
-    image: "https://i.ibb.co.com/xN223r4/pexels-yankrukov-5793655.jpg",
-    category: ["ARCHITECTURE", "DESIGN"],
-    title: "Exploring futuristic architecture trends",
-    author: "A. Smith",
-    excerpt:
-      "Dive into the world of futuristic architecture, where technology and design redefine urban landscapes.",
-  },
-];
+interface Article {
+  createdAt: string;
+  image: string;
+  category: string[];
+  title: string;
+  author: string;
+  content: string;
+  authorImage: string;
+}
 
 export default function LatestArticlesSlider() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/blogs");
+        if (!response.ok) {
+          throw new Error("Failed to fetch articles");
+        }
+        const data = await response.json();
+        console.log(data.data);
+        setArticles(data.data);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+        console.error("Error fetching articles:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+          OUR LATEST ARTICLES
+        </h2>
+        <div className="text-center py-10">Loading articles...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+          OUR LATEST ARTICLES
+        </h2>
+        <div className="text-center py-10 text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
+
+  if (articles.length === 0) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+          OUR LATEST ARTICLES
+        </h2>
+        <div className="text-center py-10">No articles found</div>
+      </div>
+    );
+  }
+  console.log(articles);
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="w-11/12 mx-auto py-20 px-4">
       <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
         OUR LATEST ARTICLES
       </h2>
@@ -74,9 +96,9 @@ export default function LatestArticlesSlider() {
         }}
         className="relative"
       >
-        {articles.map((article, index) => (
+        {articles?.map((article, index) => (
           <SwiperSlide key={index}>
-            <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col">
+            <div className="rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
               <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72">
                 <Image
                   src={article.image}
@@ -86,30 +108,33 @@ export default function LatestArticlesSlider() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-2 left-2 bg-white text-black px-3 py-1 text-sm font-bold">
-                  {article.date}
+                  {article.createdAt}
                 </div>
               </div>
               <div className="p-4 flex flex-col flex-grow">
-                <div className="mb-2 text-center">
-                  {article.category.map((cat, i) => (
-                    <span
-                      key={i}
-                      className="bg-[#3C9E26] text-white px-2 py-1 text-xs mr-2 rounded"
-                    >
-                      {cat}
-                    </span>
-                  ))}
-                </div>
+                <span className="bg-[#3C9E26] text-white w-13 mx-auto px-2 py-1 text-xs text-center rounded">
+                  {article.category}
+                </span>
                 <h3 className="text-lg font-bold mb-2 text-center">
                   {article.title}
                 </h3>
-                <p className="text-sm text-gray-600 mb-4 text-center">
+                <div className="flex gap-2 items-center justify-center">
+                  <Image
+                    src={article.authorImage}
+                    alt="authorImage"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                  <p className="text-sm text-gray-600 font-semibold mb-4 text-center">
                   Posted by {article.author}
                 </p>
+                </div>
+                
                 <p className="text-sm text-gray-500 flex-grow text-center">
-                  {article.excerpt}
+                {article.content.length > 100 ? `${article.content.substring(0, 100)}...` : article.content}
                 </p>
-                <button className="mt-4 text-[#3C9E26] text-md font-semibold text-center">
+                <button className="mt-4 text-[#3C9E26] text-md font-semibold text-center hover:underline">
                   CONTINUE READING
                 </button>
               </div>
