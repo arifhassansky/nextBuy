@@ -28,6 +28,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "slugify": "^1.6.6",
     "swiper": "^11.2.6",

@@ -18,6 +18,7 @@ interface Product {
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
+  slug?: string;
 }
 
 // Define possible error type
