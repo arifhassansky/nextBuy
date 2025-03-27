@@ -15,7 +15,7 @@ export default function NewsletterSection() {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white p-20 shadow-lg w-full max-w-4xl flex flex-col md:flex-row items-center">
+      <div className="bg-white p-20 shadow-lg w-full max-w-6xl rounded-lg flex flex-col md:flex-row items-center">
         {/* Left Side - Newsletter Form */}
         <div className="md:w-1/2 text-center md:pr-6">
           <p className="text-sm uppercase text-gray-500">
