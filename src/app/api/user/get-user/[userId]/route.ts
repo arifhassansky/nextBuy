@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     await connectDB();
     // Parse the URL
     const url = new URL(req.url);
-    const userEmail = url.pathname.split("/").pop(); // Extract userEmail from the URL path
+    const userEmail = url.pathname.split("/").pop();
 
     console.log("Received userEmail:", userEmail);
 

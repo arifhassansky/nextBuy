@@ -56,22 +56,14 @@ const ProductsCard: FC = () => {
    const products =
       data && 'data' in data ? (data as ApiResponse).data : (data as Product[] | undefined);
 
-   return (
-      <div className='md:w-11/12 mx-auto px-4'>
-         {/* Grid layout for products */}
-         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8'>
-            {isLoading && (
-               <>
-                  {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
-                     <CardSkeleton key={i} />
-                  ))}
-               </>
-            )}
-
-            {products?.map(product => (
-               <Link key={product._id} href={`${process.env.NEXTAUTH_URL}products/${product.slug}`}>
-                  <Card key={product?._id} product={product} />
-               </Link>
+  return (
+    <div className="md:w-11/12 mx-auto">
+      {/* Grid layout for products */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
+        {isLoading && (
+          <>
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
+              <CardSkeleton key={i} />
             ))}
          </div>
       </div>
