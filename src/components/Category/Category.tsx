@@ -20,7 +20,7 @@ const Category = () => {
           />
         </div>
         <div className="flex  justify-center mx-auto mt-2">
-          <span className="font-bold">phones</span>
+          <span className="font-bold ">phones</span>
         </div>
       </div>
 
