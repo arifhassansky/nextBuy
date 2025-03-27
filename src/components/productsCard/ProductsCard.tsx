@@ -1,23 +1,23 @@
 "use client";
 
-import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import { Card } from "@/components/ui/Card/Card";
 import { useGetProductsQuery } from "@/redux/ProductApi";
 import { FC } from "react";
+import CardSkeleton from "../ui/Skeletons/CardSkeleton/CardSkeleton";
 
 // Define Product Type (matching the API or as a subset)
-// interface Product {
-//   _id: string;
-//   title: string;
-//   price: number;
-//   image: string;
-//   description?: string; // Optional fields if not always used
-//   category?: string;
-//   quantity?: number;
-//   createdAt?: string;
-//   updatedAt?: string;
-//   __v?: number;
-// }
+interface Product {
+  _id: string;
+  title: string;
+  price: number;
+  image: string;
+  description?: string; // Optional fields if not always used
+  category?: string;
+  quantity?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
 
 // Define possible error type
 interface FetchError {
@@ -28,13 +28,15 @@ interface FetchError {
   message?: string;
 }
 
+// Define the expected API response structure
+interface ApiResponse {
+  data: Product[];
+}
+
 const ProductsCard: FC = () => {
-  // Remove generic type since it matches the API definition
   const { data, error, isLoading } = useGetProductsQuery();
 
-  // Handle loading state
-  if (isLoading) return <LoadingSpinner />;
-
+  console.log(data);
   // Handle error state
   if (error) {
     const errorMessage =
@@ -48,22 +50,26 @@ const ProductsCard: FC = () => {
     );
   }
 
-  // Data is Product[] directly from the API
-  const products = data || [];
+  // Safely handle the data type
+  const products =
+    data && "data" in data
+      ? (data as ApiResponse).data
+      : (data as Product[] | undefined);
 
   return (
     <div className="md:w-11/12 mx-auto px-4">
       {/* Grid layout for products */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
-        {products.length > 0 ? (
-          products.map((product) => (
-            <Card key={product._id} product={product} />
-          ))
-        ) : (
-          <div className="col-span-full text-center text-gray-500">
-            No products available.
-          </div>
+        {isLoading && (
+          <>
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
+          </>
         )}
+        {products?.map((product) => (
+          <Card key={product?._id} product={product} />
+        ))}
       </div>
     </div>
   );
