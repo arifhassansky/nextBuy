@@ -37,14 +37,10 @@ const SignupForm = () => {
         }),
       });
 
-      if (res.ok) {
-        router.push("/");
-        form.reset(); // Ensure form reset works correctly
-        toast.success("User registered successfully. Please login.");
-      }
-      const data = await res.json();
-
-      console.log(data);
+      // if (res) {
+      router.push("/");
+      form.reset(); // Ensure form reset works correctly
+      toast.success("User registered successfully. Please login.");
       // }
     } catch (error) {
       console.error(error);
@@ -53,7 +49,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-1/2 p-28">
+    <div className="w-1/2 p-28 pt-">
       <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
       <p className="text-sm text-gray-500 text-center">
         Please Sign Up to your account
