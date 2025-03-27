@@ -1,17 +1,16 @@
 "use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { IoCartOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
+import { IoCartOutline, IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 
 // Logo import - replace with your actual logo path
-
-import nextbuy from "../../../public/assets/nextbuy-logo.png";
 import { IoIosArrowUp } from "react-icons/io";
+import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 
@@ -19,12 +18,14 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
+  // const [mobileServiceOpen, setMobileServiceOpen] = useState(false);
+
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-5">
-      <div className="container mx-auto px-4">
+      <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
           <div className="flex items-center space-x-4 text-sm text-gray-600">
@@ -63,7 +64,13 @@ const Navbar = () => {
 
           {/* Logo */}
           <Link href="/" className="w-48">
-            <Image src={nextbuy} alt="Logo" className="object-cover" />
+            <Image
+              src={nextbuy}
+              alt="Logo"
+              width={120}
+              height={120}
+              className="object-cover"
+            />
           </Link>
 
           {/* Desktop Navigation */}
