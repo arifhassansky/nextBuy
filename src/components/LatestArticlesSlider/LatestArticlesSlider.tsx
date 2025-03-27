@@ -8,47 +8,52 @@ import Image from "next/image";
 
 const articles = [
   {
-    date: '23 JUL',
-    image: 'https://i.ibb.co.com/prk4XmjK/pexels-kamo11235-667838.jpg',
-    category: ['DESIGN TRENDS', 'INSPIRATION'],
-    title: 'Reinterprets the classic bookshelf',
-    author: 'S. Rogers',
-    excerpt: 'Discover how classic bookshelves are being reimagined with modern aesthetics and innovative functionality.',
+    date: "23 JUL",
+    image: "https://i.ibb.co.com/prk4XmjK/pexels-kamo11235-667838.jpg",
+    category: ["DESIGN TRENDS", "INSPIRATION"],
+    title: "Reinterprets the classic bookshelf",
+    author: "S. Rogers",
+    excerpt:
+      "Discover how classic bookshelves are being reimagined with modern aesthetics and innovative functionality.",
   },
   {
-    date: '23 JUL',
-    image: 'https://i.ibb.co.com/DPmkf0Yk/pexels-ivan-samkov-4899424.jpg',
-    category: ['DESIGN TRENDS', 'FURNITURE'],
-    title: 'Minimalist design furniture 2024',
-    author: 'S. Rogers',
-    excerpt: 'Explore the latest minimalist furniture trends that blend simplicity, elegance, and sustainability.',
+    date: "23 JUL",
+    image: "https://i.ibb.co.com/DPmkf0Yk/pexels-ivan-samkov-4899424.jpg",
+    category: ["DESIGN TRENDS", "FURNITURE"],
+    title: "Minimalist design furniture 2024",
+    author: "S. Rogers",
+    excerpt:
+      "Explore the latest minimalist furniture trends that blend simplicity, elegance, and sustainability.",
   },
   {
-    date: '23 JUL',
-    image: 'https://i.ibb.co.com/Z6nZ2p1z/pexels-pixabay-459653.jpg',
-    category: ['DESIGN TRENDS', 'HAND MADE'],
-    title: 'Green interior design inspiration',
-    author: 'S. Rogers',
-    excerpt: 'Uncover eco-friendly interior design ideas that harmonize sustainability with style.',
+    date: "23 JUL",
+    image: "https://i.ibb.co.com/Z6nZ2p1z/pexels-pixabay-459653.jpg",
+    category: ["DESIGN TRENDS", "HAND MADE"],
+    title: "Green interior design inspiration",
+    author: "S. Rogers",
+    excerpt:
+      "Uncover eco-friendly interior design ideas that harmonize sustainability with style.",
   },
   {
-    date: '24 JUL',
-    image: 'https://i.ibb.co.com/chzD05TR/pexels-eric-mufasa-578798-1350789.jpg',
-    category: ['INTERIOR', 'MODERN'],
-    title: 'The rise of modern interior aesthetics',
-    author: 'J. Doe',
-    excerpt: 'Learn how modern interior design is evolving to embrace functionality and artistic expression.',
+    date: "24 JUL",
+    image:
+      "https://i.ibb.co.com/chzD05TR/pexels-eric-mufasa-578798-1350789.jpg",
+    category: ["INTERIOR", "MODERN"],
+    title: "The rise of modern interior aesthetics",
+    author: "J. Doe",
+    excerpt:
+      "Learn how modern interior design is evolving to embrace functionality and artistic expression.",
   },
   {
-    date: '25 JUL',
-    image: 'https://i.ibb.co.com/xN223r4/pexels-yankrukov-5793655.jpg',
-    category: ['ARCHITECTURE', 'DESIGN'],
-    title: 'Exploring futuristic architecture trends',
-    author: 'A. Smith',
-    excerpt: 'Dive into the world of futuristic architecture, where technology and design redefine urban landscapes.',
-  }
+    date: "25 JUL",
+    image: "https://i.ibb.co.com/xN223r4/pexels-yankrukov-5793655.jpg",
+    category: ["ARCHITECTURE", "DESIGN"],
+    title: "Exploring futuristic architecture trends",
+    author: "A. Smith",
+    excerpt:
+      "Dive into the world of futuristic architecture, where technology and design redefine urban landscapes.",
+  },
 ];
-
 
 export default function LatestArticlesSlider() {
   return (
@@ -95,7 +100,9 @@ export default function LatestArticlesSlider() {
                     </span>
                   ))}
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-center">{article.title}</h3>
+                <h3 className="text-lg font-bold mb-2 text-center">
+                  {article.title}
+                </h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
                   Posted by {article.author}
                 </p>

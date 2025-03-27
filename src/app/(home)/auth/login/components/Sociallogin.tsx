@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 const Sociallogin = () => {
-
   const router = useRouter();
   const session = useSession();
-  console.log(session)
+  console.log(session);
 
   const handleSocialLogin = (provider: string) => {
     signIn(provider, { redirect: false });
@@ -19,7 +18,7 @@ const Sociallogin = () => {
       toast.success("Login Successfully");
       router.push("/");
     }
-  }, [session?.status]);
+  }, [session?.status, router]);
 
   return (
     <div className="flex justify-center space-x-4 mt-2">
