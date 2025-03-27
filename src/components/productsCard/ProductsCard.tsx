@@ -17,6 +17,7 @@ interface Product {
   quantity?: number;
   createdAt?: string;
   updatedAt?: string;
+  slug: string;
   __v?: number;
 }
 
@@ -51,6 +52,8 @@ const ProductsCard: FC = () => {
     );
   }
 
+  console.log(process.env.NEXTAUTH_URL);
+
   // Safely handle the data type
   const products =
     data && "data" in data
@@ -69,10 +72,7 @@ const ProductsCard: FC = () => {
           </>
         )}
         {products?.map((product) => (
-          <Link
-            key={product._id}
-            href={`http://localhost:3000/products/${product.slug}`}
-          >
+          <Link key={product._id} href={`/products/${product.slug}`}>
             <Card key={product?._id} product={product} />
           </Link>
         ))}
