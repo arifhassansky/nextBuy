@@ -17,6 +17,7 @@ interface Product {
   quantity?: number;
   createdAt?: string;
   updatedAt?: string;
+  slug: string;
   __v?: number;
 }
 
@@ -37,7 +38,6 @@ interface ApiResponse {
 const ProductsCard: FC = () => {
   const { data, error, isLoading } = useGetProductsQuery();
 
-  console.log(data);
   // Handle error state
   if (error) {
     const errorMessage =
@@ -58,7 +58,7 @@ const ProductsCard: FC = () => {
       : (data as Product[] | undefined);
 
   return (
-    <div className="md:w-11/12 mx-auto">
+    <div className="md:w-11/12 mx-auto px-4">
       {/* Grid layout for products */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
         {isLoading && (
@@ -71,7 +71,7 @@ const ProductsCard: FC = () => {
         {products?.map((product) => (
           <Link
             key={product._id}
-            href={`http://localhost:3000/products/${product.slug}`}
+            href={`${process.env.NEXTAUTH_URL}${product.slug}`}
           >
             <Card key={product?._id} product={product} />
           </Link>

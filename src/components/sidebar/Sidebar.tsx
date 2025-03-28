@@ -54,14 +54,14 @@ const Sidebar = () => {
             {/* logo */}
             <div className="grid place-items-center">
               <Image
-                className="w-20 flex justify-center items-center"
-                src="/public/assets/logo-2.png"
-                alt="Elite Travels Logo"
-                width={8}
-                height={8}
+                className="w-80 flex justify-center items-center"
+                src={logo2}
+                alt="NextBuy Logo"
+                width={280}
+                height={80}
               />
               <span className="text-2xl font-semibold transition-all duration-300 text-gray-200">
-                Elite Explore
+                NextBuy
               </span>
             </div>
 
