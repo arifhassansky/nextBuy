@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { FiCpu, FiLoader, FiSmartphone } from "react-icons/fi";
-import { TbBasketHeart, TbLoader3 } from "react-icons/tb";
+import { TbLoader3 } from "react-icons/tb";
 import { GoVerified } from "react-icons/go";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { CiDeliveryTruck, CiStar } from "react-icons/ci";
@@ -14,6 +14,7 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import s1 from "../../../../../public/assets/shipping1.jpg";
 import s2 from "../../../../../public/assets/shipping2.jpg";
 
+// Define Product interface
 interface Product {
   _id: string;
   title: string;
@@ -24,21 +25,27 @@ interface Product {
   category: string;
   quantity: number;
   createdAt: string;
+  images: string[]; // Updated to string[] since images are URLs
+}
 
-  images: [];
+// Define FormData interface
+interface FormData {
+  name: string;
+  email: string;
+  rating: number;
+  reviewTitle: string;
+  reviewText: string;
+  recommended: boolean | null;
 }
 
 export default function ProductDetailsPage() {
-  const params = useParams();
+  const params = useParams<{ productId: string }>(); // Type params with productId
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
-  // const [selectedColor, setSelectedColor] = useState("black");
-  // const [selectedStorage, setSelectedStorage] = useState("1TB");
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     rating: 0,
@@ -46,10 +53,12 @@ export default function ProductDetailsPage() {
     reviewText: "",
     recommended: null,
   });
-
   const [hover, setHover] = useState(0);
 
-  const handleChange = (e) => {
+  // Type event for input/textarea changes
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -57,17 +66,19 @@ export default function ProductDetailsPage() {
     }));
   };
 
-  const handleRatingChange = (currentRating) => {
+  // Type currentRating as number
+  const handleRatingChange = (currentRating: number) => {
     setFormData((prevState) => ({
       ...prevState,
       rating: currentRating,
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Type event for form submission
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your submit logic here
     console.log("Review Submitted:", formData);
+    // Add your submit logic here
   };
 
   useEffect(() => {
@@ -107,9 +118,7 @@ export default function ProductDetailsPage() {
     return (
       <>
         <div className="w-10 h-10 animate-[spin_1s_linear_infinite] rounded-full border-4 border-r-[#3B9DF8] border-[#3b9df84b]"></div>
-
         <FiLoader className="text-[2.8rem] animate-spin text-[#3B9DF8]" />
-
         <TbLoader3 className="text-[2.8rem] animate-spin text-[#3B9DF8]" />
       </>
     );
@@ -132,59 +141,6 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    // <div className="container mx-auto px-4 py-8 mt-32">
-    //   <div className="grid md:grid-cols-2 gap-8">
-    //     {/* Product Image */}
-    //     <div className="relative aspect-square">
-    //       {product && (
-    //         <Image
-    //           src={product.image}
-    //           alt={product.title}
-    //           fill
-    //           className="object-cover rounded-lg"
-    //           priority
-    //         />
-    //       )}
-    //     </div>
-
-    //     {/* Product Details */}
-    //     <div>
-    //       <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
-
-    //       <div className="flex items-center mb-4">
-    //         <span className="text-2xl font-semibold text-primary mr-4">
-    //           ${product.price.toFixed(2)}
-    //         </span>
-    //       </div>
-
-    //       <p className="text-gray-700 mb-6">{product.description}</p>
-
-    //       <div className="flex gap-4">
-    //         {/* <Button className="w-full" variant="default">
-    //           Add to Cart
-    //         </Button>
-    //         <Button className="w-full" variant="outline">
-    //           Buy Now
-    //         </Button> */}
-    //       </div>
-
-    //       {/* Additional Product Details */}
-    //       <div className="mt-8 border-t pt-6">
-    //         <h2 className="text-xl font-semibold mb-4">Product Information</h2>
-    //         <ul className="space-y-2">
-    //           <li>
-    //             <strong>Stock:</strong> {product.quantity} available
-    //           </li>
-    //           <li>
-    //             <strong>Added:</strong>{" "}
-    //             {new Date(product.createdAt).toLocaleDateString()}
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="w-11/12 mx-auto md:px-8 md:py-12 mt-32">
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left side - Image gallery */}
@@ -212,7 +168,7 @@ export default function ProductDetailsPage() {
           </div>
 
           {/* Main image */}
-          <div className="w-full md:w-[80%] bg-gray-100 rounded-sm  relative flex items-center justify-center">
+          <div className="w-full md:w-[80%] bg-gray-100 rounded-sm relative flex items-center justify-center">
             <Image
               height={800}
               width={400}
@@ -231,45 +187,8 @@ export default function ProductDetailsPage() {
             </h1>
             <div className="flex items-center gap-2 mt-2 md:mt-5">
               <span className="text-3xl font-medium">${product.price}</span>
-              {/* <span className="text-xl text-gray-500 line-through">$1499</span> */}
             </div>
           </div>
-
-          {/* Color selection */}
-          {/* <div className="flex float-start md:items-center flex-col md:flex-row gap-[10px]">
-                        <label className="text-sm font-medium">Select color:</label>
-                        <div className="flex gap-3">
-                            {colors.map((color) => (
-                                <button
-                                    key={color.name}
-                                    onClick={() => setSelectedColor(color.name)}
-                                    className={`w-8 h-8 rounded-full ${color.class} ${
-                                        selectedColor === color.name ? "ring-2 ring-offset-2 ring-[#0FABCA]" : ""
-                                    }`}
-                                    aria-label={color.name}
-                                />
-                            ))}
-                        </div>
-                    </div> */}
-
-          {/* Storage selection */}
-          {/* <div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            {storage.map((size) => (
-                                <button
-                                    key={size}
-                                    onClick={() => setSelectedStorage(size)}
-                                    className={`py-2 px-4 rounded-lg border ${
-                                        selectedStorage === size
-                                            ? "border-[#0FABCA] bg-[#0FABCA]/10 text-[#0FABCA]"
-                                            : "border-gray-200"
-                                    }`}
-                                >
-                                    {size}
-                                </button>
-                            ))}
-                        </div>
-                    </div> */}
 
           {/* Specifications */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -277,7 +196,9 @@ export default function ProductDetailsPage() {
               <FiSmartphone className="w-5 h-5 text-gray-700" />
               <div>
                 <p className="text-sm text-gray-500">Screen size</p>
-                <p className="font-medium text-gray-700 text-[0.9rem]">6.7"</p>
+                <p className="font-medium text-gray-700 text-[0.9rem]">
+                  6.7&quot;
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
@@ -330,7 +251,7 @@ export default function ProductDetailsPage() {
               </div>
             </button>
             <button className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90">
-              Add to Card
+              Add to Cart
             </button>
           </div>
 
@@ -365,14 +286,13 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      {/* description */}
+      {/* Description */}
       <div className="mt-32">
         <h3 className="text-center font-bold text-3xl">Description</h3>
         <p className="mt-4 text-center">{product.description}</p>
       </div>
 
-      {/* review */}
-
+      {/* Review */}
       <div>
         <h3 className="text-center font-bold text-2xl mt-10">Review</h3>
 
@@ -427,7 +347,7 @@ export default function ProductDetailsPage() {
                   Your Rating *
                 </label>
                 <div className="flex items-center">
-                  {[...Array(5)].map((star, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const currentRating = index + 1;
                     return (
                       <label key={index} className="cursor-pointer">
@@ -441,13 +361,13 @@ export default function ProductDetailsPage() {
                         <CiStar
                           size={30}
                           className={`
-                      ${
-                        currentRating <= (hover || formData.rating)
-                          ? "text-yellow-500 fill-yellow-500"
-                          : "text-gray-300"
-                      }
-                      mr-1
-                    `}
+                            ${
+                              currentRating <= (hover || formData.rating)
+                                ? "text-yellow-500 fill-yellow-500"
+                                : "text-gray-300"
+                            }
+                            mr-1
+                          `}
                           onMouseEnter={() => setHover(currentRating)}
                           onMouseLeave={() => setHover(0)}
                         />
@@ -485,7 +405,7 @@ export default function ProductDetailsPage() {
               <div>
                 <button
                   type="submit"
-                  className=" bg-[#43b02a] text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                  className="bg-[#43b02a] text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
                 >
                   Submit
                 </button>
@@ -495,8 +415,7 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      {/* shipping */}
-
+      {/* Shipping */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
         <div className="w-full h-full">
           <Image
