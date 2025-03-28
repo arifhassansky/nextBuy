@@ -13,13 +13,13 @@ export default function Home() {
     <>
       <Slider />
       <Category />
-      <Quality />
-      <TechnicalSpecifications />
       <ProductsCard />
+      <Quality />
       <LatestArticlesSlider />
       <Branding />
+      <TechnicalSpecifications />
       <NewsletterSection />
-      {/* <ProductsCard /> */}
+
       <Footer />
     </>
   );
