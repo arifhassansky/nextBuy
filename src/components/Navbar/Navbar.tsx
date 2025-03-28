@@ -273,7 +273,7 @@ const Navbar = () => {
           {/* Action Icons */}
           <div className="flex items-center space-x-6">
             <Link className="flex items-center gap-1 relative" href="/wishlist">
-              <CiHeart size={20} /> Wishlist
+              <CiHeart size={20} />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 0
               </span>
