@@ -56,7 +56,7 @@ const Navbar = () => {
               <MdEmail color="#43b02a" /> XTEMOS@EMAIL.COM
             </span>
           </div>
-          <div className="flex items-center space-x-3 text-sm text-gray-600 uppercase">
+          <div className="flex items-center space-x-3 text-xs text-gray-600 uppercase">
             <Link className="flex items-center gap-1" href="/newsletter">
               <MdEmail /> Newsletter |
             </Link>
@@ -65,7 +65,7 @@ const Navbar = () => {
 
             <Link href="/auth/login">Login |</Link>
             <Link
-              href="/subscribe"
+              href="/auth/signUp"
               className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#43B02A]"
             >
               Register
@@ -93,14 +93,14 @@ const Navbar = () => {
 
           <div className="relative md:flex hidden">
             <input
-              className="py-1 pr-4 border border-text pl-10 rounded-full outline-none focus:border-[#3B9DF8]"
+              className="py-1 pr-4 border border-text pl-10 rounded-full outline-none focus:border-green-600"
               placeholder="Search..."
             />
-            <IoIosSearch className="absolute top-[9px] left-3 text-[#424242] text-[1.3rem]" />
+            <IoIosSearch className="absolute top-[9px] left-3 text-green-600 font-bold text-[1.3rem]" />
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex  space-x-6 uppercase font-medium relative">
+          <nav className="hidden md:flex space-x-6 uppercase font-medium relative">
             <Link
               href="/"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
@@ -298,54 +298,56 @@ const Navbar = () => {
               </span>
             </Link>
             {/* user account */}
-            <div className="flex items-center gap-[15px]">
-              <div
-                className="flex items-center gap-[10px] cursor-pointer relative"
-                onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-              >
-                <div className="relative">
-                  <Image
-                    src={user?.image || "/userImage"}
-                    alt="avatar"
-                    width={35}
-                    height={35}
-                    className="w-[35px] h-[35px] rounded-full object-cover"
-                  />
-                  <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
-                </div>
-
-                <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
-                  {user?.name}
-                </h1>
-
+            {user && (
+              <div className="flex items-center gap-[15px]">
                 <div
-                  className={`${
-                    accountMenuOpen
-                      ? "translate-y-0 opacity-100 z-[1]"
-                      : "translate-y-[10px] opacity-0 z-[-1]"
-                  } bg-white w-max rounded-md absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
+                  className="flex items-center gap-[10px] cursor-pointer relative"
+                  onClick={() => setAccountMenuOpen(!accountMenuOpen)}
                 >
-                  <Link href={"/dashboard"}>
-                    <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-1 text-[1rem] text-gray-600 hover:bg-green-100 ">
-                      <IoSettingsOutline />
-                      Dashboard
-                    </p>
-                  </Link>
-                  <div className="mt-3 border-t border-gray-200 pt-[5px]">
-                    <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
-                      <TbLogout2 />
-                      Logout
-                    </p>
+                  <div className="relative">
+                    <Image
+                      src={user?.image || "/userImage"}
+                      alt="avatar"
+                      width={35}
+                      height={35}
+                      className="w-[35px] h-[35px] rounded-full object-cover"
+                    />
+                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
                   </div>
-                </div>
 
-                <IoIosArrowUp
-                  className={`${
-                    accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
-                  } transition-all duration-300 text-gray-600 sm:block hidden`}
-                />
+                  <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
+                    {user?.name}
+                  </h1>
+
+                  <div
+                    className={`${
+                      accountMenuOpen
+                        ? "translate-y-0 opacity-100 z-[1]"
+                        : "translate-y-[10px] opacity-0 z-[-1]"
+                    } bg-white w-max rounded-md absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
+                  >
+                    <Link href={"/dashboard"}>
+                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-1 text-[1rem] text-gray-600 hover:bg-green-100 ">
+                        <IoSettingsOutline />
+                        Dashboard
+                      </p>
+                    </Link>
+                    <div className="mt-3 border-t border-gray-200 pt-[5px]">
+                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                        <TbLogout2 />
+                        Logout
+                      </p>
+                    </div>
+                  </div>
+
+                  <IoIosArrowUp
+                    className={`${
+                      accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
+                    } transition-all duration-300 text-gray-600 sm:block hidden`}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
