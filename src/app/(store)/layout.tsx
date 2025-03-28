@@ -1,10 +1,10 @@
-import Footer from "@/components/Footer/Footer";
 import Sidebar from "@/components/sidebar/Sidebar";
 import React from "react";
 import NextAuthProvider from "../providers/NextAuthProvider";
 import localFont from "next/font/local";
 import { Metadata } from "next";
 import "../globals.css";
+import DashboardFooter from "@/components/DashboardFooter/DashboardFooter";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -34,9 +34,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               <Sidebar />
               <div className="w-full p-8">{children}</div>
             </div>
-            <Footer />
           </NextAuthProvider>
         </div>
+        <DashboardFooter />
       </body>
     </html>
   );
