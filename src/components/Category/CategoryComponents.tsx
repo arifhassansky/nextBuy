@@ -3,14 +3,9 @@ import Image from "next/image";
 type CategoryComponentsType = {
   img: string;
   value: string;
-  description: string;
 };
 
-const CategoryComponents = ({
-  img,
-  value,
-  description,
-}: CategoryComponentsType) => {
+const CategoryComponents = ({ img, value }: CategoryComponentsType) => {
   return (
     <div className="flex items-center justify-center flex-col">
       <div className="bg-gray-200 rounded-full flex items-center justify-center p-3 w-48 h-48 overflow-hidden">
@@ -24,12 +19,6 @@ const CategoryComponents = ({
       </div>
       <div className="flex items-center flex-col justify-center mx-auto mt-2">
         <span className="font-bold">{value}</span>
-
-        <p className="text-center">
-          {description.length > 30
-            ? `${description.substring(0, 30)}...`
-            : description}
-        </p>
       </div>
     </div>
   );
