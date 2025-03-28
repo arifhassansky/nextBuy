@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 
-const Cards = () => {
+const Carts = () => {
   return (
     <div>
       <div className="text-center">
@@ -61,4 +61,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default Carts;

@@ -218,7 +218,7 @@ const Sidebar = () => {
 
             {/* add stories */}
             <Link
-              href="/dashboard/cards"
+              href="/dashboard/carts"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
