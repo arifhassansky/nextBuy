@@ -1,8 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "daisyui";
 
 .swiper-button-next,
 .swiper-button-prev {
+  color: #43b02a !important;
+}
+.primary {
   color: #43b02a !important;
 }
 

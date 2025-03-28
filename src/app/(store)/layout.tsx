@@ -30,8 +30,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <div>
           <NextAuthProvider>
-            <Sidebar />
-            {children}
+            <div className="flex gap-8">
+              <Sidebar />
+              <div className="w-full p-8">{children}</div>
+            </div>
             <Footer />
           </NextAuthProvider>
         </div>
