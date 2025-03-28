@@ -24,7 +24,7 @@ const Navbar = () => {
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-5">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2">
       <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
@@ -67,8 +67,8 @@ const Navbar = () => {
             <Image
               src={nextbuy}
               alt="Logo"
-              width={120}
-              height={120}
+              width={150}
+              height={150}
               className="object-cover"
             />
           </Link>
