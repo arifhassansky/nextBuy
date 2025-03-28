@@ -2,6 +2,7 @@
 
 import { addToCart } from '@/redux/features/addToCardSlice/AddToCardSlice';
 import { addToWishlist } from '@/redux/features/wishlist/wishlistSlice';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
@@ -82,11 +83,11 @@ export default function ProductDetailsPage() {
       // Add your submit logic here
    };
 
-  useEffect(() => {
-    async function fetchProductDetails() {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/products/${params.productId}`);
+   useEffect(() => {
+      async function fetchProductDetails() {
+         try {
+            setIsLoading(true);
+            const response = await fetch(`/api/products/${params.productId}`);
 
             if (!response.ok) {
                throw new Error('Failed to fetch product');
@@ -112,11 +113,15 @@ export default function ProductDetailsPage() {
    }, [params.productId]);
 
    const dispatch = useDispatch();
-   const handleAddToCart = (id: string) => {
-      dispatch(addToCart(id));
-   };
+   const { data: session } = useSession();
+   const userEmails = session?.user?.email;
+
    const handleAddToWishlist = (id: string) => {
-      dispatch(addToWishlist(id));
+      dispatch(addToWishlist({ id, userEmails }));
+   };
+
+   const handleAddToCart = (id: string) => {
+      dispatch(addToCart({ id, userEmails }));
    };
 
    if (isLoading) {
@@ -227,7 +232,8 @@ export default function ProductDetailsPage() {
                   <button
                      onClick={() => {
                         setIsFavorite(!isFavorite); // Toggle favorite status
-                        handleAddToWishlist(product._id); // Call the function to add to wishlist
+                        handleAddToWishlist(product._id);
+                        // Call the function to add to wishlist
                      }}
                      className='flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50'
                   >

@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {
-   slug: string[];
+   slug: string;
+   userEmail: string | null;
 }
 
 const initialState: CartState = {
-   slug: [],
+   slug: '',
+   userEmail: null,
 };
 
 const addToCartSlice = createSlice({
@@ -13,8 +15,8 @@ const addToCartSlice = createSlice({
    initialState,
    reducers: {
       addToCart: (state, action: PayloadAction<string>) => {
-        //  console.log('Added slug:', action.payload);
-         state.slug.push(action.payload);
+         state.id = action.payload;
+         state.userEmail = action.payload.userEmail;
       },
    },
 });

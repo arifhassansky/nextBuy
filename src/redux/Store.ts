@@ -1,4 +1,5 @@
 import { ProductApi } from '@/redux/ProductApi';
+
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import AddToCartReducer from './features/addToCardSlice/AddToCardSlice';
 import ProductReducer from './features/productSlice/ProductSlice';
