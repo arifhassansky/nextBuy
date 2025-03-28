@@ -6,7 +6,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 
 const Quality = () => {
   return (
-    <div className="mt-32 container mx-auto">
+    <div className="my-10 container mx-auto">
       <p className="text-center text-[#43b02a]">
         There are some redeeming factors
       </p>
