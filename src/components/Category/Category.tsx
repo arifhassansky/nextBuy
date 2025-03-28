@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import CategoryComponents from "./CategoryComponents"; // Typo corrected: "Catagory" -> "Category"
 import Link from "next/link";
+import CategorySkeleton from "../ui/Skeletons/CategorySkeleton/CategorySkeleton";
 
 interface Category {
   _id: string;
@@ -45,17 +46,6 @@ const Category = () => {
     fetchCategories();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="w-11/12 mx-auto py-20 px-4">
-        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR CATEGORIES
-        </h2>
-        <div className="text-center py-10">Loading categories...</div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
@@ -73,15 +63,19 @@ const Category = () => {
         OUR CATEGORIES
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
-        {categories.map((category) => (
-          <Link key={category._id} href={`/products?search=${category.slug}`}>
-            <CategoryComponents
-              img={category.image}
-              value={category.name}
-              description={category.description}
-            />
-          </Link>
-        ))}
+        {loading ? (
+          <>
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
+              <CategorySkeleton key={i} />
+            ))}
+          </>
+        ) : (
+          categories.map((category) => (
+            <Link key={category._id} href={`/products?search=${category.slug}`}>
+              <CategoryComponents img={category.image} value={category.name} />
+            </Link>
+          ))
+        )}
       </div>
     </div>
   );
