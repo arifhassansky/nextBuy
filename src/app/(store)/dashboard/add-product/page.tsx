@@ -1,9 +1,6 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 
-<<<<<<< HEAD
-const AddProduct = () => {
-=======
 interface AddProduct {
   title: string;
   price: number;
@@ -52,7 +49,6 @@ const AddProduct = (): JSX.Element => {
     // Add API call here to save product
   };
 
->>>>>>> 8374aa3ae1b340ffeab578932860c7a16d653cb2
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Add New Product</h2>
