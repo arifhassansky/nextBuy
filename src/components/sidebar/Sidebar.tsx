@@ -25,6 +25,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { GiEternalLove } from "react-icons/gi";
+import UserProfileSkeleton from "../ui/Skeletons/UserProfileSkeleton/UserProfileSkeleton";
+import ActionLinkSkeleton from "../ui/Skeletons/ActionLinkSkeleton/ActionLinkSkeleton";
 
 const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -113,32 +115,36 @@ const Sidebar = () => {
           isCollapse ? "justify-between" : "justify-center"
         }  py-3 px-[20px] flex items-center mt-10`}
       >
-        <div className="flex items-center justify-center gap-2">
-          <Image
-            src={user?.image || "/user-image"}
-            width={50}
-            height={50}
-            alt="avatar"
-            className={`${
-              isCollapse ? "w-14 h-14" : "w-8"
-            } cursor-pointer rounded-full object-cover`}
-          />
+        {!user ? (
+          <UserProfileSkeleton />
+        ) : (
+          <div className="flex items-center justify-center gap-2">
+            <Image
+              src={user?.image || "/user-image"}
+              width={50}
+              height={50}
+              alt="avatar"
+              className={`${
+                isCollapse ? "w-14 h-14" : "w-8"
+              } cursor-pointer rounded-full object-cover`}
+            />
 
-          <h3
-            className={`${
-              isCollapse ? "inline" : "hidden"
-            }  text-gray-300 font-[500]`}
-          >
-            {user?.name}
-          </h3>
-          <h3
-            className={`${
-              isCollapse ? "inline" : "hidden"
-            }  text-gray-300 bg-primary text-center px-2 text-sm rounded-3xl font-meduim`}
-          >
-            {user?.role}
-          </h3>
-        </div>
+            <h3
+              className={`${
+                isCollapse ? "inline" : "hidden"
+              }  text-gray-300 font-[500]`}
+            >
+              {user?.name}
+            </h3>
+            <h3
+              className={`${
+                isCollapse ? "inline" : "hidden"
+              }  text-gray-300 bg-primary text-center px-2 text-sm rounded-3xl font-meduim`}
+            >
+              {user?.role}
+            </h3>
+          </div>
+        )}
       </div>
 
       {/* general section */}
@@ -148,206 +154,222 @@ const Sidebar = () => {
         } transition-all duration-300 ease-in-out`}
       >
         {/* Gerneral user routes */}
-        {user?.role === "user" && (
-          <div className="mt-3 flex flex-col gap-[5px]">
-            {/* manage profile */}
-            <Link
-              href="/dashboard/profile"
-              className={`
+        {!user ? (
+          <ActionLinkSkeleton number={6 as number} />
+        ) : (
+          user?.role === "user" && (
+            <div className="mt-3 flex flex-col gap-[5px]">
+              {/* manage profile */}
+              <Link
+                href="/dashboard"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/profile")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <FaUserEdit className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  Profile
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/profile")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Profile
-                </p>
-              </div>
-            </Link>
+                <div className="flex items-center gap-2">
+                  <FaUserEdit className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    Profile
+                  </p>
+                </div>
 
-            {/* my bookings */}
-            <Link
-              href="/dashboard/wishlist"
-              className={`
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    Profile
+                  </p>
+                </div>
+              </Link>
+
+              {/* my bookings */}
+              <Link
+                href="/dashboard/wishlist"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/my-bookings")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <GiEternalLove className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  My Wishlist
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/my-bookings")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  My Wishlist
-                </p>
-              </div>
-            </Link>
+                <div className="flex items-center gap-2">
+                  <GiEternalLove className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    My Wishlist
+                  </p>
+                </div>
 
-            {/* add stories */}
-            <Link
-              href="/dashboard/carts"
-              className={`
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    My Wishlist
+                  </p>
+                </div>
+              </Link>
+
+              {/* add stories */}
+              <Link
+                href="/dashboard/carts"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/add-stories")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <FaCartArrowDown className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  Add to Cards
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/add-stories")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Add to Cards
-                </p>
-              </div>
-            </Link>
+                <div className="flex items-center gap-2">
+                  <FaCartArrowDown className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    Add to Cards
+                  </p>
+                </div>
 
-            {/* manage stories */}
-            <Link
-              href="/dashboard/order-history"
-              className={`
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    Add to Cards
+                  </p>
+                </div>
+              </Link>
+
+              {/* manage stories */}
+              <Link
+                href="/dashboard/order-history"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/manage-stories")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <MdManageAccounts className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  Order History
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/manage-stories")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Order History
-                </p>
-              </div>
-            </Link>
+                <div className="flex items-center gap-2">
+                  <MdManageAccounts className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    Order History
+                  </p>
+                </div>
 
-            {/* payment history */}
-            <Link
-              href="/dashboard/payment-history"
-              className={`
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    Order History
+                  </p>
+                </div>
+              </Link>
+
+              {/* payment history */}
+              <Link
+                href="/dashboard/payment-history"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/payment-history")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <FaHistory className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  Payment History
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/payment-history")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Payment History
-                </p>
-              </div>
-            </Link>
+                <div className="flex items-center gap-2">
+                  <FaHistory className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    Payment History
+                  </p>
+                </div>
 
-            {/* Join as Tour Guide */}
-            <Link
-              href="/dashboard/join-seller"
-              className={`
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    Payment History
+                  </p>
+                </div>
+              </Link>
+
+              {/* Join as Tour Guide */}
+              <Link
+                href="/dashboard/join-seller"
+                className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
                 } flex items-center w-full p-[5px] rounded-md cursor-pointer transition-all duration-200 relative group ${
-                isActive("/dashboard/join-guide")
-                  ? "bg-primary text-white"
-                  : "hover:bg-white text-gray-300 hover:text-black"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <FaHandshakeAngle className="text-[1.3rem]" />
-                <p
-                  className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
-                >
-                  Join as Seller
-                </p>
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`${
-                  isCollapse ? "hidden" : "inline"
-                } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                  isActive("/dashboard/join-guide")
+                    ? "bg-primary text-white"
+                    : "hover:bg-white text-gray-300 hover:text-black"
+                }`}
               >
-                <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Join as Seller
-                </p>
-              </div>
-            </Link>
-          </div>
+                <div className="flex items-center gap-2">
+                  <FaHandshakeAngle className="text-[1.3rem]" />
+                  <p
+                    className={`${
+                      isCollapse ? "inline" : "hidden"
+                    } text-[1rem]`}
+                  >
+                    Join as Seller
+                  </p>
+                </div>
+
+                {/* Tooltip */}
+                <div
+                  className={`${
+                    isCollapse ? "hidden" : "inline"
+                  } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
+                >
+                  <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
+                    Join as Seller
+                  </p>
+                </div>
+              </Link>
+            </div>
+          )
         )}
 
         {/* guide routes */}
