@@ -25,7 +25,7 @@ const CategoryComponents = ({
       <div className="flex items-center flex-col justify-center mx-auto mt-2">
         <span className="font-bold">{value}</span>
 
-        <p>
+        <p className="text-center">
           {description.length > 30
             ? `${description.substring(0, 30)}...`
             : description}

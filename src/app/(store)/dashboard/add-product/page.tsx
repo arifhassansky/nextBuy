@@ -1,28 +1,49 @@
 "use client";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
-const AddProduct = () => {
-  const [product, setProduct] = useState({
+interface AddProduct {
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  images: string[];
+  category: string;
+  quantity: number;
+}
+
+const AddProduct = (): JSX.Element => {
+  // Changed return type to JSX.Element
+  const [product, setProduct] = useState<AddProduct>({
     title: "",
-    price: "",
+    price: 0, // Changed to number
     description: "",
     image: "",
     images: ["", "", ""],
     category: "",
-    quantity: "",
+    quantity: 0, // Changed to number
   });
 
-  const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({
+      ...prev,
+      [name]:
+        name === "price" || name === "quantity" ? Number(value) || 0 : value,
+    }));
   };
 
-  const handleImageChange = (e, index) => {
+  const handleImageChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const updatedImages = [...product.images];
     updatedImages[index] = e.target.value;
-    setProduct({ ...product, images: updatedImages });
+    setProduct((prev) => ({ ...prev, images: updatedImages }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Product Data:", product);
     // Add API call here to save product
@@ -59,7 +80,7 @@ const AddProduct = () => {
           value={product.description}
           onChange={handleChange}
           className="w-full border p-2 rounded-md mb-4"
-          rows="3"
+          rows={3}
           required
         />
 
