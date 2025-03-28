@@ -1,7 +1,58 @@
 "use client";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
+<<<<<<< HEAD
 const AddProduct = () => {
+=======
+interface AddProduct {
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  images: string[];
+  category: string;
+  quantity: number;
+}
+
+const AddProduct = (): JSX.Element => {
+  // Changed return type to JSX.Element
+  const [product, setProduct] = useState<AddProduct>({
+    title: "",
+    price: 0, // Changed to number
+    description: "",
+    image: "",
+    images: ["", "", ""],
+    category: "",
+    quantity: 0, // Changed to number
+  });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({
+      ...prev,
+      [name]:
+        name === "price" || name === "quantity" ? Number(value) || 0 : value,
+    }));
+  };
+
+  const handleImageChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const updatedImages = [...product.images];
+    updatedImages[index] = e.target.value;
+    setProduct((prev) => ({ ...prev, images: updatedImages }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Product Data:", product);
+    // Add API call here to save product
+  };
+
+>>>>>>> 8374aa3ae1b340ffeab578932860c7a16d653cb2
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Add New Product</h2>
@@ -33,7 +84,7 @@ const AddProduct = () => {
           value={product.description}
           onChange={handleChange}
           className="w-full border p-2 rounded-md mb-4"
-          rows="3"
+          rows={3}
           required
         />
 
