@@ -26,7 +26,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+<<<<<<< HEAD
+        hostname: "img.freepik.com",
+=======
         hostname: "img.daisyui.com",
+>>>>>>> 59c08ad92e7162b2eb1ce8dd85870529c7322635
       },
     ],
   },
