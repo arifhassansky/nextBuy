@@ -2,37 +2,11 @@
 import { useState } from "react";
 
 const AddProduct = () => {
-  const [product, setProduct] = useState({
-    title: "",
-    price: "",
-    description: "",
-    image: "",
-    images: ["", "", ""],
-    category: "",
-    quantity: "",
-  });
-
-  const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
-  };
-
-  const handleImageChange = (e, index) => {
-    const updatedImages = [...product.images];
-    updatedImages[index] = e.target.value;
-    setProduct({ ...product, images: updatedImages });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Product Data:", product);
-    // Add API call here to save product
-  };
-
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Add New Product</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <label className="block mb-2 font-medium">Title</label>
         <input
           type="text"
