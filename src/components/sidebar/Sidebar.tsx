@@ -17,20 +17,24 @@ import { FaAddressBook, FaHandshakeAngle, FaUsers } from "react-icons/fa6";
 import { FaHistory, FaHome, FaUserEdit, FaUsersCog } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import useLoadUser from "@/hooks/UseloadUser";
 import { useSession } from "next-auth/react";
 
 const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(true);
   const pathname = usePathname();
 
-  // const { user } = useLoadUser();
-  // console.log(user);
   const { data: session } = useSession();
-  const userEmail = session?.user?.email;
-  console.log(userEmail);
 
-  const user = "";
+  interface user {
+    name: string;
+    email: string;
+    image: string;
+    id: string;
+    role: string;
+    provider: string;
+    providerAccountId: string;
+  }
+  const user = session?.user;
 
   // Helper function to check active link
   const isActive = (href: string) => {
@@ -104,7 +108,7 @@ const Sidebar = () => {
       >
         <div className="flex items-center justify-center gap-2">
           <Image
-            src={user?.image}
+            src={user?.image || "user image"}
             width={50}
             height={50}
             alt="avatar"
