@@ -1,10 +1,10 @@
-import Footer from "@/components/Footer/Footer";
 import Sidebar from "@/components/sidebar/Sidebar";
 import React from "react";
 import NextAuthProvider from "../providers/NextAuthProvider";
 import { Lato } from "next/font/google"; // Import Lato from Google Fonts
 import { Metadata } from "next";
 import "../globals.css";
+import DashboardFooter from "@/components/DashboardFooter/DashboardFooter";
 
 // Configure Lato font
 const lato = Lato({
@@ -28,9 +28,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               <Sidebar />
               <div className="w-full p-8">{children}</div>
             </div>
-            <Footer />
           </NextAuthProvider>
         </div>
+        <DashboardFooter />
       </body>
     </html>
   );
