@@ -96,13 +96,13 @@ interface Product {
    title: string;
    price: number;
    image: string;
-   description?: string;
+   description?: string; // Optional fields if not always used
    category?: string;
    quantity?: number;
    createdAt?: string;
    updatedAt?: string;
+   slug: string;
    __v?: number;
-   slug?: string;
 }
 
 // Define possible error type
@@ -121,9 +121,7 @@ interface ApiResponse {
 
 const ProductsCard: FC = () => {
    const { data, error, isLoading } = useGetProductsQuery();
-
-   console.log(data);
-
+  
    // Handle error state
    if (error) {
       const errorMessage =
@@ -142,16 +140,28 @@ const ProductsCard: FC = () => {
       data && 'data' in data ? (data as ApiResponse).data : (data as Product[] | undefined);
 
    return (
-      <div className='md:w-11/12 mx-auto'>
+      <div className='md:w-11/12 mx-auto px-4'>
          {/* Grid layout for products */}
          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8'>
-            {isLoading && Array.from({ length: 5 }).map((_, i) => <CardSkeleton key={i} />)}
-
+            {isLoading && (
+               <>
+                  {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
+                     <CardSkeleton key={i} />
+                  ))}
+               </>
+            )}
             {products?.map(product => (
-               <Link key={product._id} href={`products/${product.slug}`}>
-                  <Card product={product} />
+               <Link key={product._id} href={`/products/${product.slug}`}>
+                  <Card key={product?._id} product={product} />
                </Link>
             ))}
+         </div>
+         <div className='flex justify-center items-center h-40 text-red-500 font-semibold'>
+            <Link href={'/products'}>
+               <button className='mt-4 bg-[#3C9E26] text-white py-2 px-6 rounded-md hover:bg-black cursor-pointer'>
+                  More Products
+               </button>
+            </Link>
          </div>
       </div>
    );

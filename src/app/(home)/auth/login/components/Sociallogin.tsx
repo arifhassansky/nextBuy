@@ -11,8 +11,8 @@ const Sociallogin = () => {
 
   console.log(session);
 
-  const handleSocialLogin = async(provider: string) => {
-   await signIn(provider, { redirect: false });
+  const handleSocialLogin = async (provider: string) => {
+    await signIn(provider, { redirect: false });
   };
 
   useEffect(() => {

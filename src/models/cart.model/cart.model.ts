@@ -1,13 +1,20 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { Schema, model, Document, Types, models } from "mongoose";
 
-export interface ICart extends Document {
-  userId: mongoose.Schema.Types.ObjectId;
-  items: { productId: mongoose.Schema.Types.ObjectId; quantity: number }[];
-  updatedAt: Date;
+// Define the cart item interface
+export interface ICartItem {
+  productId: Types.ObjectId | string;
+  quantity: number;
 }
 
-const CartSchema = new Schema<ICart>({
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+// Define the cart interface
+export interface ICart extends Document {
+  userEmail: string;
+  items: ICartItem[];
+  isNew: boolean; // Added for the response message logic
+}
+
+const cartSchema = new Schema<ICart>({
+  userEmail: { type: String, required: true, unique: true },
   items: [
     {
       productId: {
@@ -15,11 +22,11 @@ const CartSchema = new Schema<ICart>({
         ref: "Product",
         required: true,
       },
-      quantity: { type: Number, required: true },
+      quantity: { type: Number, required: true, min: 1 },
     },
   ],
-  updatedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.models.Cart ||
-  mongoose.model<ICart>("Cart", CartSchema);
+const Cart = models.Cart || model<ICart>("Cart", cartSchema);
+
+export default Cart;

@@ -24,7 +24,7 @@ export const ProductApi = createApi({
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
-      query: () => "api/products",
+      query: () => "api/products?limit=10",
       providesTags: (result) =>
         Array.isArray(result)
           ? [
