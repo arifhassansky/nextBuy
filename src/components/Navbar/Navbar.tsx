@@ -113,14 +113,20 @@ const Navbar = () => {
             >
               Home
             </Link>
+            <Link
+              href="/products"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
+            >
+              All Products
+            </Link>
 
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
-              href="/shop"
+              href="/shops"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Shop
+              Shops
               <IoIosArrowUp
                 className={`${
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
@@ -151,7 +157,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Demo App
+                            Contact
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -174,7 +180,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CRM
+                            Blogs
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -197,7 +203,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CMS
+                            Newsletter
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -276,16 +282,10 @@ const Navbar = () => {
               Categories
             </Link>
             <Link
-              href="/blog"
+              href="/blogs"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-[#43b02a] transition flex items-center gap-1"
-            >
-              Contact
+              Blogs
             </Link>
           </nav>
 

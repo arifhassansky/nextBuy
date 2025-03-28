@@ -5,7 +5,7 @@ export const imageUpload = async (imageData: File): Promise<string | null> => {
 
   try {
     const response = await fetch(
-      `https://api.imgbb.com/1/upload?key=f05482d5a09ecd5866a2d2ca55ad9d5a`,
+      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API}`,
       {
         method: "POST",
         body: formData,

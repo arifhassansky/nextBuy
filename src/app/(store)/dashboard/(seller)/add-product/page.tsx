@@ -1,6 +1,7 @@
 "use client";
 
 import { imageUpload } from "@/redux/utils/ImageBbUpload";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,8 @@ const AddProduct = (): JSX.Element => {
     string[]
   >([]);
   const [categories, setCategories] = useState<Category[] | null>(null);
+
+  const { data: session } = useSession();
 
   useEffect(() => {
     const getCategory = async () => {
@@ -57,6 +60,7 @@ const AddProduct = (): JSX.Element => {
       images: additionalImageUrls.filter(Boolean),
       category: formData.get("category") as string,
       quantity: quantity,
+      sellerId: session?.user?.id as string,
     };
 
     try {
