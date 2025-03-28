@@ -69,13 +69,17 @@ const ProductsCard: FC = () => {
           </>
         )}
         {products?.map((product) => (
-          <Link
-            key={product._id}
-            href={`${process.env.NEXTAUTH_URL}${product.slug}`}
-          >
+          <Link key={product._id} href={`/products/${product.slug}`}>
             <Card key={product?._id} product={product} />
           </Link>
         ))}
+      </div>
+      <div className="flex justify-center items-center h-40 text-red-500 font-semibold">
+        <Link href={"/products"}>
+          <button className="mt-4 bg-[#3C9E26] text-white py-2 px-6 rounded-md hover:bg-black cursor-pointer">
+            More Products
+          </button>
+        </Link>
       </div>
     </div>
   );

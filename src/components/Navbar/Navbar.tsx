@@ -5,30 +5,50 @@ import { useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
-import { IoCartOutline, IoCloseOutline, IoMenuOutline } from "react-icons/io5";
+import { FaPhone, FaTasks } from "react-icons/fa";
+import {
+  IoCartOutline,
+  IoCloseOutline,
+  IoMenuOutline,
+  IoSettingsOutline,
+} from "react-icons/io5";
 
 // Logo import - replace with your actual logo path
-import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
+import { FiUser } from "react-icons/fi";
+import { TbLogout2 } from "react-icons/tb";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
-  // const [mobileServiceOpen, setMobileServiceOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { data: session } = useSession();
+
+  interface user {
+    name: string;
+    email: string;
+    image: string;
+    id: string;
+    role: string;
+    provider: string;
+    providerAccountId: string;
+  }
+  const user = session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-5">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
-          <div className="flex items-center space-x-4 text-sm text-gray-600">
+          <div className="flex items-center space-x-4 text-xs text-gray-600">
             <span className="flex items-center gap-1">
               <FaPhone color="#43b02a" /> +1 (234) 567-890
             </span>
@@ -36,27 +56,25 @@ const Navbar = () => {
               <MdEmail color="#43b02a" /> XTEMOS@EMAIL.COM
             </span>
           </div>
-          <div className="flex items-center space-x-3 text-sm text-gray-600 uppercase">
+          <div className="flex items-center space-x-3 text-xs text-gray-600 uppercase">
             <Link className="flex items-center gap-1" href="/newsletter">
               <MdEmail /> Newsletter |
             </Link>
             <Link href="/contact">Contact Us |</Link>
             <Link href="/faq">Faq |</Link>
-            <Link className="flex items-center gap-1" href="/wishlist">
-              <CiHeart size={20} /> Wishlist |
-            </Link>{" "}
+
             <Link href="/auth/login">Login |</Link>
             <Link
-              href="/subscribe"
+              href="/auth/signUp"
               className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#43B02A]"
             >
-              Subscribe Us
+              Register
             </Link>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between mt-1 ">
           {/* Mobile Menu Toggle */}
           <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
             {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
@@ -67,14 +85,22 @@ const Navbar = () => {
             <Image
               src={nextbuy}
               alt="Logo"
-              width={120}
-              height={120}
-              className="object-cover"
+              width={150}
+              height={150}
+              className="object-cover w-48"
             />
           </Link>
 
+          <div className="relative md:flex hidden">
+            <input
+              className="py-1 pr-4 border border-text pl-10 rounded-full outline-none focus:border-green-600"
+              placeholder="Search..."
+            />
+            <IoIosSearch className="absolute top-[9px] left-3 text-green-600 font-bold text-[1.3rem]" />
+          </div>
+
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex  space-x-6 uppercase font-medium relative">
+          <nav className="hidden md:flex space-x-6 uppercase font-medium relative">
             <Link
               href="/"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
@@ -244,47 +270,84 @@ const Navbar = () => {
               Categories
             </Link>
             <Link
-              // onMouseEnter={() => setIsProductHover(true)}
-              // onMouseLeave={() => setIsProductHover(false)}
               href="/blog"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Blog
-              {/* <IoIosArrowUp
-                className={`${
-                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
-                } transition-all duration-300`}
-              /> */}
             </Link>
             <Link
-              // onMouseEnter={() => setIsProductHover(true)}
-              // onMouseLeave={() => setIsProductHover(false)}
               href="/contact"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Contact
-              {/* <IoIosArrowUp
-                className={`${
-                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
-                } transition-all duration-300`}
-              /> */}
             </Link>
           </nav>
 
           {/* Action Icons */}
-          <div className="flex items-center space-x-4">
-            <button onClick={toggleSearch} className="text-2xl">
-              <CiSearch />
-            </button>
-            <Link href="/account" className="text-2xl md:hidden">
-              <FaRegUser />
-            </Link>
+          <div className="flex items-center space-x-6">
+            <Link className="flex items-center gap-1 relative" href="/wishlist">
+              <CiHeart size={20} />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                0
+              </span>
+            </Link>{" "}
             <Link href="/cart" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 0
               </span>
             </Link>
+            {/* user account */}
+            {user && (
+              <div className="flex items-center gap-[15px]">
+                <div
+                  className="flex items-center gap-[10px] cursor-pointer relative"
+                  onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                >
+                  <div className="relative">
+                    <Image
+                      src={user?.image || "/userImage"}
+                      alt="avatar"
+                      width={35}
+                      height={35}
+                      className="w-[35px] h-[35px] rounded-full object-cover"
+                    />
+                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
+                  </div>
+
+                  <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
+                    {user?.name}
+                  </h1>
+
+                  <div
+                    className={`${
+                      accountMenuOpen
+                        ? "translate-y-0 opacity-100 z-[1]"
+                        : "translate-y-[10px] opacity-0 z-[-1]"
+                    } bg-white w-max rounded-md absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
+                  >
+                    <Link href={"/dashboard"}>
+                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-1 text-[1rem] text-gray-600 hover:bg-green-100 ">
+                        <IoSettingsOutline />
+                        Dashboard
+                      </p>
+                    </Link>
+                    <div className="mt-3 border-t border-gray-200 pt-[5px]">
+                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                        <TbLogout2 />
+                        Logout
+                      </p>
+                    </div>
+                  </div>
+
+                  <IoIosArrowUp
+                    className={`${
+                      accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
+                    } transition-all duration-300 text-gray-600 sm:block hidden`}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
