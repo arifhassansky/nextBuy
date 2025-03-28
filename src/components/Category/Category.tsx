@@ -27,7 +27,7 @@ const Category = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex items-center justify-center flex-col">
         <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
           <Image
             width={100}
@@ -38,12 +38,12 @@ const Category = () => {
           />
         </div>
 
-        <div className="flex items-center justify-center mt-2">
+        <div className="flex items-center justify-center mx-auto mt-2">
           <span className="font-bold">chargers</span>
         </div>
       </div>
 
-      <div>
+      <div className="flex items-center justify-center flex-col">
         <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
           <Image
             width={100}
@@ -59,7 +59,7 @@ const Category = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex items-center justify-center flex-col">
         <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
           <Image
             width={100}
@@ -74,7 +74,7 @@ const Category = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex items-center justify-center flex-col">
         <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
           <Image
             width={100}
