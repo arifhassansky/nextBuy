@@ -63,14 +63,16 @@ const Navbar = () => {
               <MdEmail color="#43b02a" /> Newsletter |
             </Link>
             <Link href="/contact">Contact Us |</Link>
-            <Link href="/faq">Faq |</Link>
+            <Link href="/faq">Faq </Link>
 
-            <Link
-              href="/auth/login"
-              className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#3C9E26] hover:bg-black "
-            >
-              Login / Sign Up
-            </Link>
+            {!user && (
+              <Link
+                href="/auth/login"
+                className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#3C9E26] hover:bg-black "
+              >
+                Login / Sign Up
+              </Link>
+            )}
           </div>
         </div>
 
