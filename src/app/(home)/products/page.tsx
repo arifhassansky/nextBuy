@@ -4,7 +4,7 @@ interface Props {
   search: string[] | string;
 }
 
-const ProductsPageServer = ({ searchParams }: Props) => {
+const Products = ({ searchParams }: Props) => {
   const search = searchParams.search || "";
 
   console.log(search);
@@ -15,4 +15,4 @@ const ProductsPageServer = ({ searchParams }: Props) => {
   );
 };
 
-export default ProductsPageServer;
+export default Products;
