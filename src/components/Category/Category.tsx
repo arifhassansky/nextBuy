@@ -1,93 +1,87 @@
-import Image from "next/image";
-import battery from "../../../public/assets/battery.jpg";
-import charger from "../../../public/assets/charger.jpg";
-import headphone from "../../../public/assets/headphone.jpg";
-import phone from "../../../public/assets/phone.jpg";
-import tablet from "../../../public/assets/tablet.jpg";
+"use client";
+import { useEffect, useState } from "react";
+import CategoryComponents from "./CategoryComponents"; // Typo corrected: "Catagory" -> "Category"
+import Link from "next/link";
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+}
 
 const Category = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Function to get an array of random categories
+  const getRandomCategories = (sourceArray: Category[], count: number) => {
+    const shuffled = [...sourceArray].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(count, sourceArray.length));
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/category?limit=20");
+        if (!response.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+        const data = await response.json();
+        const randomCategories = getRandomCategories(data.data, 5); // Get 5 random categories
+        setCategories(randomCategories);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+        console.error("Error fetching categories:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+          OUR CATEGORIES
+        </h2>
+        <div className="text-center py-10">Loading categories...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+          OUR CATEGORIES
+        </h2>
+        <div className="text-center py-10 text-red-500">{error}</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 container mx-auto mt-32 gap-10 ">
-      {/* <CategoryComponents
-      img={phone}
-      value="Phones"
-      /> */}
-      <div className="flex items-center justify-center flex-col">
-        <div className="bg-gray-200 rounded-full flex items-center justify-center p-3 w-48 h-48 overflow-hidden">
-          <Image
-            width={100}
-            height={100}
-            src={phone}
-            alt=""
-            className="h-60 object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
-          />
-        </div>
-        <div className="flex items-center  justify-center mx-auto mt-2">
-          <span className="font-bold">phones</span>
-        </div>
-      </div>
-
-      <div>
-        <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
-          <Image
-            width={100}
-            height={100}
-            src={charger}
-            alt=""
-            className="h-60 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
-          />
-        </div>
-
-        <div className="flex items-center justify-center mt-2">
-          <span className="font-bold">chargers</span>
-        </div>
-      </div>
-
-      <div>
-        <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
-          <Image
-            width={100}
-            height={100}
-            alt=""
-            src={battery}
-            className="h-60 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
-          />
-        </div>
-
-        <div className="flex items-center justify-center mt-2">
-          <span className="font-bold">battery</span>
-        </div>
-      </div>
-
-      <div>
-        <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
-          <Image
-            width={100}
-            height={100}
-            alt=""
-            src={headphone}
-            className="h-60 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
-          />
-        </div>
-        <div className="flex items-center justify-center mt-2">
-          <span className="font-bold">head phones</span>
-        </div>
-      </div>
-
-      <div>
-        <div className="bg-gray-200 rounded-full flex items-center justify-center p-5 w-48 h-48 overflow-hidden">
-          <Image
-            width={100}
-            height={100}
-            alt=""
-            src={tablet}
-            className="h-60 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 p-1"
-          />
-        </div>
-
-        <div className="flex items-center justify-center mt-2 ">
-          <span className="font-bold">tablets</span>
-        </div>
+    <div className="w-11/12 mx-auto py-20 px-4">
+      <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+        OUR CATEGORIES
+      </h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+        {categories.map((category) => (
+          <Link key={category._id} href={`/products?search=${category.slug}`}>
+            <CategoryComponents
+              img={category.image}
+              value={category.name}
+              description={category.description}
+            />
+          </Link>
+        ))}
       </div>
     </div>
   );

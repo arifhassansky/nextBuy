@@ -74,6 +74,13 @@ const ProductsCard: FC = () => {
           </Link>
         ))}
       </div>
+      <div className="flex justify-center items-center h-40 text-red-500 font-semibold">
+        <Link href={"/products"}>
+          <button className="mt-4 bg-[#3C9E26] text-white py-2 px-6 rounded-md hover:bg-black cursor-pointer">
+            More Products
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
