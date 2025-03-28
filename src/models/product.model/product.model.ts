@@ -43,7 +43,7 @@ const productSchema = new Schema(
 
 productSchema.pre("save", async function (next) {
   if (this.isModified("title")) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title).toLocaleLowerCase();
   }
   next();
 });
