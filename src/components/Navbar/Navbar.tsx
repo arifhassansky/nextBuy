@@ -5,7 +5,7 @@ import { useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { FaPhone, FaRegUser, FaTasks } from "react-icons/fa";
+import { FaPhone, FaTasks } from "react-icons/fa";
 import {
   IoCartOutline,
   IoCloseOutline,
@@ -31,7 +31,7 @@ const Navbar = () => {
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
@@ -61,7 +61,7 @@ const Navbar = () => {
         </div>
 
         {/* Main Navigation */}
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between mt-1 ">
           {/* Mobile Menu Toggle */}
           <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
             {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
@@ -74,7 +74,7 @@ const Navbar = () => {
               alt="Logo"
               width={150}
               height={150}
-              className="object-cover"
+              className="object-cover w-48"
             />
           </Link>
 
