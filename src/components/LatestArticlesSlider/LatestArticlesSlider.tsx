@@ -6,8 +6,11 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Article {
+  slug: string;
+  _id: string;
   createdAt: string;
   image: string;
   category: string[];
@@ -22,10 +25,12 @@ export default function LatestArticlesSlider() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // console.log("common url",process.env.NEXTAUTH_URL)
+  
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/blogs");
+        const response = await fetch("/api/blogs");
         if (!response.ok) {
           throw new Error("Failed to fetch articles");
         }
@@ -134,9 +139,11 @@ export default function LatestArticlesSlider() {
                 <p className="text-sm text-gray-500 flex-grow text-center">
                 {article.content.length > 100 ? `${article.content.substring(0, 100)}...` : article.content}
                 </p>
-                <button className="mt-4 text-[#3C9E26] text-md font-semibold text-center hover:underline">
-                  CONTINUE READING
-                </button>
+               
+                  <Link href={`/article/${article.slug}`} className="mt-4 text-[#3C9E26] text-md font-semibold text-center hover:underline">
+                    CONTINUE READING
+                  </Link>
+               
               </div>
             </div>
           </SwiperSlide>
