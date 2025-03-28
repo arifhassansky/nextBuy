@@ -13,7 +13,7 @@ const addToCartSlice = createSlice({
    initialState,
    reducers: {
       addToCart: (state, action: PayloadAction<string>) => {
-         console.log('Added slug:', action.payload);
+        //  console.log('Added slug:', action.payload);
          state.slug.push(action.payload);
       },
    },

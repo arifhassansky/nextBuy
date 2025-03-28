@@ -13,7 +13,7 @@ const wishlistSlice = createSlice({
    initialState,
    reducers: {
       addToWishlist: (state, action: PayloadAction<string>) => {
-         console.log('Added id:', action.payload);
+        //  console.log('Added id:', action.payload);
          state.id.push(action.payload);
       },
    },
