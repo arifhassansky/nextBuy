@@ -103,3 +103,47 @@ export async function POST(
     );
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    await connectDB();
+    // Parse the URL
+    const { searchParams } = new URL(req.url);
+    const userEmail = searchParams.get("userEmail") || "";
+    console.log("Received productId:", userEmail);
+
+    const wishlist = await Wishlist.findOne({
+      userEmail,
+    });
+    if (!wishlist) {
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Wishlist not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        status: 200,
+        success: true,
+        message: "Product retrieved successfully",
+        data: wishlist,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching Wishlist:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        success: false,
+        message: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}

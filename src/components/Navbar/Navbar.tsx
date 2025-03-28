@@ -47,33 +47,35 @@ const Navbar = () => {
       <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
-          <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <span className="flex items-center gap-1">
-              <FaPhone color="#43b02a" /> +1 (234) 567-890
+          <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <span className="flex items-center gap-1 font-semibold">
+              <FaPhone color="#43b02a" /> +880 17888 8888
             </span>
-            <span className="flex items-center gap-1">
-              <MdEmail color="#43b02a" /> XTEMOS@EMAIL.COM
+            <span className="flex items-center gap-1 font-medium">
+              <MdEmail color="#43b02a" /> contact@nextbuy.com
             </span>
           </div>
-          <div className="flex items-center space-x-3 text-xs text-gray-600 uppercase">
-            <Link className="flex items-center gap-1" href="/newsletter">
-              <MdEmail /> Newsletter |
+          <div className="flex items-center space-x-3 text-sm ">
+            <Link
+              className="flex items-center gap-1  font-medium"
+              href="/newsletter"
+            >
+              <MdEmail color="#43b02a" /> Newsletter |
             </Link>
             <Link href="/contact">Contact Us |</Link>
             <Link href="/faq">Faq |</Link>
 
-            <Link href="/auth/login">Login |</Link>
             <Link
-              href="/auth/signUp"
-              className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#43B02A]"
+              href="/auth/login"
+              className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#3C9E26] hover:bg-black "
             >
-              Register
+              Login / Sign Up
             </Link>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <div className="flex items-center justify-between mt-1 ">
+        <div className="flex items-center  mt-1 ">
           {/* Mobile Menu Toggle */}
           <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
             {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
@@ -90,30 +92,39 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="relative md:flex hidden">
+          <div className="relative md:flex hidden flex-1 mr-5">
             <input
-              className="py-1 pr-4 border border-text pl-10 rounded-full outline-none focus:border-green-600"
+              className="py-1 pr-4 border border-gray-400 border-text pl-10 rounded-full  outline-none focus:border-green-600  px-5 w-[80%] "
               placeholder="Search..."
             />
             <IoIosSearch className="absolute top-[9px] left-3 text-green-600 font-bold text-[1.3rem]" />
+            <button className="bg-[#3C9E26] hover:bg-black  text-white py-2 px-6 rounded-full cursor-pointer -ml-24">
+              Search
+            </button>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 uppercase font-medium relative">
+          <nav className="hidden md:flex space-x-6 font-medium relative flex-1">
             <Link
               href="/"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Home
             </Link>
+            <Link
+              href="/products"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
+            >
+              All Products
+            </Link>
 
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
-              href="/shop"
+              href="/shops"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Shop
+              Shops
               <IoIosArrowUp
                 className={`${
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
@@ -144,7 +155,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Demo App
+                            Contact
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -167,7 +178,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CRM
+                            Blogs
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -190,7 +201,7 @@ const Navbar = () => {
 
                         <div>
                           <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CMS
+                            Newsletter
                           </h1>
                           <p className="text-[0.9rem] text-gray-400 font-[300]">
                             Lorem ipsum dolor sit amet, consect adipiscing elit
@@ -269,28 +280,25 @@ const Navbar = () => {
               Categories
             </Link>
             <Link
-              href="/blog"
+              href="/blogs"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-[#43b02a] transition flex items-center gap-1"
-            >
-              Contact
+              Blogs
             </Link>
           </nav>
 
           {/* Action Icons */}
           <div className="flex items-center space-x-6">
-            <Link className="flex items-center gap-1 relative" href="/wishlist">
+            <Link
+              className="flex items-center gap-1 relative"
+              href="/dashboard/wishlist"
+            >
               <CiHeart size={20} />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 0
               </span>
-            </Link>{" "}
-            <Link href="/cart" className="text-2xl relative">
+            </Link>
+            <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 0

@@ -1,5 +1,5 @@
 import connectDB from "@/config/db/connectDB";
-import Cart, { ICartItem } from "@/models/cart.model/cart.model";
+import Cart from "@/models/cart.model/cart.model";
 import { NextResponse } from "next/server";
 interface CartRequestBody {
   userEmail: string;
@@ -7,6 +7,12 @@ interface CartRequestBody {
     productId: string;
     quantity: number;
   };
+}
+// Matching your exact schema
+interface ICartItem {
+  productId: string;
+  quantity: number;
+  _id?: string;
 }
 
 export async function POST(req: Request) {
@@ -76,6 +82,173 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     console.error("Error in cart controller:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        success: false,
+        message: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    await connectDB();
+    // Parse the URL
+    const { searchParams } = new URL(req.url);
+    const userEmail = searchParams.get("userEmail") || "";
+    console.log("Received productId:", userEmail);
+
+    const cart = await Cart.findOne({
+      userEmail,
+    }).populate("items.productId");
+    if (!cart) {
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Cart not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        status: 200,
+        success: true,
+        message: "Cart retrieved successfully",
+        data: cart,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        success: false,
+        message: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// app/api/cart/route.ts
+export async function PUT(req: Request) {
+  try {
+    await connectDB();
+
+    interface CartUpdateRequest {
+      userEmail: string;
+      productId: string;
+      action: "add" | "remove";
+    }
+
+    const { userEmail, productId, action }: CartUpdateRequest =
+      await req.json();
+
+    // Validate request body
+    if (!userEmail || !productId || !action) {
+      return NextResponse.json(
+        {
+          status: 400,
+          success: false,
+          message: "All fields (userEmail, productId, action) are required",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Find the cart
+    let cart = await Cart.findOne({ userEmail });
+
+    if (!cart) {
+      // If cart doesn't exist and action is 'add', create new cart
+      if (action === "add") {
+        cart = new Cart({
+          userEmail,
+          items: [{ productId, quantity: 1 }],
+        });
+        await cart.save();
+
+        return NextResponse.json(
+          {
+            status: 201,
+            success: true,
+            message: "Cart created with new item",
+            data: cart,
+          },
+          { status: 201 }
+        );
+      }
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Cart not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    // Find item index using the exact productId from your data
+    const itemIndex = cart.items.findIndex(
+      (item: { productId: string; quantity: number; _id: string }) =>
+        item.productId.toString() === productId
+    );
+
+    if (action === "add") {
+      if (itemIndex > -1) {
+        // Item exists, increment quantity by 1
+        cart.items[itemIndex].quantity += 1;
+      } else {
+        // Item doesn't exist, add new item with quantity 1
+        cart.items.push({
+          productId,
+          quantity: 1,
+        });
+      }
+    } else if (action === "remove") {
+      if (itemIndex === -1) {
+        return NextResponse.json(
+          {
+            status: 404,
+            success: false,
+            message: "Item not found in cart",
+          },
+          { status: 404 }
+        );
+      }
+
+      // Decrease quantity by 1
+      cart.items[itemIndex].quantity -= 1;
+
+      // Remove item if quantity reaches 0
+      if (cart.items[itemIndex].quantity <= 0) {
+        cart.items.splice(itemIndex, 1);
+      }
+    }
+
+    // Save updated cart
+    await cart.save();
+
+    return NextResponse.json(
+      {
+        status: 200,
+        success: true,
+        message: `Item ${
+          action === "add" ? "added to" : "removed from"
+        } cart successfully`,
+        data: cart,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in cart update controller:", error);
     return NextResponse.json(
       {
         status: 500,
