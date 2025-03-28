@@ -280,10 +280,10 @@ const Navbar = () => {
               Blog
             </Link>
             <Link
-              href="/contact"
+              href="/about"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Contact
+              About
             </Link>
           </nav>
 
