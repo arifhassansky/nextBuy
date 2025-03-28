@@ -149,6 +149,7 @@ export default function LatestArticlesSlider() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <Link href={'/blog'} className="px-3 py-2 rounded-[35px] text-white bg-[#43B02A]">See More</Link>
     </div>
   );
 }
