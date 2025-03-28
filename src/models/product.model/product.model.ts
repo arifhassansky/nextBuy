@@ -19,6 +19,8 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    images: [{ type: String }],
+
     category: {
       type: String,
     },
@@ -29,6 +31,10 @@ const productSchema = new Schema(
       type: String,
       lowercase: true,
     },
+    status: {
+      type: String,
+      default: "active",
+    },
   },
   {
     timestamps: true,
@@ -37,7 +43,7 @@ const productSchema = new Schema(
 
 productSchema.pre("save", async function (next) {
   if (this.isModified("title")) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title).toLocaleLowerCase();
   }
   next();
 });

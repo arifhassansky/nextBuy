@@ -31,7 +31,12 @@ export async function POST(req: Request) {
     console.log(newUser);
 
     return NextResponse.json(
-      { message: "User registered successfully" },
+      {
+        status: 201,
+        success: true,
+        message: "User registered successfully",
+        data: newUser,
+      },
       { status: 201 }
     );
   } catch (error) {

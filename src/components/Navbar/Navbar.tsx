@@ -24,8 +24,8 @@ const Navbar = () => {
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-5">
-      <div className="container mx-auto px-4">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2">
+      <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
           <div className="flex items-center space-x-4 text-sm text-gray-600">
@@ -45,7 +45,7 @@ const Navbar = () => {
             <Link className="flex items-center gap-1" href="/wishlist">
               <CiHeart size={20} /> Wishlist |
             </Link>{" "}
-            <Link href="/login">Login |</Link>
+            <Link href="/auth/login">Login |</Link>
             <Link
               href="/subscribe"
               className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#43B02A]"
@@ -67,167 +67,21 @@ const Navbar = () => {
             <Image
               src={nextbuy}
               alt="Logo"
-              width={120}
-              height={120}
+              width={150}
+              height={150}
               className="object-cover"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 uppercase font-medium">
+          <nav className="hidden md:flex  space-x-6 uppercase font-medium relative">
             <Link
               href="/"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
-              onMouseEnter={() => setIsProductHover(true)}
-              onMouseLeave={() => setIsProductHover(false)}
             >
               Home
-              <IoIosArrowUp
-                className={`${
-                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
-                } transition-all duration-300`}
-              />
             </Link>
 
-            <div
-              className={`${
-                isProductHover
-                  ? "translate-y-0 opacity-100 z-30"
-                  : "translate-y-[20px] opacity-0 z-[-1]"
-              } bg-white rounded-md w-full absolute top-[40px] left-0 p-[30px] transition-all duration-300 boxShadow flex flex-wrap gap-[30px]`}
-            >
-              <div className="grid grid-cols-2 gap-[30px]">
-                <div className="flex flex-col gap-[20px]">
-                  <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                    More Products
-                  </h3>
-
-                  <div className="flex float-start gap-[10px] group">
-                    <Image
-                      src="https://i.ibb.co/LQBDJGD/icon-logo-container.png"
-                      alt="image"
-                      width={50}
-                      height={50}
-                      className="w-[30px] h-[30px]"
-                    />
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        Demo App
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-
-                      <button className="text-[#FF5E5E] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                        Call to action
-                        <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex float-start gap-[10px] group">
-                    <Image
-                      src="https://i.ibb.co/Y8cRWRj/icon-logo-container-1.png"
-                      alt="image"
-                      width={50}
-                      height={50}
-                      className="w-[30px] h-[30px]"
-                    />
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        CRM
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-
-                      <button className="text-[#FE9239] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                        Call to action
-                        <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex float-start gap-[10px] group">
-                    <Image
-                      src="https://i.ibb.co/6bGWgp6/icon-logo-container-2.png"
-                      alt="image"
-                      width={50}
-                      height={50}
-                      className="w-[30px] h-[30px]"
-                    />
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        CMS
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-
-                      <button className="text-[#8B5CF6] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                        Call to action
-                        <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-[20px]">
-                  <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                    Ecosystem
-                  </h3>
-
-                  <div className="flex float-start gap-[10px]">
-                    {/* <BsBuildings className="text-[1.4rem] text-gray-600" /> */}
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        Directory
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex float-start gap-[10px]">
-                    {/* <BsCalendar2Date className="text-[1.4rem] text-gray-600" /> */}
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500] ">
-                        Bookings
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex float-start gap-[10px]">
-                    {/* <TbUsersGroup className="text-[1.4rem] text-gray-600" /> */}
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        User feedback
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex float-start gap-[10px]">
-                    <FaTasks className="text-[1.4rem] text-gray-600" />
-
-                    <div>
-                      <h1 className="text-[1rem] text-gray-600 font-[500]">
-                        Task Manager
-                      </h1>
-                      <p className="text-[0.9rem] text-gray-400 font-[300]">
-                        Lorem ipsum dolor sit amet, consect adipiscing elit
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
@@ -240,45 +94,180 @@ const Navbar = () => {
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
                 } transition-all duration-300`}
               />
+              {isProductHover && (
+                <div
+                  className={`${
+                    isProductHover
+                      ? "translate-y-0 opacity-100 z-30"
+                      : "translate-y-[20px] opacity-0 z-[-1]"
+                  } bg-white rounded-md w-full absolute top-[40px] left-0 p-[30px] transition-all duration-600 boxShadow flex flex-wrap gap-[30px]`}
+                >
+                  <div className="grid grid-cols-2 gap-[30px]">
+                    <div className="flex flex-col gap-[20px]">
+                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
+                        More Products
+                      </h3>
+
+                      <div className="flex float-start gap-[10px] group">
+                        <Image
+                          src="https://i.ibb.co/LQBDJGD/icon-logo-container.png"
+                          alt="image"
+                          width={50}
+                          height={50}
+                          className="w-[30px] h-[30px]"
+                        />
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            Demo App
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+
+                          <button className="text-[#FF5E5E] mt-2 flex items-center gap-[4px] text-[0.9rem]">
+                            Call to action
+                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex float-start gap-[10px] group">
+                        <Image
+                          src="https://i.ibb.co/Y8cRWRj/icon-logo-container-1.png"
+                          alt="image"
+                          width={50}
+                          height={50}
+                          className="w-[30px] h-[30px]"
+                        />
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            CRM
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+
+                          <button className="text-[#FE9239] mt-2 flex items-center gap-[4px] text-[0.9rem]">
+                            Call to action
+                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex float-start gap-[10px] group">
+                        <Image
+                          src="https://i.ibb.co/6bGWgp6/icon-logo-container-2.png"
+                          alt="image"
+                          width={50}
+                          height={50}
+                          className="w-[30px] h-[30px]"
+                        />
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            CMS
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+
+                          <button className="text-[#8B5CF6] mt-2 flex items-center gap-[4px] text-[0.9rem]">
+                            Call to action
+                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-[20px]">
+                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
+                        Ecosystem
+                      </h3>
+
+                      <div className="flex float-start gap-[10px]">
+                        {/* <BsBuildings className="text-[1.4rem] text-gray-600" /> */}
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            Directory
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex float-start gap-[10px]">
+                        {/* <BsCalendar2Date className="text-[1.4rem] text-gray-600" /> */}
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500] ">
+                            Bookings
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex float-start gap-[10px]">
+                        {/* <TbUsersGroup className="text-[1.4rem] text-gray-600" /> */}
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            User feedback
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex float-start gap-[10px]">
+                        <FaTasks className="text-[1.4rem] text-gray-600" />
+
+                        <div>
+                          <h1 className="text-[1rem] text-gray-600 font-[500]">
+                            Task Manager
+                          </h1>
+                          <p className="text-[0.9rem] text-gray-400 font-[300]">
+                            Lorem ipsum dolor sit amet, consect adipiscing elit
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </Link>
+
             <Link
-              onMouseEnter={() => setIsProductHover(true)}
-              onMouseLeave={() => setIsProductHover(false)}
               href="/categories"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Categories
-              <IoIosArrowUp
-                className={`${
-                  isProductHover ? "rotate-0" : "rotate-[-180deg]"
-                } transition-all duration-300`}
-              />
             </Link>
             <Link
-              onMouseEnter={() => setIsProductHover(true)}
-              onMouseLeave={() => setIsProductHover(false)}
+              // onMouseEnter={() => setIsProductHover(true)}
+              // onMouseLeave={() => setIsProductHover(false)}
               href="/blog"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Blog
-              <IoIosArrowUp
+              {/* <IoIosArrowUp
                 className={`${
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
                 } transition-all duration-300`}
-              />
+              /> */}
             </Link>
             <Link
-              onMouseEnter={() => setIsProductHover(true)}
-              onMouseLeave={() => setIsProductHover(false)}
+              // onMouseEnter={() => setIsProductHover(true)}
+              // onMouseLeave={() => setIsProductHover(false)}
               href="/contact"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Contact
-              <IoIosArrowUp
+              {/* <IoIosArrowUp
                 className={`${
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
                 } transition-all duration-300`}
-              />
+              /> */}
             </Link>
           </nav>
 

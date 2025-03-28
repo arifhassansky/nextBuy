@@ -18,12 +18,12 @@ interface Product {
 export const ProductApi = createApi({
   reducerPath: "ProductApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/",
+    baseUrl: process.env.NEXTAUTH_URL,
   }),
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
-      query: () => "api/products",
+      query: () => "api/products?limit=10",
       providesTags: (result) =>
         Array.isArray(result)
           ? [

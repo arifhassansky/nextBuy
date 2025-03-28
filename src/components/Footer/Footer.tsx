@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Spark from "../../../public/assets/Spark-Pro.jpg";
 import pexels from "../../../public/assets/pexels.jpg";
+import { useSession } from "next-auth/react";
 
 const Footer = () => {
+  const sesssion = useSession();
+  console.log(sesssion);
   return (
     <footer className="bg-white text-black border-t border-gray-300">
       <div className="max-w-10/12 mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">

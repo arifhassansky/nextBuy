@@ -1,5 +1,4 @@
 "use client";
-// import registerUser from "@/app/actions/auth/registerUser";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -22,10 +21,6 @@ const SignupForm = () => {
     console.log(name, email, image, password);
 
     try {
-      // Assuming registerUser is an API call that returns a response
-      // const res = await registerUser({ name, email, image, password });
-
-      // if (res) {
       router.push("/");
       form.reset(); // Ensure form reset works correctly
       toast.success("User registered successfully. Please login.");
@@ -37,10 +32,10 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-1/2 p-28">
-      <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
+    <div className="lg:w-1/2 lg:p-28 p-16  lg:mt-44 mt-40 ">
+      <h2 className="text-3xl font-bold text-center">Create Account</h2>
       <p className="text-sm text-gray-500 text-center">
-        Please Sign Up to your account
+        Please Sign Up to your account.
       </p>
 
       <form className="mt-5 space-y-4" onSubmit={handleSignUp}>
@@ -73,7 +68,7 @@ const SignupForm = () => {
           name="password"
           required
         />
-        <button className="w-full bg-[#3C9E26] hover:bg-[#3C9E26] text-white py-2 rounded-md">
+        <button className="w-full bg-[#3C9E26] hover:bg-[#3C9E26] text-white py-2 rounded-md cursor-pointer">
           Login
         </button>
       </form>
@@ -86,7 +81,7 @@ const SignupForm = () => {
       <p className="mt-4 text-sm text-center">
         Not a member?{" "}
         <Link href="/auth/login" className="text-[#3C9E26] font-semibold">
-          Sign up
+          Login
         </Link>
       </p>
     </div>
