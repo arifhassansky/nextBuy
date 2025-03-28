@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import logo2 from "../../../public/assets/logo-2.png";
+import logo2 from "../../../public/assets/logo_dashboard.png";
 
 // react icons
 import {
@@ -14,10 +14,17 @@ import {
 import { GoSidebarCollapse } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
 import { FaAddressBook, FaHandshakeAngle, FaUsers } from "react-icons/fa6";
-import { FaHistory, FaHome, FaUserEdit, FaUsersCog } from "react-icons/fa";
+import {
+  FaCartArrowDown,
+  FaHistory,
+  FaHome,
+  FaUserEdit,
+  FaUsersCog,
+} from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { GiEternalLove } from "react-icons/gi";
 
 const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -58,11 +65,11 @@ const Sidebar = () => {
             {/* logo */}
             <div className="grid place-items-center">
               <Image
-                className="w-80 flex justify-center items-center"
+                className="w-32 flex justify-center items-center"
                 src={logo2}
                 alt="NextBuy Logo"
-                width={280}
-                height={80}
+                width={40}
+                height={40}
               />
               <span className="text-2xl font-semibold transition-all duration-300 text-gray-200">
                 NextBuy
@@ -90,8 +97,8 @@ const Sidebar = () => {
           <Image
             src={logo2}
             alt="logo"
-            width={120}
-            height={120}
+            width={80}
+            height={80}
             className={`${
               isCollapse ? "w-16" : "w-12"
             } mx-auto cursor-pointer pt-8`}
@@ -108,7 +115,7 @@ const Sidebar = () => {
       >
         <div className="flex items-center justify-center gap-2">
           <Image
-            src={user?.image || "user image"}
+            src={user?.image || "/user-image"}
             width={50}
             height={50}
             alt="avatar"
@@ -178,7 +185,7 @@ const Sidebar = () => {
 
             {/* my bookings */}
             <Link
-              href="/dashboard/my-bookings"
+              href="/dashboard/wishlist"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -189,11 +196,11 @@ const Sidebar = () => {
               }`}
             >
               <div className="flex items-center gap-2">
-                <FaAddressBook className="text-[1.3rem]" />
+                <GiEternalLove className="text-[1.3rem]" />
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  My Bookings
+                  My Wishlist
                 </p>
               </div>
 
@@ -204,14 +211,14 @@ const Sidebar = () => {
                 } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  My Bookings
+                  My Wishlist
                 </p>
               </div>
             </Link>
 
             {/* add stories */}
             <Link
-              href="/dashboard/add-stories"
+              href="/dashboard/cards"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -222,11 +229,11 @@ const Sidebar = () => {
               }`}
             >
               <div className="flex items-center gap-2">
-                <MdAddAPhoto className="text-[1.3rem]" />
+                <FaCartArrowDown className="text-[1.3rem]" />
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  Add Stories
+                  Add to Cards
                 </p>
               </div>
 
@@ -237,7 +244,7 @@ const Sidebar = () => {
                 } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Add Stories
+                  Add to Cards
                 </p>
               </div>
             </Link>

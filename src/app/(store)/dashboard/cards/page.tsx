@@ -5,7 +5,7 @@ const Cards = () => {
   return (
     <div>
       <div className="text-center">
-        <h3 className="text-[#3C9E26] text-4xl font-bold mb-2">
+        <h3 className="text-4xl font-bold mb-2">
           Add to Cart – Save, Review & Checkout
         </h3>
         <p>
@@ -19,7 +19,7 @@ const Cards = () => {
         <table className="table table-zebra w-full border-collapse">
           {/* head */}
           <thead>
-            <tr className="bg-green-300 text-black text-center">
+            <tr className="bg-gray-300 text-black text-center">
               <th className="py-2">Product Image</th>
               <th className="py-2">Product Name</th>
               <th className="py-2">Price</th>
