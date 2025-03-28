@@ -20,6 +20,7 @@ export const ProductApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXTAUTH_URL,
   }),
+  
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
