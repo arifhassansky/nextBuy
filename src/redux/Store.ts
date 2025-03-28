@@ -1,10 +1,14 @@
 import { ProductApi } from '@/redux/ProductApi';
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
-import ProductReducer from './features/ProductSlice';
-
+import AddToCartReducer from './features/addToCardSlice/AddToCardSlice';
+import ProductReducer from './features/productSlice/ProductSlice';
+import wishlistSliceReducer from './features/wishlist/wishlistSlice';
 export const store = configureStore({
    reducer: {
       productsR: ProductReducer,
+      CartR: AddToCartReducer,
+      wishlistR: wishlistSliceReducer,
+
       [ProductApi.reducerPath]: ProductApi.reducer,
    },
 

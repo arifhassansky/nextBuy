@@ -1,13 +1,13 @@
 "use client";
 
 interface AddProduct {
-  title: string;
-  price: number;
-  description: string;
-  image: string;
-  images: string[];
-  category: string;
-  quantity: number;
+   title: string;
+   price: number;
+   description: string;
+   image: string;
+   images: string[];
+   category: string;
+   quantity: number;
 }
 
 const AddProduct = (): JSX.Element => {
@@ -66,15 +66,15 @@ const AddProduct = (): JSX.Element => {
           required
         />
 
-        <button
-          type="submit"
-          className="w-full bg-[#3C9E26] text-white p-2 rounded-md font-bold"
-        >
-          Add Product
-        </button>
-      </form>
-    </div>
-  );
+            <button
+               type='submit'
+               className='w-full bg-[#3C9E26] text-white p-2 rounded-md font-bold'
+            >
+               Add Product
+            </button>
+         </form>
+      </div>
+   );
 };
 
 export default AddProduct;
