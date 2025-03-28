@@ -55,7 +55,7 @@ export default function LatestArticlesSlider() {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR LATEST ARTICLES
+          Our Latest Blogs
         </h2>
         <div className="text-center py-10 text-red-500">Error: {error}</div>
       </div>
@@ -65,7 +65,7 @@ export default function LatestArticlesSlider() {
   return (
     <div className="w-11/12 mx-auto py-10 px-4">
       <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-        OUR LATEST ARTICLES
+        Our Latest Blogs
       </h2>
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
@@ -142,9 +142,9 @@ export default function LatestArticlesSlider() {
       )}
 
       <div className="flex justify-center items-center h-40 text-red-500 font-semibold">
-        <Link href={"/blog"}>
+        <Link href={"/blogs"}>
           <button className=" bg-[#3C9E26] text-white py-2 px-6 rounded-md hover:bg-black cursor-pointer">
-            More Articles
+            More Blogs
           </button>
         </Link>
       </div>

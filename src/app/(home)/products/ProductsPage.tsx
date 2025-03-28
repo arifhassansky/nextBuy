@@ -38,7 +38,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR PRODUCTS
+          Our Products
         </h2>
         <div className="text-center py-10">Loading products...</div>
       </div>
@@ -49,7 +49,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR PRODUCTS
+          Our Products
         </h2>
         <div className="text-center py-10 text-red-500">{error}</div>
       </div>
@@ -60,7 +60,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR PRODUCTS
+          Our Products
         </h2>
         <div className="text-center py-10">No products found</div>
       </div>
