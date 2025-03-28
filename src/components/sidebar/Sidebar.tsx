@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 import { GoSidebarCollapse } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
-import { FaAddressBook, FaHandshakeAngle, FaUsers } from "react-icons/fa6";
+import { FaHandshakeAngle, FaUsers } from "react-icons/fa6";
 import {
   FaCartArrowDown,
   FaHistory,

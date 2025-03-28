@@ -18,7 +18,6 @@ import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
-import { FiUser } from "react-icons/fi";
 import { TbLogout2 } from "react-icons/tb";
 import { useSession } from "next-auth/react";
 
