@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+'use client';
+
+import { addToCart } from '@/redux/features/addToCardSlice/AddToCardSlice';
+import { addToWishlist } from '@/redux/features/wishlist/wishlistSlice';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { CiDeliveryTruck, CiStar } from 'react-icons/ci';
+import { FiCpu, FiLoader, FiSmartphone } from 'react-icons/fi';
+import { GoVerified } from 'react-icons/go';
+import { IoMdCamera } from 'react-icons/io';
+import { IoStorefrontOutline } from 'react-icons/io5';
+import { MdBatteryChargingFull } from 'react-icons/md';
+import { TbLoader3 } from 'react-icons/tb';
+import { useDispatch } from 'react-redux';
+import s1 from '../../../../../public/assets/shipping1.jpg';
+import s2 from '../../../../../public/assets/shipping2.jpg';
+=======
 "use client";
 import { addToWishlist } from "@/redux/features/wishlist/wishlistSlice";
 import Image from "next/image";
@@ -15,6 +36,7 @@ import { useDispatch } from "react-redux";
 import s1 from "../../../../../public/assets/shipping1.jpg";
 import s2 from "../../../../../public/assets/shipping2.jpg";
 import { useSession } from "next-auth/react";
+>>>>>>> 20f74afda4e7f908abdd72a0c718c269c73207b6
 
 // Define Product interface
 interface Product {
@@ -85,11 +107,11 @@ export default function ProductDetailsPage() {
     // Add your submit logic here
   };
 
-  useEffect(() => {
-    async function fetchProductDetails() {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/products/${params.productId}`);
+   useEffect(() => {
+      async function fetchProductDetails() {
+         try {
+            setIsLoading(true);
+            const response = await fetch(`/api/products/${params.productId}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch product");
@@ -116,7 +138,21 @@ export default function ProductDetailsPage() {
     }
   }, [params.productId]);
 
+<<<<<<< HEAD
+   const dispatch = useDispatch();
+   const { data: session } = useSession();
+   const userEmails = session?.user?.email;
+
+   const handleAddToWishlist = (id: string) => {
+      dispatch(addToWishlist({ id, userEmails }));
+   };
+
+   const handleAddToCart = (id: string) => {
+      dispatch(addToCart({ id, userEmails }));
+   };
+=======
   const dispatch = useDispatch();
+>>>>>>> 20f74afda4e7f908abdd72a0c718c269c73207b6
 
   const handleAddToCart = async (cart: object) => {
     const response = await fetch(`/api/cart`, {
@@ -216,6 +252,107 @@ export default function ProductDetailsPage() {
             </div>
           </div>
 
+<<<<<<< HEAD
+            {/* Right side - Product details */}
+            <div className='flex flex-col gap-6'>
+               <div>
+                  <h1 className='text-[1.6rem] md:text-[1.9rem] font-bold text-gray-800'>
+                     {product.title}
+                  </h1>
+                  <div className='flex items-center gap-2 mt-2 md:mt-5'>
+                     <span className='text-3xl font-medium'>${product.price}</span>
+                  </div>
+               </div>
+
+               {/* Specifications */}
+               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                  <div className='flex items-center gap-2 bg-gray-50 p-3 rounded-lg'>
+                     <FiSmartphone className='w-5 h-5 text-gray-700' />
+                     <div>
+                        <p className='text-sm text-gray-500'>Screen size</p>
+                        <p className='font-medium text-gray-700 text-[0.9rem]'>6.7&quot;</p>
+                     </div>
+                  </div>
+                  <div className='flex items-center gap-2 bg-gray-50 p-3 rounded-lg'>
+                     <FiCpu className='w-5 h-5 text-gray-700' />
+                     <div>
+                        <p className='text-sm text-gray-500'>CPU</p>
+                        <p className='font-medium text-gray-700 text-[0.9rem]'>Apple A16 Bionic</p>
+                     </div>
+                  </div>
+                  <div className='flex items-center gap-2 bg-gray-50 p-3 rounded-lg'>
+                     <IoMdCamera className='w-5 h-5 text-gray-700' />
+                     <div>
+                        <p className='text-sm text-gray-500'>Camera</p>
+                        <p className='font-medium text-gray-700 text-[0.9rem]'>48-12-12 MP</p>
+                     </div>
+                  </div>
+                  <div className='flex items-center gap-2 bg-gray-50 p-3 rounded-lg'>
+                     <MdBatteryChargingFull className='w-5 h-5 text-gray-700' />
+                     <div>
+                        <p className='text-sm text-gray-500'>Battery</p>
+                        <p className='font-medium text-gray-700 text-[0.9rem]'>4323 mAh</p>
+                     </div>
+                  </div>
+               </div>
+
+               <p className='text-[0.9rem] text-gray-600'>
+                  {product.description}
+                  <button className='text-[#3B9DF8] hover:underline'>more...</button>
+               </p>
+
+               {/* Action buttons */}
+               <div className='flex flex-col md:flex-row gap-4'>
+                  <button
+                     onClick={() => {
+                        setIsFavorite(!isFavorite); // Toggle favorite status
+                        handleAddToWishlist(product._id);
+                        // Call the function to add to wishlist
+                     }}
+                     className='flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50'
+                  >
+                     <div className='flex items-center justify-center gap-2'>
+                        {isFavorite ? (
+                           <BsHeartFill className='w-5 h-5 text-red-500' />
+                        ) : (
+                           <BsHeart className='w-5 h-5' />
+                        )}
+                        Add to Wishlist
+                     </div>
+                  </button>
+                  <button
+                     onClick={() => handleAddToCart(params.productId)}
+                     className='flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90'
+                  >
+                     Add to Cart
+                  </button>
+               </div>
+
+               {/* Delivery info */}
+               <div className='flex flex-col md:flex-row gap-4 md:gap-0 justify-between mt-2'>
+                  <div className='flex items-center gap-3'>
+                     <CiDeliveryTruck className='text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md' />
+                     <div>
+                        <p className='text-sm text-gray-500'>Free Delivery</p>
+                        <p className='font-medium text-[0.9rem] text-gray-800'>1-2 day</p>
+                     </div>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                     <IoStorefrontOutline className='text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md' />
+                     <div>
+                        <p className='text-sm text-gray-500'>In Stock</p>
+                        <p className='font-medium text-[0.9rem] text-gray-800'>Today</p>
+                     </div>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                     <GoVerified className='text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md' />
+                     <div>
+                        <p className='text-sm text-gray-500'>Guaranteed</p>
+                        <p className='font-medium text-[0.9rem] text-gray-800'>1 year</p>
+                     </div>
+                  </div>
+               </div>
+=======
           {/* Specifications */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
@@ -226,6 +363,7 @@ export default function ProductDetailsPage() {
                   6.7&quot;
                 </p>
               </div>
+>>>>>>> 20f74afda4e7f908abdd72a0c718c269c73207b6
             </div>
             <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
               <FiCpu className="w-5 h-5 text-gray-700" />
