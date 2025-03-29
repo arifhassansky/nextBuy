@@ -40,6 +40,11 @@ const productSchema = new Schema(
       ref: "User",
       required: true,
     },
+    storeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Store",
+      required: true,
+    },
   },
   {
     timestamps: true,

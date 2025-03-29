@@ -12,7 +12,7 @@ const storeSchema = new Schema({
   },
   sellerId: {
     type: Schema.Types.ObjectId,
-    ref: "Seller",
+    ref: "User",
     required: true,
   },
   destruction: {
