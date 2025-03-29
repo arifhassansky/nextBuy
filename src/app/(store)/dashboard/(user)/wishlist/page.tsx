@@ -1,7 +1,84 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
 
 const Wishlist = () => {
+  // console.log(user.email);
+  const { data: session } = useSession();
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  console.log(session);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (!session?.user?.email) return;
+
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:3000/api/wishlist?userEmail=${session?.user?.email}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch wishlist");
+        }
+
+        const wishListData = await response.json();
+        // const items = wishListData.data.items || [];
+
+        // const itemsWithProducts = await Promise.all(
+        //   items.map(async (item) => {
+        //     try {
+        //       const productResponse = await fetch(
+        //         `/api/products/${item.productId}`
+        //       );
+
+        //       if (!productResponse.ok) {
+        //         throw new Error(
+        //           `Failed to fetch product with ID: ${item.productId}`
+        //         );
+        //       }
+
+        //       const productData = await productResponse.json();
+        //       return {
+        //         ...item,
+        //         product: productData.data,
+        //       };
+        //     } catch (productError) {
+        //       console.error("Error fetching product:", productError);
+        //       return {
+        //         ...item,
+        //         product: {
+        //           title: "Product information unavailable",
+        //           price: "N/A",
+        //           image: "/placeholder-image.jpg",
+        //         },
+        //       };
+        //     }
+        //   })
+        // );
+
+        setWishlistItems(wishListData);
+      } catch (err) {
+        console.error("Error fetching wishlist:", err);
+        setError(
+          err.message || "An error occurred while fetching your wishlist"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWishlist();
+  }, [session]);
+
+  console.log(wishlistItems);
+
   return (
     <div>
       <div className="text-center">
