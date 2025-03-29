@@ -96,7 +96,7 @@ export async function GET(req: Request) {
     // Extract query parameters from the request URL
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
-    const limit = Math.max(parseInt(searchParams.get("limit") || "10", 10), 1); // Default to 10, min 1
+    const limit = Math.max(parseInt(searchParams.get("limit") || ""));
     const search = searchParams.get("search") || "";
 
     // Build the query dynamically

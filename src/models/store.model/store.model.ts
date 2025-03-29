@@ -21,7 +21,6 @@ const storeSchema = new Schema({
   address: {
     street: String,
     city: String,
-    state: String,
     postalCode: String,
     country: String,
   },
@@ -32,6 +31,11 @@ const storeSchema = new Schema({
   slug: {
     type: String,
     lowercase: true,
+  },
+
+  status: {
+    type: String,
+    default: "padding",
   },
 });
 
