@@ -1,24 +1,34 @@
-// Modify your wishlistSlice to handle the new payload format
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface WishlistState {
-   id: string;
    userEmail: string | null;
+   id: string;
+   category: string;
 }
 
 const initialState: WishlistState = {
-   id: '',
    userEmail: null,
+   id: '',
+   category: '',
 };
 
 const wishlistSlice = createSlice({
    name: 'wishlist',
    initialState,
    reducers: {
-      addToWishlist: (state, action: PayloadAction<{ id: string; userEmail: string | null }>) => {
-         state.id = action.payload;
-         state.userEmail = action.payload.userEmail;
+      addToWishlist: (
+         state,
+         action: PayloadAction<{
+            cart: { _id: string; category: string };
+            userEmail: string | null;
+         }>,
+      ) => {
+         const { userEmail, cart } = action.payload;
+         const { _id, category } = cart;
+
+         state.userEmail = userEmail;
+         state.id = _id;
+         state.category = category;
       },
    },
 });

@@ -1,5 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+interface CartItem {
+   _id: string;
+   productId: {
+      _id: string;
+      title: string;
+      price: number;
+      description: string;
+      image: string;
+      images: string[];
+      category: string;
+      quantity: number;
+      slug: string;
+      status: string;
+   };
+   quantity: number;
+}
 
+interface CartResponse {
+   status: number;
+   success: boolean;
+   message: string;
+   data: {
+      _id: string;
+      userEmail: string;
+      items: CartItem[];
+   };
+}
 // Define Type for Product
 interface Product {
    _id: string;
@@ -35,8 +61,12 @@ export const ProductApi = createApi({
                  ]
                : [{ type: 'Product', id: 'LIST' }],
       }),
+
+      getCart: builder.query<CartResponse, string>({
+         query: (userEmail: string) => `/api/cart?userEmail=${userEmail}`,
+      }),
    }),
 });
 
 // Export Hook
-export const { useGetProductsQuery } = ProductApi;
+export const { useGetProductsQuery, useGetCartQuery } = ProductApi;
