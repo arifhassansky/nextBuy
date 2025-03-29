@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       !image ||
       !category ||
       !quantity ||
-      sellerId
+      !sellerId
     ) {
       return NextResponse.json(
         {

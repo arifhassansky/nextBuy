@@ -1,7 +1,15 @@
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 
-const Carts = () => {
+const Carts = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=arifskypro@gmail.com`,
+    { cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to fetch cart items");
+  const data = await res.json();
+  console.log(data.data);
+
   return (
     <div>
       <div className="text-center">
@@ -29,31 +37,41 @@ const Carts = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="text-center">
-              <td className="flex justify-center">
-                <Image
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component"
-                  width={50}
-                  height={40}
-                  className="rounded mt-1"
-                />
-              </td>
-              <td>Arif Hassan</td>
-              <td>$ 200</td>
-              <td>In Stock</td>
-              <td className="text-green-700 font-semibold hover:underline cursor-pointer">
-                Link
-              </td>
-              <td>
-                <button className="btn btn-sm btn-success text-black cursor-pointer">
-                  pay
-                </button>
-                <button className="btn btn-sm text-red-600 ml-4 cursor-pointer">
-                  <FaTrash size={18} />
-                </button>
-              </td>
-            </tr>
+            {data?.length > 0 ? (
+              data.map((item) => (
+                <tr key={item.id} className="text-center">
+                  <td className="flex justify-center">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={50}
+                      height={40}
+                      className="rounded mt-1"
+                    />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>${item.price}</td>
+                  <td>{item.status}</td>
+                  <td className="text-green-700 font-semibold hover:underline cursor-pointer">
+                    Link
+                  </td>
+                  <td>
+                    <button className="btn btn-sm btn-success text-black cursor-pointer">
+                      Pay
+                    </button>
+                    <button className="btn btn-sm text-red-600 ml-4 cursor-pointer">
+                      <FaTrash size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center py-4 text-gray-500">
+                  No items in your cart.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
