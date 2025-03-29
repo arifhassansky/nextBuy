@@ -21,7 +21,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch("/api/blogs");
+        const response = await fetch("/api/blogs?limit=8");
         if (!response.ok) {
           throw new Error("Failed to fetch articles");
         }

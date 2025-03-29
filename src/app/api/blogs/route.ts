@@ -61,7 +61,7 @@ export async function GET(req: Request) {
     // Extract query parameters correctly
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "6", 10);
+    const limit = parseInt(searchParams.get("limit") || "");
 
     const products = await Blog.find()
       .skip((page - 1) * limit) // Corrected pagination logic
