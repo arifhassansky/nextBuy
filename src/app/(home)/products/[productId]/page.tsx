@@ -57,8 +57,8 @@ export default function ProductDetailsPage() {
     recommended: null,
   });
   const [hover, setHover] = useState(0);
-  // const { data: session } = useSession();
-  // const userEmails = session?.user?.email;
+  const { data: session } = useSession();
+  const userEmails = session?.user?.email;
 
   // Type event for input/textarea changes
   const handleChange = (
@@ -126,7 +126,7 @@ export default function ProductDetailsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        //   userEmail: userEmails,
+        userEmail: userEmails,
         items: {
           productId: cart?._id,
           quantity: 1,
@@ -146,6 +146,7 @@ export default function ProductDetailsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userEmail: userEmails,
         items: {
           productId: product._id,
           quantity: 1,
@@ -155,6 +156,24 @@ export default function ProductDetailsPage() {
     const data = await response.json();
     console.log(data);
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="w-10 h-10 animate-[spin_1s_linear_infinite] rounded-full border-4 border-r-[#3B9DF8] border-[#3b9df84b]"></div>
+        <FiLoader className="text-[2.8rem] animate-spin text-[#3B9DF8]" />
+        <TbLoader3 className="text-[2.8rem] animate-spin text-[#3B9DF8]" />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -203,50 +222,128 @@ export default function ProductDetailsPage() {
           </div>
         </div>
 
-        {/* Specifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
-            <FiSmartphone className="w-5 h-5 text-gray-700" />
-            <div>
-              <p className="text-sm text-gray-500">Screen size</p>
-              <p className="font-medium text-gray-700 text-[0.9rem]">
-                6.7&quot;
-              </p>
+        {/* Right side - Product details */}
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="text-[1.6rem] md:text-[1.9rem] font-bold text-gray-800">
+              {product.title}
+            </h1>
+            <div className="flex items-center gap-2 mt-2 md:mt-5">
+              <span className="text-3xl font-medium">${product.price}</span>
+            </div>
+          </div>
+
+          {/* Specifications */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+              <FiSmartphone className="w-5 h-5 text-gray-700" />
+              <div>
+                <p className="text-sm text-gray-500">Screen size</p>
+                <p className="font-medium text-gray-700 text-[0.9rem]">
+                  6.7&quot;
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+              <FiCpu className="w-5 h-5 text-gray-700" />
+              <div>
+                <p className="text-sm text-gray-500">CPU</p>
+                <p className="font-medium text-gray-700 text-[0.9rem]">
+                  Apple A16 Bionic
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+              <IoMdCamera className="w-5 h-5 text-gray-700" />
+              <div>
+                <p className="text-sm text-gray-500">Camera</p>
+                <p className="font-medium text-gray-700 text-[0.9rem]">
+                  48-12-12 MP
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+              <MdBatteryChargingFull className="w-5 h-5 text-gray-700" />
+              <div>
+                <p className="text-sm text-gray-500">Battery</p>
+                <p className="font-medium text-gray-700 text-[0.9rem]">
+                  4323 mAh
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-[0.9rem] text-gray-600">
+            {product.description}
+            <button className="text-[#3B9DF8] hover:underline">more...</button>
+          </p>
+
+          {/* Action buttons */}
+          <div className="flex flex-col md:flex-row gap-4">
+            <button
+              onClick={() => {
+                //  setIsFavorite(!isFavorite); // Toggle favorite status
+                handleAddToWishlist(product); // Call the function to add to wishlist
+              }}
+              className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
+            >
+              <div className="flex items-center justify-center gap-2">
+                {isFavorite ? (
+                  <BsHeartFill className="w-5 h-5 text-red-500" />
+                ) : (
+                  <BsHeart className="w-5 h-5" />
+                )}
+                Add to Wishlist
+              </div>
+            </button>
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90 cursor-pointer"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          {/* Delivery info */}
+          <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between mt-2">
+            <div className="flex items-center gap-3">
+              <CiDeliveryTruck className="text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md" />
+              <div>
+                <p className="text-sm text-gray-500">Free Delivery</p>
+                <p className="font-medium text-[0.9rem] text-gray-800">
+                  1-2 day
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <IoStorefrontOutline className="text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md" />
+              <div>
+                <p className="text-sm text-gray-500">In Stock</p>
+                <p className="font-medium text-[0.9rem] text-gray-800">Today</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <GoVerified className="text-[3rem] text-gray-500 p-3 bg-gray-100 rounded-md" />
+              <div>
+                <p className="text-sm text-gray-500">Guaranteed</p>
+                <p className="font-medium text-[0.9rem] text-gray-800">
+                  1 year
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Description */}
-        <div className="mt-32">
-          <h3 className="text-center font-bold text-3xl">Description</h3>
-          <p className="mt-4 text-center">{product.description}</p>
-        </div>
+      {/* Description */}
+      <div className="mt-32">
+        <h3 className="text-center font-bold text-3xl">Description</h3>
+        <p className="mt-4 text-center">{product.description}</p>
+      </div>
 
-        {/* Action buttons */}
-        <div className="flex flex-col md:flex-row gap-4">
-          <button
-            onClick={() => {
-              //  setIsFavorite(!isFavorite); // Toggle favorite status
-              handleAddToWishlist(product); // Call the function to add to wishlist
-            }}
-            className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
-          >
-            <div className="flex items-center justify-center gap-2">
-              {isFavorite ? (
-                <BsHeartFill className="w-5 h-5 text-red-500" />
-              ) : (
-                <BsHeart className="w-5 h-5" />
-              )}
-              Add to Wishlist
-            </div>
-          </button>
-          <button
-            onClick={() => handleAddToCart(product)}
-            className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90 cursor-pointer"
-          >
-            Add to Cart
-          </button>
-        </div>
+      {/* Review */}
+      <div>
+        <h3 className="text-center font-bold text-2xl mt-10">Review</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 mt-32">
           <div>
