@@ -1,15 +1,10 @@
 "use client";
 // import AddProduct from "@/app/(store)/dashboard/add-product/page";
+import { Card } from "@/components/ui/Card/Card";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import shopBanner from "../../../../public/assets/shopBanner.jpg";
-import shopB2 from "../../../../public/assets/shopB2.jpg";
-import sb3 from "../../../../public/assets/sb3.jpg";
-import sb4 from "../../../../public/assets/sb4.jpg";
-import sbr from "../../../../public/assets/resized-image-Promo.jpeg";
-import sb5 from "../../../../public/assets/sb5.jpg";
-import { Card } from "@/components/ui/Card/Card";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
+import sb5 from "../../../../public/assets/sb5.jpg";
 // import Category from "@/components/Category/Category";
 
 interface Product {
