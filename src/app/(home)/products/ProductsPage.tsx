@@ -36,7 +36,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(100);
+  const [maxValue, setMaxValue] = useState(1000);
   const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -522,13 +522,17 @@ const ProductsPage = ({ search }: { search: string[] }) => {
 
         {/* all products */}
         {/* right column */}
-        <div className="w-full lg:w-3/4 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
+        <div className="w-full lg:w-3/4 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
           {inStockOnly
             ? inStockProducts.map((product) => (
-                <Card key={product._id} product={product} />
+                <div className="w-full" key={product._id}>
+                  <Card product={product} />
+                </div>
               ))
             : filteredProducts.map((product) => (
-                <Card key={product._id} product={product} />
+                <div className="w-full" key={product._id}>
+                  <Card product={product} />
+                </div>
               ))}
         </div>
       </div>
