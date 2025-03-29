@@ -20,13 +20,19 @@ import nextbuy from "../../../public/assets/nextbuy-logo.png";
 import { useSession } from "next-auth/react";
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
+import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const { data: session } = useSession();
+  const session = useSession();
+  console.log(session);
+
+  //   const { data: cart, error, isLoading } = useGetProductsQuery();
+
+  //   console.log(cart);
 
   interface user {
     name: string;

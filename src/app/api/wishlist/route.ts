@@ -142,7 +142,13 @@ export async function GET(req: Request) {
 
     const wishlist = await Wishlist.findOne({
       userEmail,
-    });
+    })
+      .populate({
+        path: "items.productId",
+        model: "Product", // Ensure this matches your Product model name
+      })
+      .exec();
+
     if (!wishlist) {
       return NextResponse.json(
         {
