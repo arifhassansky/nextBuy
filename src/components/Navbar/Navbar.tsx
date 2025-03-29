@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
@@ -17,9 +17,9 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
+import { useSession } from "next-auth/react";
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,6 +41,35 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
+
+  const { data: Session } = useSession();
+  const userEmail = Session?.user?.email;
+  const [cartItems, setCartItems] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+
+  useEffect(() => {
+    if (userEmail) {
+      const fetchData = async () => {
+        try {
+          const [cartResponse, wishlistResponse] = await Promise.all([
+            fetch(`/api/cart?userEmail=${userEmail}`),
+            fetch(`/api/wishlist?userEmail=${userEmail}`),
+          ]);
+
+          const [cartData, wishlistData] = await Promise.all([
+            cartResponse.json(),
+            wishlistResponse.json(),
+          ]);
+
+          setCartItems(cartData.data.items);
+          setWishlistItems(wishlistData.data.items);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userEmail]);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
@@ -303,13 +332,13 @@ const Navbar = () => {
             >
               <CiHeart size={20} />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {wishlistItems.length}
               </span>
             </Link>
             <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {cartItems.length}
               </span>
             </Link>
             {/* user account */}

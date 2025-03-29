@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import speaker from "../../../public/assets/speaker.jpg";
+import Recommendation from "@/components/Recommendation/Recommendation";
 
 const images = [
   "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -29,37 +30,37 @@ const images = [
 
 const Slider: React.FC = () => {
   return (
-    <div className="w-full">
-      <Swiper
-        cssMode={true}
-        spaceBetween={30}
-        centeredSlides={true}
-        navigation={true}
-        pagination={{
-          clickable: true,
-        }}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        mousewheel={true}
-        keyboard={true}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
-        className="mySwiper w-full h-auto [&>.swiper-button-next]:text-[#43B02A]
-          [&>.swiper-button-prev]:text-[#43B02A]"
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <Image
-              src={image}
-              width={1080}
-              height={1080}
-              alt="Monitor"
-              className="object-cover w-full max-h-[850px]"
-            />
-          </SwiperSlide>
-        ))}
-        {/* <SwiperSlide>
+     <div className='w-full'>
+        <Swiper
+           cssMode={true}
+           spaceBetween={30}
+           centeredSlides={true}
+           navigation={true}
+           pagination={{
+              clickable: true,
+           }}
+           autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+           }}
+           mousewheel={true}
+           keyboard={true}
+           modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
+           className='mySwiper w-full h-auto [&>.swiper-button-next]:text-[#43B02A]
+          [&>.swiper-button-prev]:text-[#43B02A]'
+        >
+           {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                 <Image
+                    src={image}
+                    width={1080}
+                    height={1080}
+                    alt='Monitor'
+                    className='object-cover w-full max-h-[850px]'
+                 />
+              </SwiperSlide>
+           ))}
+           {/* <SwiperSlide>
           <Image
             src={speaker}
             width={1920}
@@ -78,7 +79,9 @@ const Slider: React.FC = () => {
           />
         </SwiperSlide> */}
       </Swiper>
-    </div>
+      
+        <Recommendation/>
+     </div>
   );
 };
 

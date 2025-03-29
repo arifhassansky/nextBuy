@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       category,
       quantity,
       sellerId,
+      storeId,
     } = await req.json();
     // console.log(images);
     if (
@@ -40,7 +41,12 @@ export async function POST(req: Request) {
       !image ||
       !category ||
       !quantity ||
+<<<<<<< HEAD
       !sellerId
+=======
+      !sellerId ||
+      !storeId
+>>>>>>> 4c39bc04ebc121c57504c17bc7c0f0db8b099270
     ) {
       return NextResponse.json(
         {
@@ -60,6 +66,7 @@ export async function POST(req: Request) {
       category,
       quantity,
       sellerId,
+      storeId,
       slug: `${slugify(title).toLocaleLowerCase()}-${nanoid(
         7
       ).toLocaleLowerCase()}`,
