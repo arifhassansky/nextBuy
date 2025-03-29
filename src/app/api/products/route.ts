@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       category,
       quantity,
       sellerId,
+      storeId,
     } = await req.json();
     // console.log(images);
     if (
@@ -40,7 +41,8 @@ export async function POST(req: Request) {
       !image ||
       !category ||
       !quantity ||
-      sellerId
+      !sellerId ||
+      !storeId
     ) {
       return NextResponse.json(
         {
@@ -60,6 +62,7 @@ export async function POST(req: Request) {
       category,
       quantity,
       sellerId,
+      storeId,
       slug: `${slugify(title).toLocaleLowerCase()}-${nanoid(
         7
       ).toLocaleLowerCase()}`,
@@ -96,7 +99,7 @@ export async function GET(req: Request) {
     // Extract query parameters from the request URL
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
-    const limit = Math.max(parseInt(searchParams.get("limit") || "10", 10), 1); // Default to 10, min 1
+    const limit = Math.max(parseInt(searchParams.get("limit") || ""));
     const search = searchParams.get("search") || "";
 
     // Build the query dynamically

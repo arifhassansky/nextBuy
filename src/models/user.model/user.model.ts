@@ -28,6 +28,10 @@ const userSchema = new Schema(
       enum: ["admin", "seller", "user"],
       default: "user",
     },
+    storeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Store",
+    },
   },
   {
     timestamps: true,
