@@ -20,6 +20,7 @@ interface Product {
 const Carts: React.FC = () => {
   const { data: session } = useSession();
   const [products, setProducts] = useState<Product[] | null>(null);
+  console.log(products);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -100,9 +101,12 @@ const Carts: React.FC = () => {
                     <Link href={`/products/${item.productId.slug}`}>Link</Link>
                   </td>
                   <td>
-                    <button className="btn btn-sm btn-success text-black cursor-pointer">
+                    <Link
+                      href={`carts/payment/${item.productId.slug}`}
+                      className="btn btn-sm btn-success text-black cursor-pointer"
+                    >
                       Pay
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleDelete(item.productId._id)}
                       className="btn btn-sm text-red-600 ml-4 cursor-pointer"
