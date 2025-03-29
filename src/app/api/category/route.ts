@@ -1,10 +1,24 @@
 import connectDB from "@/config/db/connectDB";
 import Category from "@/models/category.model/category.model";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const { name, description, image } = await req.json();
 

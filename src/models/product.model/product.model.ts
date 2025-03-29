@@ -36,7 +36,7 @@ const productSchema = new Schema(
       default: "active",
     },
     sellerId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
