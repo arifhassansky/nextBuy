@@ -1,42 +1,41 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define Type for Product
 interface Product {
-  _id: string;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  quantity: number;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+   _id: string;
+   title: string;
+   price: number;
+   description: string;
+   category: string;
+   image: string;
+   quantity: number;
+   createdAt: string;
+   updatedAt: string;
+   __v: number;
 }
 
 // Create API
 export const ProductApi = createApi({
-  reducerPath: "ProductApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXTAUTH_URL,
-  }),
-  
-  tagTypes: ["Product"],
-  endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      query: () => "api/products?limit=10",
-      providesTags: (result) =>
-        Array.isArray(result)
-          ? [
-              ...result.map((product) => ({
-                type: "Product" as const,
-                id: product._id,
-              })),
-              { type: "Product", id: "LIST" },
-            ]
-          : [{ type: "Product", id: "LIST" }],
-    }),
-  }),
+   reducerPath: 'ProductApi',
+   baseQuery: fetchBaseQuery({
+      baseUrl: process.env.NEXTAUTH_URL,
+   }),
+   tagTypes: ['Product'],
+   endpoints: builder => ({
+      getProducts: builder.query<Product[], void>({
+         query: () => 'api/products?limit=10',
+         providesTags: result =>
+            Array.isArray(result)
+               ? [
+                    ...result.map(product => ({
+                       type: 'Product' as const,
+                       id: product._id,
+                    })),
+                    { type: 'Product', id: 'LIST' },
+                 ]
+               : [{ type: 'Product', id: 'LIST' }],
+      }),
+   }),
 });
 
 // Export Hook

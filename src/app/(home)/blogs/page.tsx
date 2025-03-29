@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface Article {
@@ -60,8 +61,9 @@ const Blog = () => {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {articles.map((article) => (
-          <div
+          <Link
             key={article._id}
+            href={`/article/${article.slug}`}
             className="h-[400px] border border-gray-300 rounded-xl shadow-lg  bg-white cursor-pointer"
           >
             <div className="hover14 column">
@@ -98,7 +100,7 @@ const Blog = () => {
                 <p className="text-xs text-gray-500">{article.createdAt}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
