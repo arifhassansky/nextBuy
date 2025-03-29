@@ -33,56 +33,58 @@ interface Product {
 
 // Define FormData interface
 interface FormData {
-   name: string;
-   email: string;
-   rating: number;
-   reviewTitle: string;
-   reviewText: string;
-   recommended: boolean | null;
+  name: string;
+  email: string;
+  rating: number;
+  reviewTitle: string;
+  reviewText: string;
+  recommended: boolean | null;
 }
 
 export default function ProductDetailsPage() {
-   const params = useParams<{ productId: string }>(); // Type params with productId
-   const [product, setProduct] = useState<Product | null>(null);
-   const [isLoading, setIsLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-   const [selectedImage, setSelectedImage] = useState(0);
-   const [isFavorite, setIsFavorite] = useState(false);
-   const [formData, setFormData] = useState<FormData>({
-      name: '',
-      email: '',
-      rating: 0,
-      reviewTitle: '',
-      reviewText: '',
-      recommended: null,
-   });
-   const [hover, setHover] = useState(0);
-   // const { data: session } = useSession();
-   // const userEmails = session?.user?.email;
+  const params = useParams<{ productId: string }>(); // Type params with productId
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    rating: 0,
+    reviewTitle: "",
+    reviewText: "",
+    recommended: null,
+  });
+  const [hover, setHover] = useState(0);
+  // const { data: session } = useSession();
+  // const userEmails = session?.user?.email;
 
-   // Type event for input/textarea changes
-   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-      setFormData(prevState => ({
-         ...prevState,
-         [name]: value,
-      }));
-   };
+  // Type event for input/textarea changes
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-   // Type currentRating as number
-   const handleRatingChange = (currentRating: number) => {
-      setFormData(prevState => ({
-         ...prevState,
-         rating: currentRating,
-      }));
-   };
+  // Type currentRating as number
+  const handleRatingChange = (currentRating: number) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      rating: currentRating,
+    }));
+  };
 
-   // Type event for form submission
-   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      console.log('Review Submitted:', formData);
-      // Add your submit logic here
-   };
+  // Type event for form submission
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Review Submitted:", formData);
+    // Add your submit logic here
+  };
 
   useEffect(() => {
     async function fetchProductDetails() {
@@ -90,28 +92,30 @@ export default function ProductDetailsPage() {
         setIsLoading(true);
         const response = await fetch(`/api/products/${params.productId}`);
 
-            if (!response.ok) {
-               throw new Error('Failed to fetch product');
-            }
+        if (!response.ok) {
+          throw new Error("Failed to fetch product");
+        }
 
-            const result = await response.json();
+        const result = await response.json();
 
-            if (result.success) {
-               setProduct(result.data);
-            } else {
-               throw new Error(result.message || 'Unknown error occurred');
-            }
-         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An unknown error occurred');
-         } finally {
-            setIsLoading(false);
-         }
+        if (result.success) {
+          setProduct(result.data);
+        } else {
+          throw new Error(result.message || "Unknown error occurred");
+        }
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+      } finally {
+        setIsLoading(false);
       }
+    }
 
-      if (params.productId) {
-         fetchProductDetails();
-      }
-   }, [params.productId]);
+    if (params.productId) {
+      fetchProductDetails();
+    }
+  }, [params.productId]);
 
   //   const dispatch = useDispatch();
 
@@ -122,7 +126,7 @@ export default function ProductDetailsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: userEmails,
+        //   userEmail: userEmails,
         items: {
           productId: cart?._id,
           quantity: 1,
@@ -142,7 +146,6 @@ export default function ProductDetailsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: userEmails,
         items: {
           productId: product._id,
           quantity: 1,
@@ -153,232 +156,260 @@ export default function ProductDetailsPage() {
     console.log(data);
   };
 
-   if (!product) {
-      return <div className='flex justify-center items-center h-screen'>Product not found</div>;
-   }
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Product not found
+      </div>
+    );
+  }
 
-   return (
-      <div className='w-11/12 mx-auto md:px-8 md:py-12 mt-32'>
-         <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {/* Left side - Image gallery */}
-            <div className='flex flex-col-reverse gap-[15px] md:gap-0 md:flex-row'>
-               {/* Thumbnails */}
-               <div className='w-full md:w-[20%] flex flex-row md:flex-col md:gap-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 md:pr-2'>
-                  {product.images.map((image, index) => (
-                     <button
-                        key={index}
-                        onClick={() => setSelectedImage(index)}
-                        className={`relative w-36 md:w-20 h-[70px] md:h-20 border-2 p-1 md:p-2 rounded-lg overflow-hidden ${
-                           selectedImage === index ? 'border-[#0FABCA]' : 'border-transparent'
-                        }`}
-                     >
-                        <Image
-                           src={image}
-                           fill
-                           alt={`Product ${index + 1}`}
-                           className='object-cover'
-                        />
-                     </button>
-                  ))}
-               </div>
-
-               {/* Main image */}
-               <div className='w-full md:w-[80%] bg-gray-100 rounded-sm relative flex items-center justify-center'>
-                  <Image
-                     height={800}
-                     width={400}
-                     src={product.images[selectedImage]}
-                     alt='Product main image'
-                     className='object-cover w-full h-full rounded-lg'
-                  />
-               </div>
-            </div>
-
-          {/* Specifications */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
-              <FiSmartphone className="w-5 h-5 text-gray-700" />
-              <div>
-                <p className="text-sm text-gray-500">Screen size</p>
-                <p className="font-medium text-gray-700 text-[0.9rem]">
-                  6.7&quot;
-                </p>
-              </div>
-            </div>
-         </div>
-
-         {/* Description */}
-         <div className='mt-32'>
-            <h3 className='text-center font-bold text-3xl'>Description</h3>
-            <p className='mt-4 text-center'>{product.description}</p>
-         </div>
-
-          {/* Action buttons */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <button
-              onClick={() => {
-                //  setIsFavorite(!isFavorite); // Toggle favorite status
-                handleAddToWishlist(product); // Call the function to add to wishlist
-              }}
-              className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
-            >
-              <div className="flex items-center justify-center gap-2">
-                {isFavorite ? (
-                  <BsHeartFill className="w-5 h-5 text-red-500" />
-                ) : (
-                  <BsHeart className="w-5 h-5" />
-                )}
-                Add to Wishlist
-              </div>
-            </button>
-            <button
-              onClick={() => handleAddToCart(product)}
-              className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90 cursor-pointer"
-            >
-              Add to Cart
-            </button>
+  return (
+    <div className="w-11/12 mx-auto md:px-8 md:py-12 mt-32">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left side - Image gallery */}
+        <div className="flex flex-col-reverse gap-[15px] md:gap-0 md:flex-row">
+          {/* Thumbnails */}
+          <div className="w-full md:w-[20%] flex flex-row md:flex-col md:gap-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 md:pr-2">
+            {product.images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                className={`relative w-36 md:w-20 h-[70px] md:h-20 border-2 p-1 md:p-2 rounded-lg overflow-hidden ${
+                  selectedImage === index
+                    ? "border-[#0FABCA]"
+                    : "border-transparent"
+                }`}
+              >
+                <Image
+                  src={image}
+                  fill
+                  alt={`Product ${index + 1}`}
+                  className="object-cover"
+                />
+              </button>
+            ))}
           </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 mt-32'>
-               <div>
-                  <h3>Reviews</h3>
-               </div>
+          {/* Main image */}
+          <div className="w-full md:w-[80%] bg-gray-100 rounded-sm relative flex items-center justify-center">
+            <Image
+              height={800}
+              width={400}
+              src={product.images[selectedImage]}
+              alt="Product main image"
+              className="object-cover w-full h-full rounded-lg"
+            />
+          </div>
+        </div>
 
-               <div>
-                  <form onSubmit={handleSubmit} className='space-y-4'>
-                     {/* Name Input */}
-                     <div>
-                        <label htmlFor='name' className='block text-sm font-medium text-gray-700'>
-                           Name *
-                        </label>
+        {/* Specifications */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+            <FiSmartphone className="w-5 h-5 text-gray-700" />
+            <div>
+              <p className="text-sm text-gray-500">Screen size</p>
+              <p className="font-medium text-gray-700 text-[0.9rem]">
+                6.7&quot;
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="mt-32">
+          <h3 className="text-center font-bold text-3xl">Description</h3>
+          <p className="mt-4 text-center">{product.description}</p>
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex flex-col md:flex-row gap-4">
+          <button
+            onClick={() => {
+              //  setIsFavorite(!isFavorite); // Toggle favorite status
+              handleAddToWishlist(product); // Call the function to add to wishlist
+            }}
+            className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
+          >
+            <div className="flex items-center justify-center gap-2">
+              {isFavorite ? (
+                <BsHeartFill className="w-5 h-5 text-red-500" />
+              ) : (
+                <BsHeart className="w-5 h-5" />
+              )}
+              Add to Wishlist
+            </div>
+          </button>
+          <button
+            onClick={() => handleAddToCart(product)}
+            className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90 cursor-pointer"
+          >
+            Add to Cart
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-32">
+          <div>
+            <h3>Reviews</h3>
+          </div>
+
+          <div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name Input */}
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Email Input */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Rating */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Your Rating *
+                </label>
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, index) => {
+                    const currentRating = index + 1;
+                    return (
+                      <label key={index} className="cursor-pointer">
                         <input
-                           type='text'
-                           id='name'
-                           name='name'
-                           required
-                           value={formData.name}
-                           onChange={handleChange}
-                           className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                          type="radio"
+                          name="rating"
+                          className="hidden"
+                          value={currentRating}
+                          onClick={() => handleRatingChange(currentRating)}
                         />
-                     </div>
-
-                     {/* Email Input */}
-                     <div>
-                        <label htmlFor='email' className='block text-sm font-medium text-gray-700'>
-                           Email *
-                        </label>
-                        <input
-                           type='email'
-                           id='email'
-                           name='email'
-                           required
-                           value={formData.email}
-                           onChange={handleChange}
-                           className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        />
-                     </div>
-
-                     {/* Rating */}
-                     <div className='mb-4'>
-                        <label className='block text-sm font-medium text-gray-700 mb-2'>
-                           Your Rating *
-                        </label>
-                        <div className='flex items-center'>
-                           {[...Array(5)].map((_, index) => {
-                              const currentRating = index + 1;
-                              return (
-                                 <label key={index} className='cursor-pointer'>
-                                    <input
-                                       type='radio'
-                                       name='rating'
-                                       className='hidden'
-                                       value={currentRating}
-                                       onClick={() => handleRatingChange(currentRating)}
-                                    />
-                                    <CiStar
-                                       size={30}
-                                       className={`
+                        <CiStar
+                          size={30}
+                          className={`
                             ${
-                               currentRating <= (hover || formData.rating)
-                                  ? 'text-yellow-500 fill-yellow-500'
-                                  : 'text-gray-300'
+                              currentRating <= (hover || formData.rating)
+                                ? "text-yellow-500 fill-yellow-500"
+                                : "text-gray-300"
                             }
                             mr-1
                           `}
-                                       onMouseEnter={() => setHover(currentRating)}
-                                       onMouseLeave={() => setHover(0)}
-                                    />
-                                 </label>
-                              );
-                           })}
-                           <span className='ml-2 text-gray-600'>
-                              {formData.rating ? `${formData.rating} out of 5` : 'Select a rating'}
-                           </span>
-                        </div>
-                     </div>
-
-                     {/* Review Text */}
-                     <div>
-                        <label
-                           htmlFor='reviewText'
-                           className='block text-sm font-medium text-gray-700'
-                        >
-                           Your Review *
-                        </label>
-                        <textarea
-                           id='reviewText'
-                           name='reviewText'
-                           required
-                           rows={4}
-                           value={formData.reviewText}
-                           onChange={handleChange}
-                           className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                          onMouseEnter={() => setHover(currentRating)}
+                          onMouseLeave={() => setHover(0)}
                         />
-                     </div>
+                      </label>
+                    );
+                  })}
+                  <span className="ml-2 text-gray-600">
+                    {formData.rating
+                      ? `${formData.rating} out of 5`
+                      : "Select a rating"}
+                  </span>
+                </div>
+              </div>
 
-                     {/* Submit Button */}
-                     <div>
-                        <button
-                           type='submit'
-                           className='bg-[#43b02a] text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors'
-                        >
-                           Submit
-                        </button>
-                     </div>
-                  </form>
-               </div>
-            </div>
-         </div>
+              {/* Review Text */}
+              <div>
+                <label
+                  htmlFor="reviewText"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Your Review *
+                </label>
+                <textarea
+                  id="reviewText"
+                  name="reviewText"
+                  required
+                  rows={4}
+                  value={formData.reviewText}
+                  onChange={handleChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
 
-         {/* Shipping */}
-         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
-            <div className='w-full h-full'>
-               <Image src={s1} width={400} height={200} alt='image' className='h-full' />
-            </div>
-
-            <div className='w-full h-full'>
-               <Image src={s2} width={400} height={200} alt='image' className='h-full' />
-            </div>
-
-            <div>
-               <h3 className='font-bold'>MAECENAS IACULIS</h3>
-               <p className='mt-4'>
-                  Vestibulum curae torquent diam diam commodo parturient penatibus nunc dui
-                  adipiscing convallis bulum parturient suspendisse parturient a.Parturient in
-                  parturient scelerisque nibh lectus quam a natoque adipiscing a vestibulum
-                  hendrerit et pharetra fames nunc natoque dui.
-               </p>
-
-               <h3 className='font-bold mt-4'>ADIPISCING CONVALLIS BULUM</h3>
-
-               <p className='mt-4'>
-                  Scelerisque adipiscing bibendum sem vestibulum et in a a a purus lectus faucibus
-                  lobortis tincidunt purus lectus nisl class eros.Condimentum a et ullamcorper
-                  dictumst mus et tristique elementum nam inceptos hac parturient scelerisque
-                  vestibulum amet elit ut volutpat.
-               </p>
-            </div>
-         </div>
+              {/* Submit Button */}
+              <div>
+                <button
+                  type="submit"
+                  className="bg-[#43b02a] text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-   );
+
+      {/* Shipping */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+        <div className="w-full h-full">
+          <Image
+            src={s1}
+            width={400}
+            height={200}
+            alt="image"
+            className="h-full"
+          />
+        </div>
+
+        <div className="w-full h-full">
+          <Image
+            src={s2}
+            width={400}
+            height={200}
+            alt="image"
+            className="h-full"
+          />
+        </div>
+
+        <div>
+          <h3 className="font-bold">MAECENAS IACULIS</h3>
+          <p className="mt-4">
+            Vestibulum curae torquent diam diam commodo parturient penatibus
+            nunc dui adipiscing convallis bulum parturient suspendisse
+            parturient a.Parturient in parturient scelerisque nibh lectus quam a
+            natoque adipiscing a vestibulum hendrerit et pharetra fames nunc
+            natoque dui.
+          </p>
+
+          <h3 className="font-bold mt-4">ADIPISCING CONVALLIS BULUM</h3>
+
+          <p className="mt-4">
+            Scelerisque adipiscing bibendum sem vestibulum et in a a a purus
+            lectus faucibus lobortis tincidunt purus lectus nisl class
+            eros.Condimentum a et ullamcorper dictumst mus et tristique
+            elementum nam inceptos hac parturient scelerisque vestibulum amet
+            elit ut volutpat.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
