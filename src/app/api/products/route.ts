@@ -3,10 +3,24 @@ import Product from "@/models/product.model/product.model";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
 import { nanoid } from "nanoid";
+import { getServerSession } from "next-auth";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const {
       title,

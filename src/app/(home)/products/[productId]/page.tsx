@@ -1,26 +1,5 @@
-<<<<<<< HEAD
-'use client';
-
-import { addToCart } from '@/redux/features/addToCardSlice/AddToCardSlice';
-import { addToWishlist } from '@/redux/features/wishlist/wishlistSlice';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { CiDeliveryTruck, CiStar } from 'react-icons/ci';
-import { FiCpu, FiLoader, FiSmartphone } from 'react-icons/fi';
-import { GoVerified } from 'react-icons/go';
-import { IoMdCamera } from 'react-icons/io';
-import { IoStorefrontOutline } from 'react-icons/io5';
-import { MdBatteryChargingFull } from 'react-icons/md';
-import { TbLoader3 } from 'react-icons/tb';
-import { useDispatch } from 'react-redux';
-import s1 from '../../../../../public/assets/shipping1.jpg';
-import s2 from '../../../../../public/assets/shipping2.jpg';
-=======
 "use client";
-import { addToWishlist } from "@/redux/features/wishlist/wishlistSlice";
+// import { addToWishlist } from "@/redux/features/wishlist/wishlistSlice";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -32,11 +11,10 @@ import { IoMdCamera } from "react-icons/io";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdBatteryChargingFull } from "react-icons/md";
 import { TbLoader3 } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import s1 from "../../../../../public/assets/shipping1.jpg";
 import s2 from "../../../../../public/assets/shipping2.jpg";
 import { useSession } from "next-auth/react";
->>>>>>> 20f74afda4e7f908abdd72a0c718c269c73207b6
 
 // Define Product interface
 interface Product {
@@ -50,6 +28,7 @@ interface Product {
   quantity: number;
   createdAt: string;
   images: string[]; // Updated to string[] since images are URLs
+  //   " product._id": string;
 }
 
 // Define FormData interface
@@ -107,11 +86,11 @@ export default function ProductDetailsPage() {
     // Add your submit logic here
   };
 
-   useEffect(() => {
-      async function fetchProductDetails() {
-         try {
-            setIsLoading(true);
-            const response = await fetch(`/api/products/${params.productId}`);
+  useEffect(() => {
+    async function fetchProductDetails() {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/products/${params.productId}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch product");
@@ -138,23 +117,9 @@ export default function ProductDetailsPage() {
     }
   }, [params.productId]);
 
-<<<<<<< HEAD
-   const dispatch = useDispatch();
-   const { data: session } = useSession();
-   const userEmails = session?.user?.email;
+  //   const dispatch = useDispatch();
 
-   const handleAddToWishlist = (id: string) => {
-      dispatch(addToWishlist({ id, userEmails }));
-   };
-
-   const handleAddToCart = (id: string) => {
-      dispatch(addToCart({ id, userEmails }));
-   };
-=======
-  const dispatch = useDispatch();
->>>>>>> 20f74afda4e7f908abdd72a0c718c269c73207b6
-
-  const handleAddToCart = async (cart: object) => {
+  const handleAddToCart = async (cart: Product) => {
     const response = await fetch(`/api/cart`, {
       method: "POST",
       headers: {
@@ -172,8 +137,24 @@ export default function ProductDetailsPage() {
     console.log(data);
   };
 
-  const handleAddToWishlist = (id: string) => {
-    dispatch(addToWishlist(id));
+  const handleAddToWishlist = async (product: Product) => {
+    // dispatch(addToWishlist(id));
+
+    const response = await fetch(`/api/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userEmail: userEmails,
+        items: {
+          productId: product._id,
+          quantity: 1,
+        },
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
   };
 
   if (isLoading) {
@@ -301,8 +282,8 @@ export default function ProductDetailsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             <button
               onClick={() => {
-                setIsFavorite(!isFavorite); // Toggle favorite status
-                handleAddToWishlist(product._id); // Call the function to add to wishlist
+                //  setIsFavorite(!isFavorite); // Toggle favorite status
+                handleAddToWishlist(product); // Call the function to add to wishlist
               }}
               className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
             >
