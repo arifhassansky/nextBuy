@@ -2,9 +2,9 @@
 
 import { Card } from "@/components/ui/Card/Card";
 import { useGetProductsQuery } from "@/redux/ProductApi";
+import Link from "next/link";
 import { FC } from "react";
 import CardSkeleton from "../ui/Skeletons/CardSkeleton/CardSkeleton";
-import Link from "next/link";
 
 // Define Product Type (matching the API or as a subset)
 interface Product {
@@ -41,9 +41,8 @@ const ProductsCard: FC = () => {
   // Handle error state
   if (error) {
     const errorMessage =
-      (error as FetchError)?.data?.message ||
-      (error as FetchError)?.message ||
-      "Failed to load products.";
+      (error as FetchError)?.data?.message || (error as FetchError)?.message;
+    ("Failed to load products.");
     return (
       <div className="flex justify-center items-center h-40 text-red-500 font-semibold">
         Error: {errorMessage}

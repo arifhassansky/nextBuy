@@ -117,7 +117,7 @@ const Navbar = () => {
               href="/products"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              All Products
+              Products
             </Link>
 
             <Link
@@ -287,10 +287,16 @@ const Navbar = () => {
             >
               Blogs
             </Link>
+            <Link
+              href="/about"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
+            >
+              About
+            </Link>
           </nav>
 
           {/* Action Icons */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4 ml-6">
             <Link
               className="flex items-center gap-1 relative"
               href="/dashboard/wishlist"
