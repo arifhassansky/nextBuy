@@ -9,6 +9,7 @@ import sb4 from "../../../../public/assets/sb4.jpg";
 import sbr from "../../../../public/assets/resized-image-Promo.jpeg";
 import sb5 from "../../../../public/assets/sb5.jpg";
 import { Card } from "@/components/ui/Card/Card";
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 // import Category from "@/components/Category/Category";
 
 interface Product {
@@ -39,7 +40,15 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [checked, setChecked] = useState(false);
+  const [minValue, setMinValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(100);
+  const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const minPrice = 0;
+  const maxPrice = 1000;
 
   const getRandomCategories = (sourceArray: Category[], count: number) => {
     const shuffled = [...sourceArray].sort(() => 0.5 - Math.random());
@@ -47,23 +56,119 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   };
 
   console.log(products);
-  const [value, setValue] = useState(0);
 
-  const sliderChange = (event) => {
-    setValue(event.target.value);
+  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    const sliderBounds = e.currentTarget.getBoundingClientRect();
+    const clickPosition = e.clientX - sliderBounds.left;
+    const percentage =
+      (clickPosition / sliderBounds.width) * (maxPrice - minPrice) + minPrice;
+
+    // Determine which thumb to move based on click position
+    const midpoint = (minValue + maxValue) / 2;
+    if (percentage < midpoint) {
+      setMinValue(Math.min(Math.round(percentage), maxValue - 10));
+    } else {
+      setMaxValue(Math.max(Math.round(percentage), minValue + 10));
+    }
   };
 
-  const handleClick = (event) => {
-    const slider = event.target.getBoundingClientRect();
-    const newValue = ((event.clientX - slider.left) / slider.width) * 100;
-    setValue(Math.min(Math.max(newValue, 0), 100));
+  // Handle min thumb drag
+  const handleMinMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveThumb("min");
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const sliderBounds = document
+        .getElementById("price-slider-track")
+        ?.getBoundingClientRect();
+      if (!sliderBounds) return;
+
+      const percentage = Math.max(
+        0,
+        Math.min(
+          1,
+          (moveEvent.clientX - sliderBounds.left) / sliderBounds.width
+        )
+      );
+      const newValue = Math.round(
+        percentage * (maxPrice - minPrice) + minPrice
+      );
+      setMinValue(Math.min(newValue, maxValue - 10));
+    };
+
+    const handleMouseUp = () => {
+      setActiveThumb(null);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  // Handle max thumb drag
+  const handleMaxMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveThumb("max");
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      moveEvent.preventDefault();
+      moveEvent.stopPropagation();
+
+      const sliderBounds = document
+        .getElementById("price-slider-track")
+        ?.getBoundingClientRect();
+      if (!sliderBounds) return;
+
+      const percentage = Math.max(
+        0,
+        Math.min(
+          1,
+          (moveEvent.clientX - sliderBounds.left) / sliderBounds.width
+        )
+      );
+      const newValue = Math.round(
+        percentage * (maxPrice - minPrice) + minPrice
+      );
+      setMaxValue(Math.max(newValue, minValue + 10));
+    };
+
+    const handleMouseUp = (upEvent: MouseEvent) => {
+      upEvent.preventDefault();
+      upEvent.stopPropagation();
+
+      setActiveThumb(null);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  // Get percentage position for visual elements
+  const getMinPercentage = () => (minValue / maxPrice) * 100;
+  const getMaxPercentage = () => (maxValue / maxPrice) * 100;
+  const getRangeWidth = () => getMaxPercentage() - getMinPercentage();
+
+  const resetFilters = () => {
+    setMinValue(minPrice);
+    setMaxValue(maxPrice);
+    // setChecked(false); // Also reset the checkboxes if they're being used for filtering
+  };
+  const handleCheckboxChange = () => {
+    setInStockOnly(!inStockOnly);
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async (page) => {
       try {
         const response = await fetch(
-          `/api/products?search=${search ? search : ""}`
+          `/api/products?page=${page}&limit=10&search=${search ? search : ""}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -71,6 +176,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
         const data = await response.json();
         console.log(data.data);
         setProducts(data.data);
+        setTotalPages(data.pagination.totalPages);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -81,8 +187,8 @@ const ProductsPage = ({ search }: { search: string[] }) => {
       }
     };
 
-    fetchProducts();
-  }, [search]);
+    fetchProducts(currentPage);
+  }, [search, currentPage]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -106,6 +212,22 @@ const ProductsPage = ({ search }: { search: string[] }) => {
 
     fetchCategories();
   }, []);
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const filteredProducts = products.filter(
+    (product) => product.price >= minValue && product.price <= maxValue
+  );
+
+  const inStockProducts = filteredProducts.filter(
+    (product) => product.quantity > 0
+  );
 
   if (loading) {
     return (
@@ -141,18 +263,14 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   }
   // console.log(products);
 
-  const handleInputChange = (event) => {
-    if (event.target.checked) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
-  };
-
   return (
     <div className="w-full relative">
       {/* Banner image */}
-      <div className="w-screen relative h-[400px] -mx-[calc(50vw-50%)]">
+
+      <div
+        className="w-screen relative h-[400px] -mx-[calc(50vw-50%)]"
+        // className=" h-[400px] overflow-hidden"
+      >
         <Image
           src={sb5}
           fill
@@ -163,30 +281,42 @@ const ProductsPage = ({ search }: { search: string[] }) => {
         />
       </div>
 
+      <div className="pointer-events-none">
+        <div className="absolute top-48 left-0 w-full z-20 md:hidden justify-center mt-10">
+          <h3 className="text-2xl text-white">Our Products</h3>
+        </div>
+      </div>
+
       {/* categories */}
-      <div className="absolute top-[15%] hidden lg:flex">
-        <div className="flex items-center gap-24 ">
-          {categories.map((category) => (
-            <div key={category._id} className="flex items-center gap-2">
-              <Image
-                src={category.image}
-                width={50}
-                height={50}
-                className="object-cover bg-transparent"
-                alt="category"
-              />
-              <h2 className="text-white">{category.name}</h2>
-            </div>
-          ))}
+      <div className="pointer-events-none">
+        <div
+          className="absolute top-48 left-0 w-full z-20 hidden lg:flex justify-center mt-10"
+          // style={{ top: "15%", zIndex: 50 }}
+        >
+          <div className="flex items-center gap-24 ">
+            {categories.map((category) => (
+              <div key={category._id} className="flex items-center gap-2">
+                <Image
+                  src={category.image}
+                  width={50}
+                  height={50}
+                  className="object-cover bg-transparent"
+                  alt="category"
+                />
+                <h2 className="text-white">{category.name}</h2>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* all products area */}
-      <div className="w-11/12 mx-auto flex flex-col lg:flex-row items-start justify-between mt-10 gap-10">
+      <div className="w-full md:w-11/12 mx-auto flex flex-col lg:flex-row items-start justify-center mt-10 mb-10 gap-10">
         {/* left column */}
         <div className="w-full lg:w-1/4 flex flex-col items-start ">
           <h3>Filter by price</h3>
-          <div className="flex items-center justify-center mt-4">
+          {/* slider */}
+          {/* <div className="flex items-center justify-center mt-4">
             <div
               className="relative w-64 h-3 bg-gray-300 rounded-full cursor-pointer"
               onClick={handleClick}
@@ -212,11 +342,72 @@ const ProductsPage = ({ search }: { search: string[] }) => {
                 }}
               />
             </div>
+          </div> */}
+
+          {/* Dual Range Slider */}
+          <div className="flex flex-col items-start w-full mt-4 mb-6">
+            <div
+              id="price-slider-track"
+              className="relative w-9/12 h-1 bg-gray-300 rounded-full cursor-pointer mt-8 mb-6"
+              onClick={handleTrackClick}
+            >
+              {/* Selected range */}
+              <div
+                className="absolute h-1 bg-[#43b02a] rounded-full"
+                style={{
+                  left: `${getMinPercentage()}%`,
+                  width: `${getRangeWidth()}%`,
+                }}
+              ></div>
+
+              {/* Min handle */}
+              <div
+                className={`absolute top-[-8px] w-4 h-4 bg-[#43b02a] rounded-full transform -translate-x-1/2 cursor-grab ${
+                  activeThumb === "min" ? "cursor-grabbing" : ""
+                }`}
+                style={{ left: `${getMinPercentage()}%` }}
+                onMouseDown={handleMinMouseDown}
+                role="slider"
+                aria-valuemin={minPrice}
+                aria-valuemax={maxPrice}
+                aria-valuenow={minValue}
+              ></div>
+
+              {/* Max handle */}
+              <div
+                className={`absolute top-[-8px] w-4 h-4 bg-[#43b02a] rounded-full transform -translate-x-1/2 cursor-grab ${
+                  activeThumb === "max" ? "cursor-grabbing" : ""
+                }`}
+                style={{ left: `${getMaxPercentage()}%` }}
+                onMouseDown={handleMaxMouseDown}
+                role="slider"
+                aria-valuemin={minPrice}
+                aria-valuemax={maxPrice}
+                aria-valuenow={maxValue}
+              ></div>
+            </div>
+
+            {/* Price display */}
+            <div className="flex justify-between w-full">
+              <span className="text-sm font-medium">${minValue}</span>
+              <span className="text-sm font-medium">${maxValue}</span>
+            </div>
+          </div>
+
+          <div className="flex justify-between w-full mt-2">
+            {/* <span className="text-sm font-medium">${minValue}</span> */}
+            <button
+              onClick={resetFilters}
+              className="px-3 py-2  bg-[#43b02a] text-white rounded hover:bg-opacity-90 transition-all"
+            >
+              Reset Filters
+            </button>
+            {/* <span className="text-sm font-medium">${maxValue}</span> */}
           </div>
           {/* status */}
           <div className="mt-24">
             <h3>Product Status</h3>
-            <label className="flex items-center gap-[10px] cursor-pointer mt-5">
+            {/* <label className="flex items-center gap-[10px] cursor-pointer mt-5">
               <input
                 type="checkbox"
                 className="hidden"
@@ -272,14 +463,15 @@ const ProductsPage = ({ search }: { search: string[] }) => {
               )}
 
               <span className="text-[1.2rem] text-[#424242]">On sale</span>
-            </label>
+            </label> */}
             <label className="flex items-center gap-[10px] cursor-pointer mt-5">
               <input
                 type="checkbox"
                 className="hidden"
-                onChange={handleInputChange}
+                checked={inStockOnly}
+                onChange={handleCheckboxChange}
               />
-              {checked ? (
+              {inStockOnly ? (
                 <svg
                   width="21"
                   height="21"
@@ -295,7 +487,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
                       width="20"
                       height="20"
                       rx="4"
-                      className="fill-[#3B9DF8]"
+                      className="fill-[#43b02a]"
                       stroke="#3B9DF8"
                     ></rect>
                     <path
@@ -335,11 +527,50 @@ const ProductsPage = ({ search }: { search: string[] }) => {
 
         {/* all products */}
         {/* right column */}
-        <div className="w-full  lg:w-3/4 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
-          {products.map((product) => (
-            <Card key={product._id} product={product} />
-          ))}
+        <div className="w-full lg:w-3/4 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
+          {inStockOnly
+            ? inStockProducts.map((product) => (
+                <Card key={product._id} product={product} />
+              ))
+            : filteredProducts.map((product) => (
+                <Card key={product._id} product={product} />
+              ))}
         </div>
+      </div>
+      <div className="flex space-x-4 mt-10 justify-center mb-24">
+        <button
+          onClick={() => handlePageChange("prev")}
+          disabled={currentPage === 1}
+          className="flex items-center gap-1 px-3 py-1 bg-[#43b02a] rounded-3xl text-white"
+        >
+          <FaLongArrowAltLeft className="mr-1 text-white" /> Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+          (pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => setCurrentPage(pageNumber)}
+              className={`w-8 h-8 flex items-center justify-center rounded-md transition-colors ${
+                currentPage === pageNumber
+                  ? "bg-[#43b02a] text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+
+        {/* <span>{`Page ${currentPage} of ${totalPages}`}</span> */}
+
+        <button
+          onClick={() => handlePageChange("next")}
+          disabled={currentPage === totalPages}
+          className="flex gap-1 items-center px-3 py-1 bg-[#43b02a] rounded-3xl text-white"
+        >
+          <FaLongArrowAltRight className="ml-1 text-white" /> Next
+        </button>
       </div>
     </div>
   );

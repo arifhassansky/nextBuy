@@ -1,5 +1,5 @@
 // types/order.ts
-export interface Order {
+export interface Orders {
   _id?: string;
   orderNumber: string;
   customer: {
@@ -32,7 +32,7 @@ export interface Order {
   totalAmount: number;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   payment: {
-    method: "credit_card" | "paypal" | "bank_transfer";
+    method: "sslcommerz" | "strip" | "cod";
     status: "pending" | "paid" | "failed";
     transactionId?: string;
     amount: number;
@@ -45,9 +45,9 @@ export interface Order {
 
 // For Mongoose schema (if using MongoDB)
 // models/Order.ts
-import mongoose from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = new Schema(
   {
     orderNumber: {
       type: String,
@@ -56,7 +56,7 @@ const orderSchema = new mongoose.Schema(
     },
     customer: {
       userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
       },
@@ -67,7 +67,7 @@ const orderSchema = new mongoose.Schema(
     items: [
       {
         productId: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
@@ -80,7 +80,6 @@ const orderSchema = new mongoose.Schema(
     shippingAddress: {
       street: { type: String, required: true },
       city: { type: String, required: true },
-      state: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
     },
@@ -104,7 +103,7 @@ const orderSchema = new mongoose.Schema(
     payment: {
       method: {
         type: String,
-        enum: ["credit_card", "paypal", "bank_transfer"],
+        enum: ["sslcommerz", "strip", , "cod"],
         required: true,
       },
       status: {
@@ -123,4 +122,6 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.Order || mongoose.model("Order", orderSchema);
+const Order = models.Order || model<Orders>("Order", orderSchema);
+
+export default Order;
