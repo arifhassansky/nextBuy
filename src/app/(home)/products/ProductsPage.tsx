@@ -311,7 +311,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
       </div>
 
       {/* all products area */}
-      <div className="w-11/12 mx-auto flex flex-col lg:flex-row items-start justify-center mt-10 mb-10 gap-10">
+      <div className="w-full md:w-11/12 mx-auto flex flex-col lg:flex-row items-start justify-center mt-10 mb-10 gap-10">
         {/* left column */}
         <div className="w-full lg:w-1/4 flex flex-col items-start ">
           <h3>Filter by price</h3>
@@ -527,7 +527,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
 
         {/* all products */}
         {/* right column */}
-        <div className="w-full  lg:w-3/4 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
+        <div className="w-full lg:w-3/4 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
           {inStockOnly
             ? inStockProducts.map((product) => (
                 <Card key={product._id} product={product} />
@@ -537,7 +537,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
               ))}
         </div>
       </div>
-      <div className="flex space-x-4 mt-10 justify-center mt-10 mb-24">
+      <div className="flex space-x-4 mt-10 justify-center mb-24">
         <button
           onClick={() => handlePageChange("prev")}
           disabled={currentPage === 1}
