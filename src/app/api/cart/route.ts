@@ -33,11 +33,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const { userEmail, items }: CartRequestBody = await req.json();
+    const { items }: CartRequestBody = await req.json();
 
-    console.log(userEmail, items);
-
-    if (!userEmail || !items || !items.productId || !items.quantity) {
+    if (!items || !items.productId || !items.quantity) {
       return NextResponse.json(
         {
           status: 400,
@@ -49,7 +47,7 @@ export async function POST(req: Request) {
     }
 
     // Check if cart already exists for this user
-    let cart = await Cart.findOne({ userEmail });
+    let cart = await Cart.findOne({ userEmail: user?.email });
 
     if (cart) {
       // Cart exists, check if product already in cart
@@ -125,12 +123,7 @@ export async function GET(req: Request) {
       );
     }
 
-    // Parse the URL
-    const { searchParams } = new URL(req.url);
-    const userEmail = searchParams.get("userEmail") || "";
-    console.log("Received userEmail:", userEmail);
-
-    const cart = await Cart.findOne({ userEmail })
+    const cart = await Cart.findOne({ userEmail: user.email })
       .populate({
         path: "items.productId",
         model: "Product", // Ensure this matches your Product model name
@@ -193,11 +186,10 @@ export async function PUT(req: Request) {
       action: "add" | "remove";
     }
 
-    const { userEmail, productId, action }: CartUpdateRequest =
-      await req.json();
+    const { productId, action }: CartUpdateRequest = await req.json();
 
     // Validate request body
-    if (!userEmail || !productId || !action) {
+    if (!productId || !action) {
       return NextResponse.json(
         {
           status: 400,
@@ -209,13 +201,13 @@ export async function PUT(req: Request) {
     }
 
     // Find the cart
-    let cart = await Cart.findOne({ userEmail });
+    let cart = await Cart.findOne({ userEmail: user.email });
 
     if (!cart) {
       // If cart doesn't exist and action is 'add', create new cart
       if (action === "add") {
         cart = new Cart({
-          userEmail,
+          userEmail: user.email,
           items: [{ productId, quantity: 1 }],
         });
         await cart.save();
