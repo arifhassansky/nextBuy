@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
 
@@ -29,7 +30,7 @@ const Wishlist = () => {
         }
 
         const wishListData = await response.json();
-        // const items = wishListData.data.items || [];
+        const items = wishListData?.data?.items || [];
 
         // const itemsWithProducts = await Promise.all(
         //   items.map(async (item) => {
@@ -63,7 +64,7 @@ const Wishlist = () => {
         //   })
         // );
 
-        setWishlistItems(wishListData);
+        setWishlistItems(items);
       } catch (err) {
         console.error("Error fetching wishlist:", err);
         setError(
@@ -79,6 +80,11 @@ const Wishlist = () => {
 
   console.log(wishlistItems);
 
+  const getProductProperty = (item, property) => {
+    if (!item || !item.productId) return "N/A";
+    return item.productId[property] || "N/A";
+  };
+
   return (
     <div>
       <div className="text-center">
@@ -90,6 +96,19 @@ const Wishlist = () => {
           organize, and shop whenever you&apos;re ready.
         </p>
       </div>
+      {/* Loading state */}
+      {loading && (
+        <div className="text-center my-12">
+          <p className="text-lg">Loading your wishlist...</p>
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div className="text-center my-12">
+          <p className="text-lg text-red-600">{error}</p>
+        </div>
+      )}
 
       {/* table */}
       <div className="overflow-x-auto mt-12">
@@ -106,29 +125,33 @@ const Wishlist = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="text-center">
-              <td className="flex justify-center">
-                <Image
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component"
-                  width={50}
-                  height={40}
-                  className="rounded mt-1"
-                />
-              </td>
-              <td>Arif Hassan</td>
-              <td>$ 200</td>
-              <td>In Stock</td>
-              <td>Link</td>
-              <td>
-                <button className="text-green-600 cursor-pointer">
-                  <FaCartPlus size={20} />
-                </button>
-                <button className=" text-red-600 ml-4 cursor-pointer">
-                  <FaTrash size={18} />
-                </button>
-              </td>
-            </tr>
+            {wishlistItems?.map((item, index) => (
+              <tr key={index} className="text-center">
+                <td className="flex justify-center">
+                  <Image
+                    src={item?.productId?.image}
+                    alt="Avatar Tailwind CSS Component"
+                    width={50}
+                    height={40}
+                    className="rounded mt-1"
+                  />
+                </td>
+                <td>{item?.productId?.title}</td>
+                <td>$ {item?.productId?.price}</td>
+                <td>{item.productId.status}</td>
+                <td>
+                  <Link href={`/products/${item.productId.slug}`}>Link</Link>
+                </td>
+                <td>
+                  <button className="text-green-600 cursor-pointer">
+                    <FaCartPlus size={20} />
+                  </button>
+                  <button className=" text-red-600 ml-4 cursor-pointer">
+                    <FaTrash size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
