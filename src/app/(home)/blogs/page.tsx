@@ -18,6 +18,8 @@ interface Article {
 const Blog = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6; // Change this value to show more/less articles per page
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -27,7 +29,6 @@ const Blog = () => {
           throw new Error("Failed to fetch articles");
         }
         const data = await response.json();
-        console.log(data.data);
         setArticles(data.data);
       } catch (err) {
         setError(
@@ -40,6 +41,11 @@ const Blog = () => {
     fetchArticles();
   }, []);
 
+  // Pagination logic
+  const totalPages = Math.ceil(articles.length / postsPerPage);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const paginatedArticles = articles.slice(startIndex, startIndex + postsPerPage);
+
   if (error) {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
@@ -50,6 +56,7 @@ const Blog = () => {
       </div>
     );
   }
+
   return (
     <div className="w-11/12 mx-auto p-6 mt-28">
       <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-4">
@@ -59,12 +66,14 @@ const Blog = () => {
         Stay informed with expert insights, trends, and valuable tips from
         industry professionals.
       </p>
+
+      {/* Blog List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {articles.map((article) => (
+        {paginatedArticles.map((article) => (
           <Link
             key={article._id}
             href={`/article/${article.slug}`}
-            className="h-[400px] border border-gray-300 rounded-xl shadow-lg  bg-white cursor-pointer"
+            className="h-[400px] border border-gray-300 rounded-xl shadow-lg bg-white cursor-pointer"
           >
             <div className="hover14 column">
               <figure className="w-full h-40 overflow-hidden">
@@ -93,7 +102,7 @@ const Blog = () => {
                     height={40}
                     className="rounded-full"
                   />
-                  <p className="text-xs text-gray-600 font-semibold  text-center">
+                  <p className="text-xs text-gray-600 font-semibold text-center">
                     {article.author}
                   </p>
                 </div>
@@ -102,6 +111,37 @@ const Blog = () => {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center items-center mt-8 space-x-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 border rounded ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-gray-800 text-white hover:bg-gray-600"
+          }`}
+        >
+          Previous
+        </button>
+
+        <span className="px-4 py-2 border rounded bg-gray-100 text-gray-800">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 border rounded ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-gray-800 text-white hover:bg-gray-600"
+          }`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
