@@ -33,6 +33,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const { data: session } = useSession();
+  console.log(session);
 
   interface user {
     name: string;
@@ -373,11 +374,11 @@ const Sidebar = () => {
         )}
 
         {/* guide routes */}
-        {user?.role === "guide" && (
+        {user?.role === "seller" && (
           <div className="mt-3 flex flex-col gap-[5px]">
             {/* manage profile */}
             <Link
-              href="/dashboard/profile"
+              href="/dashboard"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -392,7 +393,7 @@ const Sidebar = () => {
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  Manage Profile
+                  Profile
                 </p>
               </div>
 
@@ -403,14 +404,14 @@ const Sidebar = () => {
                 } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Manage Profile
+                  Profile
                 </p>
               </div>
             </Link>
 
             {/* My assigned tours */}
             <Link
-              href="/dashboard/my-assigned-tours"
+              href="/dashboard/add-product"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -425,7 +426,7 @@ const Sidebar = () => {
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  My Assigned Tours
+                  Add Product
                 </p>
               </div>
 
@@ -436,7 +437,7 @@ const Sidebar = () => {
                 } absolute top-0 right-[-135px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  My Assigned Tours
+                  Add Product
                 </p>
               </div>
             </Link>

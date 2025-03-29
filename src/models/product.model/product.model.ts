@@ -35,6 +35,11 @@ const productSchema = new Schema(
       type: String,
       default: "active",
     },
+    sellerId: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,

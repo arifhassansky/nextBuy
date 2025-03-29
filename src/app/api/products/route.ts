@@ -8,10 +8,26 @@ export async function POST(req: Request) {
   try {
     await connectDB();
 
-    const { title, price, description, image, images, category, quantity } =
-      await req.json();
+    const {
+      title,
+      price,
+      description,
+      image,
+      images,
+      category,
+      quantity,
+      sellerId,
+    } = await req.json();
     // console.log(images);
-    if (!title || !price || !description || !image || !category || !quantity) {
+    if (
+      !title ||
+      !price ||
+      !description ||
+      !image ||
+      !category ||
+      !quantity ||
+      sellerId
+    ) {
       return NextResponse.json(
         {
           status: 400,
@@ -29,6 +45,7 @@ export async function POST(req: Request) {
       images,
       category,
       quantity,
+      sellerId,
       slug: `${slugify(title).toLocaleLowerCase()}-${nanoid(
         7
       ).toLocaleLowerCase()}`,
