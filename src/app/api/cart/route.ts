@@ -1,5 +1,6 @@
 import connectDB from "@/config/db/connectDB";
 import Cart from "@/models/cart.model/cart.model";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 interface CartRequestBody {
   userEmail: string;
@@ -18,6 +19,19 @@ interface ICartItem {
 export async function POST(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const { userEmail, items }: CartRequestBody = await req.json();
 
@@ -96,14 +110,33 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    // Uncomment this if you want to enforce authentication
+    // if (!user) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 401,
+    //       success: false,
+    //       message: "Unauthorized",
+    //     },
+    //     { status: 401 }
+    //   );
+    // }
+
     // Parse the URL
     const { searchParams } = new URL(req.url);
     const userEmail = searchParams.get("userEmail") || "";
-    console.log("Received productId:", userEmail);
+    console.log("Received userEmail:", userEmail);
 
-    const cart = await Cart.findOne({
-      userEmail,
-    }).populate("items.productId");
+    const cart = await Cart.findOne({ userEmail })
+      .populate({
+        path: "items.productId",
+        model: "Product", // Ensure this matches your Product model name
+      })
+      .exec();
+
     if (!cart) {
       return NextResponse.json(
         {
@@ -136,11 +169,23 @@ export async function GET(req: Request) {
     );
   }
 }
-
 // app/api/cart/route.ts
 export async function PUT(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     interface CartUpdateRequest {
       userEmail: string;
