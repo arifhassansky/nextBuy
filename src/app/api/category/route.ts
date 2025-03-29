@@ -1,10 +1,24 @@
 import connectDB from "@/config/db/connectDB";
 import Category from "@/models/category.model/category.model";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
+    // const session = await getServerSession();
+    // const user = session?.user;
+
+    // if (!user) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 401,
+    //       success: false,
+    //       message: "Unauthorized",
+    //     },
+    //     { status: 401 }
+    //   );
+    // }
 
     const { name, description, image } = await req.json();
 
@@ -68,7 +82,7 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
-    const limit = Math.max(parseInt(searchParams.get("limit") || "5", 5), 1); // Default to 10, min 1
+    const limit = Math.max(parseInt(searchParams.get("limit") || ""));
 
     // Fetch products with pagination and sorting
     const categories = await Category.find()

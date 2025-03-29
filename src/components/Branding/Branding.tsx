@@ -32,7 +32,7 @@ const Branding = () => {
   return (
     <div className="w-11/12 mx-auto py-10 px-4 relative overflow-hidden">
       <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-        OUR TRUSTED BRANDS
+        Our Trusted Brands
       </h2>
       <div className="relative">
         <Marquee speed={80} pauseOnHover={true} gradient={false}>

@@ -3,6 +3,7 @@ import Wishlist, {
   IWishlist,
   IWishlistItem,
 } from "@/models/wishlist.model/wishlist.model";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 interface WishlistRequestBody {
@@ -24,6 +25,19 @@ export async function POST(
 ): Promise<NextResponse<WishlistResponse>> {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const { userEmail, items }: WishlistRequestBody = await req.json();
 
@@ -93,6 +107,64 @@ export async function POST(
     );
   } catch (error: unknown) {
     console.error("Error in wishlist controller:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        success: false,
+        message: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
+
+    // Parse the URL
+    const { searchParams } = new URL(req.url);
+    const userEmail = searchParams.get("userEmail") || "";
+    console.log("Received productId:", userEmail);
+
+    const wishlist = await Wishlist.findOne({
+      userEmail,
+    });
+    if (!wishlist) {
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Wishlist not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        status: 200,
+        success: true,
+        message: "Wishlist fetched successfully",
+        data: wishlist,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching Wishlist:", error);
     return NextResponse.json(
       {
         status: 500,

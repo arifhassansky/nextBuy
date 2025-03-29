@@ -14,6 +14,9 @@
   background-color: #43b02a !important;
   /* opacity: 0.5 !important; */
 }
+body {
+  font-family: var(--font-lato), sans-serif; /* Fallback to sans-serif */
+}
 
 /* @custom-variant dark (&:is(.dark *));
 

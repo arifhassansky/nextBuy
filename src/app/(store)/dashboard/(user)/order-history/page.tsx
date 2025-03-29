@@ -1,16 +1,15 @@
 import Image from "next/image";
-import { FaTrash } from "react-icons/fa";
 
-const Cards = () => {
+const OrderHistory = () => {
   return (
     <div>
       <div className="text-center">
         <h3 className="text-4xl font-bold mb-2">
-          Add to Cart – Save, Review & Checkout
+          Order History – Review Your Past Purchases
         </h3>
         <p>
-          Keep your selected items in one place for a smooth shopping journey.
-          Add, manage, and purchase with ease.
+          Keep track of all your previous orders in one place. View details,
+          reorder favorites, and manage your shopping history effortlessly.
         </p>
       </div>
 
@@ -25,7 +24,6 @@ const Cards = () => {
               <th className="py-2">Price</th>
               <th className="py-2">Status</th>
               <th className="py-2">View Product</th>
-              <th className="py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -42,17 +40,7 @@ const Cards = () => {
               <td>Arif Hassan</td>
               <td>$ 200</td>
               <td>In Stock</td>
-              <td className="text-green-700 font-semibold hover:underline cursor-pointer">
-                Link
-              </td>
-              <td>
-                <button className="btn btn-sm btn-success text-black cursor-pointer">
-                  pay
-                </button>
-                <button className="btn btn-sm text-red-600 ml-4 cursor-pointer">
-                  <FaTrash size={18} />
-                </button>
-              </td>
+              <td>Link</td>
             </tr>
           </tbody>
         </table>
@@ -61,4 +49,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default OrderHistory;

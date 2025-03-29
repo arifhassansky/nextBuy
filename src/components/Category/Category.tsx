@@ -50,7 +50,7 @@ const Category = () => {
     return (
       <div className="w-11/12 mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-          OUR CATEGORIES
+          Our Categories
         </h2>
         <div className="text-center py-10 text-red-500">{error}</div>
       </div>
@@ -60,7 +60,7 @@ const Category = () => {
   return (
     <div className="w-11/12 mx-auto py-20 px-4">
       <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-        OUR CATEGORIES
+        Our Categories
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
         {loading ? (

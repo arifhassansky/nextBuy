@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { GiSelfLove } from "react-icons/gi";
 import { IoSearch } from "react-icons/io5";
@@ -13,7 +14,7 @@ interface Product {
 
 export const Card = ({ product }: { product: Product }) => {
   return (
-    <div className="rounded-2xl overflow-hidden relative group">
+    <div className="rounded-2xl overflow-hidden relative group w-full">
       <div className="relative cursor-pointer">
         {/* Display product image dynamically */}
 
