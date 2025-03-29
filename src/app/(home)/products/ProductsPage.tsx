@@ -9,6 +9,7 @@ import sb4 from "../../../../public/assets/sb4.jpg";
 import sbr from "../../../../public/assets/resized-image-Promo.jpeg";
 import sb5 from "../../../../public/assets/sb5.jpg";
 import { Card } from "@/components/ui/Card/Card";
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 // import Category from "@/components/Category/Category";
 
 interface Product {
@@ -39,11 +40,12 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [checked, setChecked] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(100);
   const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const minPrice = 0;
   const maxPrice = 1000;
@@ -54,16 +56,6 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   };
 
   console.log(products);
-
-  const sliderChange = (event) => {
-    setValue(event.target.value);
-  };
-
-  const handleClick = (event) => {
-    const slider = event.target.getBoundingClientRect();
-    const newValue = ((event.clientX - slider.left) / slider.width) * 100;
-    setValue(Math.min(Math.max(newValue, 0), 100));
-  };
 
   const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -166,17 +158,17 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   const resetFilters = () => {
     setMinValue(minPrice);
     setMaxValue(maxPrice);
-    setChecked(false); // Also reset the checkboxes if they're being used for filtering
+    // setChecked(false); // Also reset the checkboxes if they're being used for filtering
   };
   const handleCheckboxChange = () => {
     setInStockOnly(!inStockOnly);
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async (page) => {
       try {
         const response = await fetch(
-          `/api/products?search=${search ? search : ""}`
+          `/api/products?page=${page}&limit=10&search=${search ? search : ""}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -184,6 +176,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
         const data = await response.json();
         console.log(data.data);
         setProducts(data.data);
+        setTotalPages(data.pagination.totalPages);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -194,8 +187,8 @@ const ProductsPage = ({ search }: { search: string[] }) => {
       }
     };
 
-    fetchProducts();
-  }, [search]);
+    fetchProducts(currentPage);
+  }, [search, currentPage]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -219,6 +212,14 @@ const ProductsPage = ({ search }: { search: string[] }) => {
 
     fetchCategories();
   }, []);
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
 
   const filteredProducts = products.filter(
     (product) => product.price >= minValue && product.price <= maxValue
@@ -265,6 +266,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   return (
     <div className="w-full relative">
       {/* Banner image */}
+
       <div
         className="w-screen relative h-[400px] -mx-[calc(50vw-50%)]"
         // className=" h-[400px] overflow-hidden"
@@ -534,6 +536,41 @@ const ProductsPage = ({ search }: { search: string[] }) => {
                 <Card key={product._id} product={product} />
               ))}
         </div>
+      </div>
+      <div className="flex space-x-4 mt-10 justify-center mt-10 mb-24">
+        <button
+          onClick={() => handlePageChange("prev")}
+          disabled={currentPage === 1}
+          className="flex items-center gap-1 px-3 py-1 bg-[#43b02a] rounded-3xl text-white"
+        >
+          <FaLongArrowAltLeft className="mr-1 text-white" /> Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+          (pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => setCurrentPage(pageNumber)}
+              className={`w-8 h-8 flex items-center justify-center rounded-md transition-colors ${
+                currentPage === pageNumber
+                  ? "bg-[#43b02a] text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+
+        {/* <span>{`Page ${currentPage} of ${totalPages}`}</span> */}
+
+        <button
+          onClick={() => handlePageChange("next")}
+          disabled={currentPage === totalPages}
+          className="flex gap-1 items-center px-3 py-1 bg-[#43b02a] rounded-3xl text-white"
+        >
+          <FaLongArrowAltRight className="ml-1 text-white" /> Next
+        </button>
       </div>
     </div>
   );
