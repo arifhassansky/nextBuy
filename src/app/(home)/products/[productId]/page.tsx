@@ -120,7 +120,7 @@ export default function ProductDetailsPage() {
   //   const dispatch = useDispatch();
 
   const handleAddToCart = async (cart: Product) => {
-    const response = await fetch(`/api/cart`, {
+    const response = await fetch(`/api/cart?userEmail=${userEmails}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

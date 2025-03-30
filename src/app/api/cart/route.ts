@@ -70,6 +70,7 @@ export async function POST(req: Request) {
     } else {
       // Create new cart if it doesn't exist
       cart = new Cart({
+        userEmail: user?.email,
         items: [
           {
             productId: items.productId,
