@@ -43,7 +43,7 @@ const Navbar = () => {
     provider: string;
     providerAccountId: string;
   }
-  const user = session?.user;
+  const user = session?.data?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
@@ -52,6 +52,8 @@ const Navbar = () => {
   const userEmail = Session?.user?.email;
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
+
+  // console.log(userEmail);
 
   useEffect(() => {
     if (userEmail) {
@@ -67,8 +69,8 @@ const Navbar = () => {
             wishlistResponse.json(),
           ]);
 
-          setCartItems(cartData.data.items);
-          setWishlistItems(wishlistData.data.items);
+          setCartItems(cartData?.data?.items);
+          setWishlistItems(wishlistData?.data?.items);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -338,7 +340,7 @@ const Navbar = () => {
             <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {cartItems.length}
+                {cartItems?.length}
               </span>
             </Link>
             {/* user account */}
