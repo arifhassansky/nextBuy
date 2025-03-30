@@ -63,25 +63,27 @@ const AddProduct = (): JSX.Element => {
       sellerId: session?.user?.id as string,
     };
 
-    try {
-      const res = await fetch(`/api/products`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalData),
-      });
+    if (session) {
+      try {
+        const res = await fetch(`/api/products`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        });
 
-      if (res.ok) {
-        console.log("Product added successfully");
-      } else {
-        const errorData = await res.json();
-        console.error("Failed to add product", errorData.message);
+        if (res.ok) {
+          console.log("Product added successfully");
+        } else {
+          const errorData = await res.json();
+          console.error("Failed to add product", errorData.message);
+        }
+      } catch (error) {
+        console.error("Error posting product", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error posting product", error);
-    } finally {
-      setLoading(false);
     }
   };
 

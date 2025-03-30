@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 
 const UserProfile = () => {
   const { data: session } = useSession();
-  console.log(session);
 
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden mt-20">
@@ -24,7 +23,7 @@ const UserProfile = () => {
           className="rounded-full border-4 border-white shadow-lg object-cover"
         />
         <span className="mt-2 bg-blue-600 text-white text-sm px-3 py-1 rounded-full">
-          admin
+          {session?.user?.role}
         </span>
       </div>
 

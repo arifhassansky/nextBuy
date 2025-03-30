@@ -46,7 +46,7 @@ export const ProductApi = createApi({
    baseQuery: fetchBaseQuery({
       baseUrl: process.env.NEXTAUTH_URL,
    }),
-   tagTypes: ['Product'],
+   tagTypes: ['Product', 'Cart'],
    endpoints: builder => ({
       getProducts: builder.query<Product[], void>({
          query: () => 'api/products?limit=10',
@@ -64,6 +64,7 @@ export const ProductApi = createApi({
 
       getCart: builder.query<CartResponse, string>({
          query: (userEmail: string) => `/api/cart?userEmail=${userEmail}`,
+         providesTags: (result, error, userEmail) => [{ type: 'Cart', id: userEmail }],
       }),
    }),
 });

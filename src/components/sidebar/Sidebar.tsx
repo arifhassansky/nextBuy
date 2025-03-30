@@ -33,7 +33,6 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const { data: session } = useSession();
-  console.log(session);
 
   interface user {
     name: string;
