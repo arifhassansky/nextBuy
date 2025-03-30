@@ -77,6 +77,8 @@ const Navbar = () => {
     }
   }, [userEmail]);
 
+
+  
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
