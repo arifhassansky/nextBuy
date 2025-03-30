@@ -28,7 +28,7 @@ const Navbar = () => {
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const session = useSession();
-  console.log(session);
+  // console.log(session);
 
   //   const { data: cart, error, isLoading } = useGetProductsQuery();
 
