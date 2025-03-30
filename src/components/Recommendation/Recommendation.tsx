@@ -2,6 +2,8 @@
 import Image from "next/image";
 
 const Recommendation = () => {
+  // const {data:}
+  
   return (
     <div className="p-6 rounded-lg">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 place-items-center">

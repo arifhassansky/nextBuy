@@ -1,7 +1,10 @@
 'use client';
 
 const MyAddedProducts = () => {
-   return <div></div>;
+
+  return <div>
+     
+   </div>;
 };
 
 export default MyAddedProducts;
