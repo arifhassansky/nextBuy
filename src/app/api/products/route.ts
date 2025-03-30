@@ -41,8 +41,7 @@ export async function POST(req: Request) {
       !image ||
       !category ||
       !quantity ||
-      !sellerId ||
-      !storeId
+      !sellerId
     ) {
       return NextResponse.json(
         {
