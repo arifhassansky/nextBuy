@@ -17,22 +17,21 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const session = useSession();
-  // console.log(session);
+  const { data: Session } = useSession();
 
-  //   const { data: cart, error, isLoading } = useGetProductsQuery();
-
-  //   console.log(cart);
+  const router = useRouter();
 
   interface user {
     name: string;
@@ -43,17 +42,21 @@ const Navbar = () => {
     provider: string;
     providerAccountId: string;
   }
-  const user = session?.data?.user;
+  const user = Session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
-  const { data: Session } = useSession();
-  const userEmail = Session?.user?.email;
+  const userEmail = user?.email;
+
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  // console.log(userEmail);
+  const handelLogout = () => {
+    router.push("/");
+    toast.success("Logged out successfully");
+    signOut({ redirect: false });
+  };
 
   useEffect(() => {
     if (userEmail) {
@@ -69,8 +72,8 @@ const Navbar = () => {
             wishlistResponse.json(),
           ]);
 
-          setCartItems(cartData?.data?.items);
-          setWishlistItems(wishlistData?.data?.items);
+          setCartItems(cartData.data.items);
+          setWishlistItems(wishlistData.data.items);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -79,8 +82,6 @@ const Navbar = () => {
     }
   }, [userEmail]);
 
-
-  
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
@@ -156,7 +157,7 @@ const Navbar = () => {
               href="/products"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Products
+              All Products
             </Link>
 
             <Link
@@ -326,16 +327,10 @@ const Navbar = () => {
             >
               Blogs
             </Link>
-            <Link
-              href="/about"
-              className="hover:text-[#43b02a] transition flex items-center gap-1"
-            >
-              About
-            </Link>
           </nav>
 
           {/* Action Icons */}
-          <div className="flex items-center space-x-4 ml-6">
+          <div className="flex items-center space-x-6">
             <Link
               className="flex items-center gap-1 relative"
               href="/dashboard/wishlist"
@@ -348,7 +343,7 @@ const Navbar = () => {
             <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {cartItems?.length}
+                {cartItems.length}
               </span>
             </Link>
             {/* user account */}
@@ -387,7 +382,10 @@ const Navbar = () => {
                       </p>
                     </Link>
                     <div className="mt-3 border-t border-gray-200 pt-[5px]">
-                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                      <p
+                        onClick={handelLogout}
+                        className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50"
+                      >
                         <TbLogout2 />
                         Logout
                       </p>

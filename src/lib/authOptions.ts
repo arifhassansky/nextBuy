@@ -109,6 +109,7 @@ export const authOptions: NextAuthOptions = {
             image,
             role: "user",
           });
+
           await newUser.save();
           user.id = newUser._id.toString();
           user.role = newUser.role;
