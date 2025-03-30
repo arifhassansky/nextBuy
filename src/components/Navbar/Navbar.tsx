@@ -29,8 +29,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const Session = useSession();
-  // console.log(session);
+  const { data: Session } = useSession();
 
   const router = useRouter();
 
@@ -73,8 +72,8 @@ const Navbar = () => {
             wishlistResponse.json(),
           ]);
 
-          setCartItems(cartData?.data?.items);
-          setWishlistItems(wishlistData?.data?.items);
+          setCartItems(cartData.data.items);
+          setWishlistItems(wishlistData.data.items);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -158,7 +157,7 @@ const Navbar = () => {
               href="/products"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Products
+              All Products
             </Link>
 
             <Link
@@ -328,16 +327,10 @@ const Navbar = () => {
             >
               Blogs
             </Link>
-            <Link
-              href="/about"
-              className="hover:text-[#43b02a] transition flex items-center gap-1"
-            >
-              About
-            </Link>
           </nav>
 
           {/* Action Icons */}
-          <div className="flex items-center space-x-4 ml-6">
+          <div className="flex items-center space-x-6">
             <Link
               className="flex items-center gap-1 relative"
               href="/dashboard/wishlist"
@@ -350,7 +343,7 @@ const Navbar = () => {
             <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {cartItems?.length}
+                {cartItems.length}
               </span>
             </Link>
             {/* user account */}
