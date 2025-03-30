@@ -131,6 +131,9 @@ export default function ProductDetailsPage() {
       }
    }, [params.productId]);
 
+<<<<<<< HEAD
+  // const dispatch = useDispatch();
+=======
    const dispatch = useDispatch();
    const { refetch } = useGetCartQuery(userEmails);
    const handleAddToCart = async (cart: Product) => {
@@ -148,6 +151,7 @@ export default function ProductDetailsPage() {
             },
          }),
       });
+>>>>>>> f42a0ffc76e406cb78d68eacd4843cb9ca1b7594
 
 <<<<<<< HEAD
       const data = await response.json();
