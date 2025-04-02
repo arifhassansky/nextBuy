@@ -108,21 +108,6 @@ export async function GET(req: Request) {
   try {
     await connectDB();
 
-    const session = await getServerSession();
-    const user = session?.user;
-
-    // Uncomment this if you want to enforce authentication
-    if (!user) {
-      return NextResponse.json(
-        {
-          status: 401,
-          success: false,
-          message: "Unauthorized",
-        },
-        { status: 401 }
-      );
-    }
-
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
     const limit = Math.max(parseInt(searchParams.get("limit") || ""));
