@@ -112,16 +112,16 @@ export async function GET(req: Request) {
     const user = session?.user;
 
     // Uncomment this if you want to enforce authentication
-    // if (!user) {
-    //   return NextResponse.json(
-    //     {
-    //       status: 401,
-    //       success: false,
-    //       message: "Unauthorized",
-    //     },
-    //     { status: 401 }
-    //   );
-    // }
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
@@ -163,18 +163,18 @@ export async function PUT(req: Request) {
     const user = session?.user;
     console.log(user);
     // Uncomment this if you want to enforce authentication
-    // if (!user) {
-    //   return NextResponse.json(
-    //     {
-    //       status: 401,
-    //       success: false,
-    //       message: "Unauthorized",
-    //     },
-    //     { status: 401 }
-    //   );
-    // }
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
-    const { userEmail, action } = await req.json();
+    const { userEmail } = await req.json();
 
     // Fetch products with pagination and sorting
     const stores = await Store.find({ sellerId: userEmail });

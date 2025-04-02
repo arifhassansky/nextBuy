@@ -1,4 +1,5 @@
 "use client";
+// @ts-ignore
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -20,7 +21,6 @@ import nextbuy from "../../../public/assets/nextbuy-logo.png";
 import { signOut, useSession } from "next-auth/react";
 import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -29,7 +29,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const { data: Session } = useSession();
+  const { data: session } = useSession();
 
   const router = useRouter();
 
@@ -45,10 +45,9 @@ const Navbar = () => {
 
   interface Shop {
     slug: string;
-   
   }
-  
-  const user = Session?.user;
+
+  const user = session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
@@ -99,7 +98,6 @@ const Navbar = () => {
         setShops(data.data);
       });
   }, []);
-
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">

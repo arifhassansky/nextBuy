@@ -42,7 +42,7 @@ const ProductsCard: FC = () => {
   if (error) {
     const errorMessage =
       (error as FetchError)?.data?.message || (error as FetchError)?.message;
-    ("Failed to load products.");
+
     return (
       <div className="flex justify-center items-center h-40 text-red-500 font-semibold">
         Error: {errorMessage}
