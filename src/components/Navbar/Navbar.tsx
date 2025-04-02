@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { FaPhone, FaTasks } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import {
   IoCartOutline,
   IoCloseOutline,
@@ -17,8 +17,13 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
+<<<<<<< HEAD
+import { useSession } from "next-auth/react";
+import { MdEmail } from "react-icons/md";
+=======
 import { signOut, useSession } from "next-auth/react";
 import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
+>>>>>>> 3c0237738d142293be7543c9579e605f4d489506
 import { TbLogout2 } from "react-icons/tb";
 import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
 import { useRouter } from "next/navigation";
@@ -42,7 +47,13 @@ const Navbar = () => {
     provider: string;
     providerAccountId: string;
   }
-  const user = Session?.user;
+
+  interface Shop {
+    slug: string;
+   
+  }
+  
+  const user = session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
@@ -51,6 +62,7 @@ const Navbar = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
+  const [shops, setShops] = useState<Shop[]>([]);
 
   const handelLogout = () => {
     router.push("/");
@@ -82,6 +94,16 @@ const Navbar = () => {
     }
   }, [userEmail]);
 
+  // store related data fetching
+
+  useEffect(() => {
+    fetch("/api/store")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        setShops(data.data);
+      });
+  }, []);
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
@@ -181,135 +203,11 @@ const Navbar = () => {
                   } bg-white rounded-md w-full absolute top-[40px] left-0 p-[30px] transition-all duration-600 boxShadow flex flex-wrap gap-[30px]`}
                 >
                   <div className="grid grid-cols-2 gap-[30px]">
-                    <div className="flex flex-col gap-[20px]">
-                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                        More Products
+                    {shops.map((shop) => (
+                      <h3 key={shop.slug} className="text-md font-semibold">
+                        {shop.slug}
                       </h3>
-
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/LQBDJGD/icon-logo-container.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Contact
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#FF5E5E] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/Y8cRWRj/icon-logo-container-1.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Blogs
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#FE9239] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/6bGWgp6/icon-logo-container-2.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Newsletter
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#8B5CF6] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-[20px]">
-                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                        Ecosystem
-                      </h3>
-
-                      <div className="flex float-start gap-[10px]">
-                        {/* <BsBuildings className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Directory
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        {/* <BsCalendar2Date className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500] ">
-                            Bookings
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        {/* <TbUsersGroup className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            User feedback
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        <FaTasks className="text-[1.4rem] text-gray-600" />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Task Manager
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               )}
