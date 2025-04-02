@@ -17,13 +17,8 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
-<<<<<<< HEAD
-import { useSession } from "next-auth/react";
-import { MdEmail } from "react-icons/md";
-=======
 import { signOut, useSession } from "next-auth/react";
-import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
->>>>>>> 3c0237738d142293be7543c9579e605f4d489506
+import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
 import { useRouter } from "next/navigation";
@@ -50,10 +45,9 @@ const Navbar = () => {
 
   interface Shop {
     slug: string;
-   
   }
-  
-  const user = session?.user;
+
+  const user = Session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);

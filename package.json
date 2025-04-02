@@ -34,6 +34,7 @@
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "slugify": "^1.6.6",
+    "sweetalert2": "^11.17.2",
     "swiper": "^11.2.6",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4"
