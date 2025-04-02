@@ -35,6 +35,16 @@ const productSchema = new Schema(
       type: String,
       default: "active",
     },
+    sellerId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    storeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Store",
+      required: true,
+    },
   },
   {
     timestamps: true,

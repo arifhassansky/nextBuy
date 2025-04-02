@@ -1,18 +1,20 @@
 "use client";
-
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+// import { addToWishlist } from "@/redux/features/wishlist/wishlistSlice";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { FiCpu, FiLoader, FiSmartphone } from "react-icons/fi";
-import { TbLoader3 } from "react-icons/tb";
-import { GoVerified } from "react-icons/go";
-import { IoStorefrontOutline } from "react-icons/io5";
-import { CiDeliveryTruck, CiStar } from "react-icons/ci";
-import { MdBatteryChargingFull } from "react-icons/md";
-import { IoMdCamera } from "react-icons/io";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { CiDeliveryTruck, CiStar } from "react-icons/ci";
+import { FiCpu, FiLoader, FiSmartphone } from "react-icons/fi";
+import { GoVerified } from "react-icons/go";
+import { IoMdCamera } from "react-icons/io";
+import { IoStorefrontOutline } from "react-icons/io5";
+import { MdBatteryChargingFull } from "react-icons/md";
+import { TbLoader3 } from "react-icons/tb";
+// import { useDispatch } from "react-redux";
 import s1 from "../../../../../public/assets/shipping1.jpg";
 import s2 from "../../../../../public/assets/shipping2.jpg";
+import { useSession } from "next-auth/react";
 
 // Define Product interface
 interface Product {
@@ -26,6 +28,7 @@ interface Product {
   quantity: number;
   createdAt: string;
   images: string[]; // Updated to string[] since images are URLs
+  //   " product._id": string;
 }
 
 // Define FormData interface
@@ -54,6 +57,8 @@ export default function ProductDetailsPage() {
     recommended: null,
   });
   const [hover, setHover] = useState(0);
+  const { data: session } = useSession();
+  const userEmails = session?.user?.email;
 
   // Type event for input/textarea changes
   const handleChange = (
@@ -111,6 +116,46 @@ export default function ProductDetailsPage() {
       fetchProductDetails();
     }
   }, [params.productId]);
+
+  //   const dispatch = useDispatch();
+
+  const handleAddToCart = async (cart: Product) => {
+    const response = await fetch(`/api/cart?userEmail=${userEmails}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userEmail: userEmails,
+        items: {
+          productId: cart?._id,
+          quantity: 1,
+        },
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
+  const handleAddToWishlist = async (product: Product) => {
+    // dispatch(addToWishlist(id));
+
+    const response = await fetch(`/api/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userEmail: userEmails,
+        items: {
+          productId: product._id,
+          quantity: 1,
+        },
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
 
   if (isLoading) {
     return (
@@ -236,7 +281,10 @@ export default function ProductDetailsPage() {
           {/* Action buttons */}
           <div className="flex flex-col md:flex-row gap-4">
             <button
-              onClick={() => setIsFavorite(!isFavorite)}
+              onClick={() => {
+                //  setIsFavorite(!isFavorite); // Toggle favorite status
+                handleAddToWishlist(product); // Call the function to add to wishlist
+              }}
               className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"
             >
               <div className="flex items-center justify-center gap-2">
@@ -248,7 +296,10 @@ export default function ProductDetailsPage() {
                 Add to Wishlist
               </div>
             </button>
-            <button className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="flex-1 py-3 px-4 rounded-lg bg-[#0FABCA] text-white hover:bg-[#0FABCA]/90 cursor-pointer"
+            >
               Add to Cart
             </button>
           </div>

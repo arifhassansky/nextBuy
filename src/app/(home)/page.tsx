@@ -1,6 +1,5 @@
 import Branding from "@/components/Branding/Branding";
 import Category from "@/components/Category/Category";
-import Footer from "@/components/Footer/Footer";
 import LatestArticlesSlider from "@/components/LatestArticlesSlider/LatestArticlesSlider";
 import NewsletterSection from "@/components/NewsletterSection/NewsletterSection";
 import ProductsCard from "@/components/productsCard/ProductsCard";
@@ -19,8 +18,6 @@ export default function Home() {
       <Branding />
       <TechnicalSpecifications />
       <NewsletterSection />
-
-      <Footer />
     </>
   );
 }

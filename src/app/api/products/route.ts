@@ -3,15 +3,46 @@ import Product from "@/models/product.model/product.model";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
 import { nanoid } from "nanoid";
+import { getServerSession } from "next-auth";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
+    const session = await getServerSession();
+    const user = session?.user;
 
-    const { title, price, description, image, images, category, quantity } =
-      await req.json();
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
+
+    const {
+      title,
+      price,
+      description,
+      image,
+      images,
+      category,
+      quantity,
+      sellerId,
+      storeId,
+    } = await req.json();
     // console.log(images);
-    if (!title || !price || !description || !image || !category || !quantity) {
+    if (
+      !title ||
+      !price ||
+      !description ||
+      !image ||
+      !category ||
+      !quantity ||
+      !sellerId
+    ) {
       return NextResponse.json(
         {
           status: 400,
@@ -29,6 +60,8 @@ export async function POST(req: Request) {
       images,
       category,
       quantity,
+      sellerId,
+      storeId,
       slug: `${slugify(title).toLocaleLowerCase()}-${nanoid(
         7
       ).toLocaleLowerCase()}`,
@@ -65,7 +98,7 @@ export async function GET(req: Request) {
     // Extract query parameters from the request URL
     const { searchParams } = new URL(req.url);
     const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1); // Default to 1, min 1
-    const limit = Math.max(parseInt(searchParams.get("limit") || "10", 10), 1); // Default to 10, min 1
+    const limit = Math.max(parseInt(searchParams.get("limit") || ""));
     const search = searchParams.get("search") || "";
 
     // Build the query dynamically

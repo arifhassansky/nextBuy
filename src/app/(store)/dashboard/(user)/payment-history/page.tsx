@@ -1,16 +1,16 @@
 import Image from "next/image";
-import { FaTrash } from "react-icons/fa";
+import { FaCartPlus, FaTrash } from "react-icons/fa";
 
-const Cards = () => {
+const PaymentHistory = () => {
   return (
     <div>
       <div className="text-center">
         <h3 className="text-4xl font-bold mb-2">
-          Add to Cart – Save, Review & Checkout
+          Payment History – Monitor Your Transactions
         </h3>
         <p>
-          Keep your selected items in one place for a smooth shopping journey.
-          Add, manage, and purchase with ease.
+          View and manage all your past payments in one place. Keep track of
+          completed transactions, refunds, and payment methods securely.
         </p>
       </div>
 
@@ -42,14 +42,12 @@ const Cards = () => {
               <td>Arif Hassan</td>
               <td>$ 200</td>
               <td>In Stock</td>
-              <td className="text-green-700 font-semibold hover:underline cursor-pointer">
-                Link
-              </td>
+              <td>Link</td>
               <td>
-                <button className="btn btn-sm btn-success text-black cursor-pointer">
-                  pay
+                <button className="text-green-600 cursor-pointer">
+                  <FaCartPlus size={20} />
                 </button>
-                <button className="btn btn-sm text-red-600 ml-4 cursor-pointer">
+                <button className=" text-red-600 ml-4 cursor-pointer">
                   <FaTrash size={18} />
                 </button>
               </td>
@@ -61,4 +59,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default PaymentHistory;

@@ -1,16 +1,15 @@
 import Image from "next/image";
-import { FaCartPlus, FaTrash } from "react-icons/fa";
 
-const Wishlist = () => {
+const OrderHistory = () => {
   return (
     <div>
       <div className="text-center">
         <h3 className="text-4xl font-bold mb-2">
-          Wishlist – Keep Track of What You Love
+          Order History – Review Your Past Purchases
         </h3>
         <p>
-          Easily store and manage your favorite items in one place. Revisit,
-          organize, and shop whenever you&apos;re ready.
+          Keep track of all your previous orders in one place. View details,
+          reorder favorites, and manage your shopping history effortlessly.
         </p>
       </div>
 
@@ -25,7 +24,6 @@ const Wishlist = () => {
               <th className="py-2">Price</th>
               <th className="py-2">Status</th>
               <th className="py-2">View Product</th>
-              <th className="py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -43,14 +41,6 @@ const Wishlist = () => {
               <td>$ 200</td>
               <td>In Stock</td>
               <td>Link</td>
-              <td>
-                <button className="text-green-600 cursor-pointer">
-                  <FaCartPlus size={20} />
-                </button>
-                <button className=" text-red-600 ml-4 cursor-pointer">
-                  <FaTrash size={18} />
-                </button>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -59,4 +49,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default OrderHistory;

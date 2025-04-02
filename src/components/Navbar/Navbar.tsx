@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Icons
 import { CiHeart, CiSearch } from "react-icons/ci";
-import { FaPhone, FaTasks } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import {
   IoCartOutline,
   IoCloseOutline,
@@ -17,16 +17,21 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
-import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
+import { signOut, useSession } from "next-auth/react";
+import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useSession } from "next-auth/react";
+
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: Session } = useSession();
+
+  const router = useRouter();
 
   interface user {
     name: string;
@@ -37,43 +42,100 @@ const Navbar = () => {
     provider: string;
     providerAccountId: string;
   }
-  const user = session?.user;
+
+  interface Shop {
+    slug: string;
+   
+  }
+  
+  const user = Session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
+
+  const userEmail = user?.email;
+
+  const [cartItems, setCartItems] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [shops, setShops] = useState<Shop[]>([]);
+
+  const handelLogout = () => {
+    router.push("/");
+    toast.success("Logged out successfully");
+    signOut({ redirect: false });
+  };
+
+  useEffect(() => {
+    if (userEmail) {
+      const fetchData = async () => {
+        try {
+          const [cartResponse, wishlistResponse] = await Promise.all([
+            fetch(`/api/cart?userEmail=${userEmail}`),
+            fetch(`/api/wishlist?userEmail=${userEmail}`),
+          ]);
+
+          const [cartData, wishlistData] = await Promise.all([
+            cartResponse.json(),
+            wishlistResponse.json(),
+          ]);
+
+          setCartItems(cartData.data.items);
+          setWishlistItems(wishlistData.data.items);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userEmail]);
+
+  // store related data fetching
+
+  useEffect(() => {
+    fetch("/api/store")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        setShops(data.data);
+      });
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
         {/* Top Information Bar */}
         <div className="hidden lg:flex justify-between items-center py-2 border-b border-gray-200">
-          <div className="flex items-center space-x-4 text-xs text-gray-600">
-            <span className="flex items-center gap-1">
-              <FaPhone color="#43b02a" /> +1 (234) 567-890
+          <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <span className="flex items-center gap-1 font-semibold">
+              <FaPhone color="#43b02a" /> +880 17888 8888
             </span>
-            <span className="flex items-center gap-1">
-              <MdEmail color="#43b02a" /> XTEMOS@EMAIL.COM
+            <span className="flex items-center gap-1 font-medium">
+              <MdEmail color="#43b02a" /> contact@nextbuy.com
             </span>
           </div>
-          <div className="flex items-center space-x-3 text-xs text-gray-600 uppercase">
-            <Link className="flex items-center gap-1" href="/newsletter">
-              <MdEmail /> Newsletter |
+          <div className="flex items-center space-x-3 text-sm ">
+            <Link
+              className="flex items-center gap-1  font-medium"
+              href="/newsletter"
+            >
+              <MdEmail color="#43b02a" /> Newsletter |
             </Link>
             <Link href="/contact">Contact Us |</Link>
-            <Link href="/faq">Faq |</Link>
+            <Link href="/faq">Faq </Link>
 
-            <Link href="/auth/login">Login |</Link>
-            <Link
-              href="/auth/signUp"
-              className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#43B02A]"
-            >
-              Register
-            </Link>
+            {!user && (
+              <Link
+                href="/auth/login"
+                className="flex items-center px-3 py-2 rounded-[35px] text-white bg-[#3C9E26] hover:bg-black "
+              >
+                Login / Sign Up
+              </Link>
+            )}
           </div>
         </div>
 
         {/* Main Navigation */}
-        <div className="flex items-center justify-between mt-1 ">
+        <div className="flex items-center  mt-1 ">
           {/* Mobile Menu Toggle */}
           <button onClick={toggleMobileMenu} className="md:hidden text-3xl">
             {isMobileMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
@@ -90,30 +152,39 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="relative md:flex hidden">
+          <div className="relative md:flex hidden flex-1 mr-5">
             <input
-              className="py-1 pr-4 border border-text pl-10 rounded-full outline-none focus:border-green-600"
+              className="py-1 pr-4 border border-gray-400 border-text pl-10 rounded-full  outline-none focus:border-green-600  px-5 w-[80%] "
               placeholder="Search..."
             />
             <IoIosSearch className="absolute top-[9px] left-3 text-green-600 font-bold text-[1.3rem]" />
+            <button className="bg-[#3C9E26] hover:bg-black  text-white py-2 px-6 rounded-full cursor-pointer -ml-24">
+              Search
+            </button>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 uppercase font-medium relative">
+          <nav className="hidden md:flex space-x-6 font-medium relative flex-1">
             <Link
               href="/"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
               Home
             </Link>
+            <Link
+              href="/products"
+              className="hover:text-[#43b02a] transition flex items-center gap-1"
+            >
+              All Products
+            </Link>
 
             <Link
               onMouseEnter={() => setIsProductHover(true)}
               onMouseLeave={() => setIsProductHover(false)}
-              href="/shop"
+              href="/shops"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Shop
+              Shops
               <IoIosArrowUp
                 className={`${
                   isProductHover ? "rotate-0" : "rotate-[-180deg]"
@@ -128,135 +199,11 @@ const Navbar = () => {
                   } bg-white rounded-md w-full absolute top-[40px] left-0 p-[30px] transition-all duration-600 boxShadow flex flex-wrap gap-[30px]`}
                 >
                   <div className="grid grid-cols-2 gap-[30px]">
-                    <div className="flex flex-col gap-[20px]">
-                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                        More Products
+                    {shops.map((shop) => (
+                      <h3 key={shop.slug} className="text-md font-semibold">
+                        {shop.slug}
                       </h3>
-
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/LQBDJGD/icon-logo-container.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Demo App
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#FF5E5E] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/Y8cRWRj/icon-logo-container-1.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CRM
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#FE9239] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px] group">
-                        <Image
-                          src="https://i.ibb.co/6bGWgp6/icon-logo-container-2.png"
-                          alt="image"
-                          width={50}
-                          height={50}
-                          className="w-[30px] h-[30px]"
-                        />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            CMS
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-
-                          <button className="text-[#8B5CF6] mt-2 flex items-center gap-[4px] text-[0.9rem]">
-                            Call to action
-                            <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-[20px]">
-                      <h3 className="text-[1.2rem] text-gray-500 font-[500]">
-                        Ecosystem
-                      </h3>
-
-                      <div className="flex float-start gap-[10px]">
-                        {/* <BsBuildings className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Directory
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        {/* <BsCalendar2Date className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500] ">
-                            Bookings
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        {/* <TbUsersGroup className="text-[1.4rem] text-gray-600" /> */}
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            User feedback
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex float-start gap-[10px]">
-                        <FaTasks className="text-[1.4rem] text-gray-600" />
-
-                        <div>
-                          <h1 className="text-[1rem] text-gray-600 font-[500]">
-                            Task Manager
-                          </h1>
-                          <p className="text-[0.9rem] text-gray-400 font-[300]">
-                            Lorem ipsum dolor sit amet, consect adipiscing elit
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -269,31 +216,28 @@ const Navbar = () => {
               Categories
             </Link>
             <Link
-              href="/blog"
+              href="/blogs"
               className="hover:text-[#43b02a] transition flex items-center gap-1"
             >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-[#43b02a] transition flex items-center gap-1"
-            >
-              Contact
+              Blogs
             </Link>
           </nav>
 
           {/* Action Icons */}
           <div className="flex items-center space-x-6">
-            <Link className="flex items-center gap-1 relative" href="/wishlist">
+            <Link
+              className="flex items-center gap-1 relative"
+              href="/dashboard/wishlist"
+            >
               <CiHeart size={20} />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {wishlistItems.length}
               </span>
-            </Link>{" "}
-            <Link href="/cart" className="text-2xl relative">
+            </Link>
+            <Link href="/dashboard/carts" className="text-2xl relative">
               <IoCartOutline />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {cartItems.length}
               </span>
             </Link>
             {/* user account */}
@@ -332,7 +276,10 @@ const Navbar = () => {
                       </p>
                     </Link>
                     <div className="mt-3 border-t border-gray-200 pt-[5px]">
-                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                      <p
+                        onClick={handelLogout}
+                        className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50"
+                      >
                         <TbLogout2 />
                         Logout
                       </p>
