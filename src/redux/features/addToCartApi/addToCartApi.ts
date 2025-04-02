@@ -9,13 +9,16 @@ export const addToCartApi = createApi({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: () => `cart`,
-      providesTags: (result) =>
+      providesTags: (result: { id: string | number }[] | undefined) =>
         result
           ? [
-              ...result.map(({ id }: any) => ({ type: "Cart", id })),
-              { type: "Cart", id: "LIST" },
+              ...result.map(({ id }: { id: string | number }) => ({
+                type: "Cart" as const,
+                id,
+              })),
+              { type: "Cart" as const, id: "LIST" },
             ]
-          : [{ type: "Cart", id: "LIST" }],
+          : [{ type: "Cart" as const, id: "LIST" }],
     }),
 
     // createProducts: builder.mutation({

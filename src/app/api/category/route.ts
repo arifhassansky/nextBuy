@@ -1,4 +1,3 @@
-// @ts-ignore
 import connectDB from "@/config/db/connectDB";
 import Category from "@/models/category.model/category.model";
 import { getServerSession } from "next-auth";

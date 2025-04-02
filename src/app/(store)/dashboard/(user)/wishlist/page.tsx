@@ -3,17 +3,31 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
 
-const Wishlist = () => {
-  // console.log(user.email);
-  const { data: session } = useSession();
-  const [wishlistItems, setWishlistItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+interface WishlistItem {
+  productId: {
+    image: string;
+    title: string;
+    price: number;
+    status: string;
+    slug: string;
+  };
+  addedAt: string;
+}
 
-  console.log(session);
+interface WishlistData {
+  _id: string;
+  userEmail: string;
+  items: WishlistItem[];
+}
+
+const Wishlist: FC = () => {
+  const { data: session } = useSession();
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -22,53 +36,20 @@ const Wishlist = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:3000/api/wishlist?userEmail=${session?.user?.email}`
+          `http://localhost:3000/api/wishlist?userEmail=${session.user.email}`
         );
 
         if (!response.ok) {
           throw new Error("Failed to fetch wishlist");
         }
 
-        const wishListData = await response.json();
-        const items = wishListData?.data?.items || [];
-
-        // const itemsWithProducts = await Promise.all(
-        //   items.map(async (item) => {
-        //     try {
-        //       const productResponse = await fetch(
-        //         `/api/products/${item.productId}`
-        //       );
-
-        //       if (!productResponse.ok) {
-        //         throw new Error(
-        //           `Failed to fetch product with ID: ${item.productId}`
-        //         );
-        //       }
-
-        //       const productData = await productResponse.json();
-        //       return {
-        //         ...item,
-        //         product: productData.data,
-        //       };
-        //     } catch (productError) {
-        //       console.error("Error fetching product:", productError);
-        //       return {
-        //         ...item,
-        //         product: {
-        //           title: "Product information unavailable",
-        //           price: "N/A",
-        //           image: "/placeholder-image.jpg",
-        //         },
-        //       };
-        //     }
-        //   })
-        // );
-
-        setWishlistItems(items);
+        const wishListData: { data?: WishlistData } = await response.json();
+        setWishlistItems(wishListData.data?.items || []);
       } catch (err) {
-        console.error("Error fetching wishlist:", err);
         setError(
-          err.message || "An error occurred while fetching your wishlist"
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching your wishlist"
         );
       } finally {
         setLoading(false);
@@ -77,13 +58,6 @@ const Wishlist = () => {
 
     fetchWishlist();
   }, [session]);
-
-  console.log(wishlistItems);
-
-  const getProductProperty = (item, property) => {
-    if (!item || !item.productId) return "N/A";
-    return item.productId[property] || "N/A";
-  };
 
   return (
     <div>
@@ -96,24 +70,21 @@ const Wishlist = () => {
           organize, and shop whenever you&apos;re ready.
         </p>
       </div>
-      {/* Loading state */}
+
       {loading && (
         <div className="text-center my-12">
           <p className="text-lg">Loading your wishlist...</p>
         </div>
       )}
 
-      {/* Error state */}
       {error && (
         <div className="text-center my-12">
           <p className="text-lg text-red-600">{error}</p>
         </div>
       )}
 
-      {/* table */}
       <div className="overflow-x-auto mt-12">
         <table className="table table-zebra w-full border-collapse">
-          {/* head */}
           <thead>
             <tr className="bg-gray-300 text-black text-center">
               <th className="py-2">Product Image</th>
@@ -125,19 +96,19 @@ const Wishlist = () => {
             </tr>
           </thead>
           <tbody>
-            {wishlistItems?.map((item, index) => (
+            {wishlistItems.map((item, index) => (
               <tr key={index} className="text-center">
                 <td className="flex justify-center">
                   <Image
-                    src={item?.productId?.image}
-                    alt="Avatar Tailwind CSS Component"
+                    src={item.productId.image}
+                    alt={item.productId.title}
                     width={50}
                     height={40}
                     className="rounded mt-1"
                   />
                 </td>
-                <td>{item?.productId?.title}</td>
-                <td>$ {item?.productId?.price}</td>
+                <td>{item.productId.title}</td>
+                <td>$ {item.productId.price}</td>
                 <td>{item.productId.status}</td>
                 <td>
                   <Link href={`/products/${item.productId.slug}`}>Link</Link>
@@ -146,7 +117,7 @@ const Wishlist = () => {
                   <button className="text-green-600 cursor-pointer">
                     <FaCartPlus size={20} />
                   </button>
-                  <button className=" text-red-600 ml-4 cursor-pointer">
+                  <button className="text-red-600 ml-4 cursor-pointer">
                     <FaTrash size={18} />
                   </button>
                 </td>
