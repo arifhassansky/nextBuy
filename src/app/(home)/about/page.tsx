@@ -52,7 +52,7 @@ const AboutUs = () => {
           from trusted sellers in a secure and intuitive platform. Our mission
           is to make online shopping effortless by combining advanced
           technology, user-friendly design, and exceptional customer service.
-          Whether you're searching for the latest trends or unique items,
+          Whether you&apos;re searching for the latest trends or unique items,
           NextBuy offers a reliable, streamlined, and enjoyable shopping journey
           from start to finish.
         </p>
@@ -90,7 +90,23 @@ const AboutUs = () => {
       <div className="mt-16 text-center">
         <h2 className="text-3xl font-bold text-gray-800">Our Mission</h2>
         <p className="text-lg text-gray-600 mt-4 mx-auto">
-        In the future, NextBuy plans to implement several advanced features to enhance the e-commerce experience. We aim to integrate AI-powered voice search and chatbots to allow customers to interact with the platform hands-free and engage in more intuitive conversations. Blockchain technology could be leveraged to offer secure, decentralized transactions, providing an extra layer of trust and transparency. Additionally, real-time shipping tracking and predictive delivery times will keep customers informed, enhancing satisfaction and transparency. We also plan to introduce subscription services for specific product categories, offering convenience and savings for regular purchases. As part of our global expansion, NextBuy will introduce multi-currency and multi-language support to cater to international customers. Finally, integrating social commerce will allow customers to shop directly through social media platforms, combining engagement with seamless transactions. These innovations will position NextBuy at the forefront of e-commerce, offering a smarter, more efficient, and personalized shopping experience.
+          In the future, NextBuy plans to implement several advanced features to
+          enhance the e-commerce experience. We aim to integrate AI-powered
+          voice search and chatbots to allow customers to interact with the
+          platform hands-free and engage in more intuitive conversations.
+          Blockchain technology could be leveraged to offer secure,
+          decentralized transactions, providing an extra layer of trust and
+          transparency. Additionally, real-time shipping tracking and predictive
+          delivery times will keep customers informed, enhancing satisfaction
+          and transparency. We also plan to introduce subscription services for
+          specific product categories, offering convenience and savings for
+          regular purchases. As part of our global expansion, NextBuy will
+          introduce multi-currency and multi-language support to cater to
+          international customers. Finally, integrating social commerce will
+          allow customers to shop directly through social media platforms,
+          combining engagement with seamless transactions. These innovations
+          will position NextBuy at the forefront of e-commerce, offering a
+          smarter, more efficient, and personalized shopping experience.
         </p>
       </div>
       {/* Tech Stack Section */}
@@ -106,7 +122,7 @@ const AboutUs = () => {
             "Vercel",
             "Mongoose",
             "Typescript",
-            "Redux"
+            "Redux",
           ].map((tech, i) => (
             <span
               key={i}
