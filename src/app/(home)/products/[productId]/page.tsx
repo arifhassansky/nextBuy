@@ -282,7 +282,7 @@ export default function ProductDetailsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             <button
               onClick={() => {
-                //  setIsFavorite(!isFavorite); // Toggle favorite status
+                setIsFavorite(!isFavorite); // Toggle favorite status
                 handleAddToWishlist(product); // Call the function to add to wishlist
               }}
               className="flex-1 py-3 px-4 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50"

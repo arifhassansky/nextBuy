@@ -105,7 +105,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     await connectDB();
 
@@ -338,7 +338,7 @@ export async function DELETE(req: Request) {
     }
 
     // Find the cart
-    let cart = await Cart.findOne({ userEmail: user.email });
+    const cart = await Cart.findOne({ userEmail: user.email });
 
     if (!cart) {
       return NextResponse.json(
