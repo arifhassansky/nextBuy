@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { useSession } from "next-auth/react";
 
 export const addToCartApi = createApi({
   reducerPath: "addToCartApi",
@@ -13,7 +12,7 @@ export const addToCartApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Cart", id })),
+              ...result.map(({ id }: any) => ({ type: "Cart", id })),
               { type: "Cart", id: "LIST" },
             ]
           : [{ type: "Cart", id: "LIST" }],
