@@ -17,16 +17,26 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
+<<<<<<< HEAD
 import { useSession } from "next-auth/react";
 import { MdEmail } from "react-icons/md";
+=======
+import { signOut, useSession } from "next-auth/react";
+import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
+>>>>>>> 3c0237738d142293be7543c9579e605f4d489506
 import { TbLogout2 } from "react-icons/tb";
+import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: Session } = useSession();
+
+  const router = useRouter();
 
   interface user {
     name: string;
@@ -48,11 +58,17 @@ const Navbar = () => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
-  const { data: Session } = useSession();
-  const userEmail = Session?.user?.email;
+  const userEmail = user?.email;
+
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
   const [shops, setShops] = useState<Shop[]>([]);
+
+  const handelLogout = () => {
+    router.push("/");
+    toast.success("Logged out successfully");
+    signOut({ redirect: false });
+  };
 
   useEffect(() => {
     if (userEmail) {
@@ -264,7 +280,10 @@ const Navbar = () => {
                       </p>
                     </Link>
                     <div className="mt-3 border-t border-gray-200 pt-[5px]">
-                      <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                      <p
+                        onClick={handelLogout}
+                        className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50"
+                      >
                         <TbLogout2 />
                         Logout
                       </p>

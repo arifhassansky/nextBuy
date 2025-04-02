@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     } else {
       // Create new cart if it doesn't exist
       cart = new Cart({
-        userEmail,
+        userEmail: user?.email,
         items: [
           {
             productId: items.productId,
@@ -108,6 +108,7 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     await connectDB();
+
     const session = await getServerSession();
     const user = session?.user;
 
@@ -166,6 +167,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
   try {
     await connectDB();
+
     const session = await getServerSession();
     const user = session?.user;
 
@@ -286,6 +288,103 @@ export async function PUT(req: Request) {
     );
   } catch (error) {
     console.error("Error in cart update controller:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        success: false,
+        message: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    await connectDB();
+
+    // Check authentication
+    const session = await getServerSession();
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
+
+    // Define request interface
+    interface CartDeleteRequest {
+      productId: string;
+    }
+
+    const { productId }: CartDeleteRequest = await req.json();
+
+    // Validate request body
+    if (!productId) {
+      return NextResponse.json(
+        {
+          status: 400,
+          success: false,
+          message: "Product ID is required",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Find the cart
+    let cart = await Cart.findOne({ userEmail: user.email });
+
+    if (!cart) {
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Cart not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    // Find item index using the exact productId
+    const itemIndex = cart.items.findIndex(
+      (item: { productId: string; quantity: number; _id: string }) =>
+        item.productId.toString() === productId
+    );
+
+    if (itemIndex === -1) {
+      return NextResponse.json(
+        {
+          status: 404,
+          success: false,
+          message: "Item not found in cart",
+        },
+        { status: 404 }
+      );
+    }
+
+    // Remove the item completely regardless of quantity
+    cart.items.splice(itemIndex, 1);
+
+    // Save updated cart
+    await cart.save();
+
+    return NextResponse.json(
+      {
+        status: 200,
+        success: true,
+        message: "Item removed from cart successfully",
+        data: cart,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in cart delete controller:", error);
     return NextResponse.json(
       {
         status: 500,

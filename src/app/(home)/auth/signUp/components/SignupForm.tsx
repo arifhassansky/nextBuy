@@ -21,10 +21,23 @@ const SignupForm = () => {
     console.log(name, email, image, password);
 
     try {
-      router.push("/");
-      form.reset(); // Ensure form reset works correctly
-      toast.success("User registered successfully. Please login.");
-      // }
+      const res = await fetch("/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role: "user",
+        }),
+      });
+      if (res.ok) {
+        router.push("/auth/login");
+        form.reset(); // Ensure form reset works correctly
+        toast.success("User registered successfully. Please login now.");
+      }
     } catch (error) {
       console.error(error);
       toast.error("Registration failed. Please try again.");

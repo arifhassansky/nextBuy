@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     //     { status: 401 }
     //   );
     // }
-    const findUser = await User.findOne({ email: user?.email });
+    const findUser = await User.findOne({ email: "himelmia1625@gmail.com" });
 
     if (!findUser) {
       return NextResponse.json(
