@@ -61,13 +61,25 @@ import React, { useEffect, useState } from "react";
 // };
 
 // Main Checkout Component
-const CheckoutPage = ({ params }) => {
+interface CheckoutPageProps {
+  params: {
+    id: string;
+  };
+}
+
+const CheckoutPage = ({ params }: CheckoutPageProps) => {
   const { id: slug } = params;
   const { data: session } = useSession();
   const [selectedPayment, setSelectedPayment] = useState("credit-card");
   const [isChecked, setIsChecked] = useState(false);
   //   product
-  const [product, setProduct] = useState();
+  interface Product {
+    image: string;
+    title: string;
+    // Add other properties of the product object as needed
+  }
+
+  const [product, setProduct] = useState<Product | null>(null);
   console.log(product);
 
   useEffect(() => {
@@ -223,7 +235,9 @@ const CheckoutPage = ({ params }) => {
                 type="checkbox"
                 className="hidden"
                 // onChange={handleCheckboxChange}
-                onClick={(e) => setIsChecked(e.target.checked)}
+                onClick={(e) =>
+                  setIsChecked((e.target as HTMLInputElement)?.checked)
+                }
               />
               {isChecked ? (
                 <svg
@@ -405,7 +419,7 @@ const CheckoutPage = ({ params }) => {
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
                 <Image
-                  src={product?.image}
+                  src={product?.image || ""}
                   alt="product"
                   width={50}
                   height={50}
