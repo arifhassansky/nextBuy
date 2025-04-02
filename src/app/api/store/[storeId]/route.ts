@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     console.log("Received storeId:", storeId);
 
     const store = await Store.findOne({ slug: storeId });
+    console.log(store);
 
     const findAllProducts = await Product.find({ storeId: store?._id });
 

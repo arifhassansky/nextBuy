@@ -13,16 +13,18 @@ export async function POST(req: Request) {
     const user = session?.user;
 
     // Uncomment this if you want to enforce authentication
-    // if (!user) {
-    //   return NextResponse.json(
-    //     {
-    //       status: 401,
-    //       success: false,
-    //       message: "Unauthorized",
-    //     },
-    //     { status: 401 }
-    //   );
-    // }
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 401,
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
+
     const findUser = await User.findOne({ email: "himelmia1625@gmail.com" });
 
     if (!findUser) {
