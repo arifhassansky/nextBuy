@@ -17,15 +17,10 @@ import {
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import nextbuy from "../../../public/assets/nextbuy-logo.png";
 
-<<<<<<< HEAD
-import { useSession } from "next-auth/react";
-import { MdEmail } from "react-icons/md";
-=======
 import { signOut, useSession } from "next-auth/react";
-import { MdEmail, MdOutlineArrowRightAlt } from "react-icons/md";
->>>>>>> 3c0237738d142293be7543c9579e605f4d489506
+import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
+
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -53,7 +48,7 @@ const Navbar = () => {
    
   }
   
-  const user = session?.user;
+  const user = Session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
@@ -104,6 +99,7 @@ const Navbar = () => {
         setShops(data.data);
       });
   }, []);
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white pb-2 shadow">
       <div className="w-11/12 mx-auto px-4">
