@@ -200,9 +200,9 @@ const Navbar = () => {
                 >
                   <div className="grid grid-cols-2 gap-[30px]">
                     {shops.map((shop) => (
-                      <h3 key={shop.slug} className="text-md font-semibold">
+                      <Link href={`/shops/${shop.slug}`}key={shop.slug} className="text-md font-semibold">
                         {shop.slug}
-                      </h3>
+                      </Link>
                     ))}
                   </div>
                 </div>
