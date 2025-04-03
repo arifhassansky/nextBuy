@@ -22,45 +22,71 @@ interface Product {
   //   " product._id": string;
 }
 
-const Wishlist = () => {
-  // console.log(user.email);
+interface WishlistData {
+  _id: string;
+  userEmail: string;
+  items: WishlistItem[];
+}
+
+const Wishlist: FC = () => {
   const { data: session } = useSession();
-  const [wishlistItems, setWishlistItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const userEmails = session?.user?.email;
 
   const handleAddToCart = async (cart: Product) => {
-    const response = await fetch(`/api/cart?userEmail=${userEmails}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userEmail: userEmails,
-        items: {
-          productId: cart?._id,
-          quantity: 1,
+    try {
+      const response = await fetch(`/api/cart?userEmail=${userEmails}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          userEmail: userEmails,
+          items: {
+            productId: cart?._id,
+            quantity: 1,
+          },
+        }),
+      });
 
-    await fetch(`http://localhost:3000/api/wishlist`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userEmail: userEmails,
-        productId: cart?.productId._id,
-      }),
-    });
-    setWishlistItems(
-      wishlistItems.filter((item) => item.productId._id !== cart.productId._id)
-    );
+      await fetch(`http://localhost:3000/api/wishlist`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: userEmails,
+          productId: cart?.productId._id,
+        }),
+      });
+      setWishlistItems(
+        wishlistItems.filter(
+          (item) => item.productId._id !== cart.productId._id
+        )
+      );
 
-    const data = await response.json();
-    // console.log(data);
+      const data = await response.json();
+      console.log(data);
+
+      if (data.status === 201) {
+        Swal.fire({
+          title: "Added to Cart!",
+          text: `${cart?.productId?.title} has been added to your cart.`,
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to add item to cart.",
+        icon: "error",
+      });
+      console.error("Error adding item to cart:", error);
+    }
   };
 
   const handleDelete = async (cart: Product) => {
@@ -109,30 +135,7 @@ const Wishlist = () => {
         console.error("Error deleting item:", error);
       }
     }
-
-    // const response = await fetch(`http://localhost:3000/api/wishlist`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     userEmail: userEmails,
-    //     productId: cart?.productId._id,
-    //   }),
-    // });
   };
-
-interface WishlistData {
-  _id: string;
-  userEmail: string;
-  items: WishlistItem[];
-}
-
-const Wishlist: FC = () => {
-  const { data: session } = useSession();
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWishlist = async () => {
