@@ -26,9 +26,7 @@ const Carts: React.FC = () => {
     const fetchProducts = async () => {
       if (!session?.user?.email) return;
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=${session.user.email}`
-        );
+        const res = await fetch(`/api/cart?userEmail=${session.user.email}`);
         const data = await res.json();
         setProducts(data?.data?.items || []);
       } catch (error) {
@@ -41,10 +39,7 @@ const Carts: React.FC = () => {
   const handleDelete = async (id: string) => {
     const deleteData = { id, action: "remove" };
     try {
-      const { data } = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart`,
-        deleteData
-      );
+      const { data } = await axios.put(`/api/cart`, deleteData);
       console.log(data);
       setProducts(
         (prev) => prev?.filter((item) => item.productId._id !== id) || []

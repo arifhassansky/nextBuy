@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const session = await getServerSession();
     const user = session?.user;
 
-    //   // Uncomment this if you want to enforce authentication
+    // Uncomment this if you want to enforce authentication
 
     if (!user) {
       return NextResponse.json(
