@@ -17,7 +17,7 @@ interface Shop {
 }
 
 const ShopDetails = ({ params }: { params: { id: string } }) => {
-    console.log(params.id)
+  
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -62,8 +62,8 @@ const ShopDetails = ({ params }: { params: { id: string } }) => {
             <div className="hover14 column">
               <figure className="w-full h-40 overflow-hidden">
                 <Image
-                  src={shop.image} // Fixed image src
-                  alt={shop.title} // Fixed alt text
+                  src={shop.image} 
+                  alt={shop.title} 
                   width={300}
                   height={160}
                   className="w-full h-40 rounded-t-xl object-cover"
@@ -74,7 +74,7 @@ const ShopDetails = ({ params }: { params: { id: string } }) => {
               <h1 className="font-semibold text-lg">{shop.title}</h1>
               <p className="text-gray-600 text-xs">Category: {shop.category}</p>
               <p className="text-gray-600 text-xs">Quantity: {shop.quantity}</p>
-              <p className="text-xs text-gray-500">Status: {shop.status}</p> {/* Add real address if available */}
+              <p className="text-xs text-gray-500">Status: {shop.status}</p> 
             </div>
           </div>
         ))}
