@@ -14,53 +14,54 @@ interface Shop {
   city: string;
   postalCode: string;
   country: string;
-  address : string;
+  address: {
+    street: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
 }
 
 const Shop = () => {
-
   const [shops, setShops] = useState<Shop[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-  
-    // console.log("common url",process.env.NEXTAUTH_URL)
-  
-    useEffect(() => {
-      const fetchShops = async () => {
-        try {
-          const response = await fetch("/api/store");
-          if (!response.ok) {
-            throw new Error("Failed to fetch shops");
-          }
-          const data = await response.json();
-          console.log(data.data);
-          setShops(data.data);
-        } catch (err) {
-          setError(
-            err instanceof Error ? err.message : "An unknown error occurred"
-          );
-          console.error("Error fetching shops:", err);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchShops();
-    }, []);
+  const [error, setError] = useState<string | null>(null);
 
-    if (error) {
-      return (
-        <div className="w-11/12 mx-auto py-20 px-4">
-          <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
+  // console.log("common url",process.env.NEXTAUTH_URL)
+
+  useEffect(() => {
+    const fetchShops = async () => {
+      try {
+        const response = await fetch("/api/store");
+        if (!response.ok) {
+          throw new Error("Failed to fetch shops");
+        }
+        const data = await response.json();
+        console.log(data.data);
+        setShops(data.data);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+        console.error("Error fetching shops:", err);
+      }
+    };
+
+    fetchShops();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="w-11/12 mx-auto py-20 px-4">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
           Explore Our Exclusive Shops
-          </h2>
-          <p className="text-lg text-gray-600 mt-2 text-center mb-8">
-        Discover high-quality products from trusted sellers.
-      </p>
-          <div className="text-center py-10 text-red-500">Error: {error}</div>
-        </div>
-      );
-    }
+        </h2>
+        <p className="text-lg text-gray-600 mt-2 text-center mb-8">
+          Discover high-quality products from trusted sellers.
+        </p>
+        <div className="text-center py-10 text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
   return (
     <div className="w-11/12 mx-auto p-6 mt-24">
       <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-4">
@@ -88,11 +89,12 @@ const Shop = () => {
             </div>
             <div className="p-4 space-y-2">
               <h1 className="font-semibold text-lg">{shop.name}</h1>
-              <p className="text-gray-600 text-xs">
-                Category: {shop.category}
-              </p>
+              <p className="text-gray-600 text-xs">Category: {shop.category}</p>
               <div className="flex justify-between items-center">
-                <p className="text-xs text-gray-500">Address:{shop.address.street},{shop.address.city},{shop.address.postalCode}, {shop.address.country}</p>
+                <p className="text-xs text-gray-500">
+                  Address:{shop.address?.street},{shop.address?.city},
+                  {shop.address?.postalCode}, {shop.address?.country}
+                </p>
               </div>
             </div>
           </div>

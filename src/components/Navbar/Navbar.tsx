@@ -20,7 +20,6 @@ import nextbuy from "../../../public/assets/nextbuy-logo.png";
 import { signOut, useSession } from "next-auth/react";
 import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useGetProductsQuery } from "@/redux/features/addToCartApi/addToCartApi";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -29,7 +28,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const { data: Session } = useSession();
+  const { data: session } = useSession();
 
   const router = useRouter();
 
@@ -47,7 +46,7 @@ const Navbar = () => {
     slug: string;
   }
 
-  const user = Session?.user;
+  const user = session?.user;
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);

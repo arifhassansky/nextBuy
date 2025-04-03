@@ -160,7 +160,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   };
 
   useEffect(() => {
-    const fetchProducts = async (page) => {
+    const fetchProducts = async (page: number) => {
       try {
         const response = await fetch(
           `/api/products?page=${page}&limit=10&search=${search ? search : ""}`
@@ -208,7 +208,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
     fetchCategories();
   }, []);
 
-  const handlePageChange = (direction) => {
+  const handlePageChange = (direction: string) => {
     if (direction === "next" && currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
     } else if (direction === "prev" && currentPage > 1) {
@@ -221,7 +221,7 @@ const ProductsPage = ({ search }: { search: string[] }) => {
   );
 
   const inStockProducts = filteredProducts.filter(
-    (product) => product.quantity > 0
+    (product) => (product?.quantity ?? 0) > 0
   );
 
   if (loading) {

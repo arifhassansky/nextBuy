@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -122,7 +122,17 @@ const Wishlist = () => {
     // });
   };
 
-  console.log(session);
+interface WishlistData {
+  _id: string;
+  userEmail: string;
+  items: WishlistItem[];
+}
+
+const Wishlist: FC = () => {
+  const { data: session } = useSession();
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -131,7 +141,7 @@ const Wishlist = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:3000/api/wishlist?userEmail=${session?.user?.email}`
+          `http://localhost:3000/api/wishlist?userEmail=${session.user.email}`
         );
 
         if (!response.ok) {
@@ -143,9 +153,10 @@ const Wishlist = () => {
 
         setWishlistItems(items);
       } catch (err) {
-        console.error("Error fetching wishlist:", err);
         setError(
-          err.message || "An error occurred while fetching your wishlist"
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching your wishlist"
         );
       } finally {
         setLoading(false);
@@ -168,21 +179,19 @@ const Wishlist = () => {
           organize, and shop whenever you&apos;re ready.
         </p>
       </div>
-      {/* Loading state */}
+
       {loading && (
         <div className="text-center my-12">
           <p className="text-lg">Loading your wishlist...</p>
         </div>
       )}
 
-      {/* Error state */}
       {error && (
         <div className="text-center my-12">
           <p className="text-lg text-red-600">{error}</p>
         </div>
       )}
 
-      {/* table */}
       <div className="overflow-x-auto mt-12">
         <table className="table  w-full border-collapse">
           {/* head */}
@@ -197,19 +206,19 @@ const Wishlist = () => {
             </tr>
           </thead>
           <tbody>
-            {wishlistItems?.map((item, index) => (
+            {wishlistItems.map((item, index) => (
               <tr key={index} className="text-center">
                 <td className="flex justify-center">
                   <Image
-                    src={item?.productId?.image}
-                    alt="Avatar Tailwind CSS Component"
+                    src={item.productId.image}
+                    alt={item.productId.title}
                     width={50}
                     height={40}
                     className="rounded mt-1"
                   />
                 </td>
-                <td>{item?.productId?.title}</td>
-                <td>$ {item?.productId?.price}</td>
+                <td>{item.productId.title}</td>
+                <td>$ {item.productId.price}</td>
                 <td>{item.productId.status}</td>
                 <td>
                   <Link href={`/products/${item.productId.slug}`}>Link</Link>
