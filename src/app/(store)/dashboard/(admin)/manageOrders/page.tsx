@@ -17,9 +17,7 @@ const ManageOrders = () => {
                 </p>
               </div>
         
-    
              
-        
               <div className="overflow-x-auto mt-12">
                 <table className="table  w-full border-collapse">
                   {/* head */}
