@@ -19,7 +19,13 @@ interface Product {
   quantity: number;
   createdAt: string;
   images: string[]; // Updated to string[] since images are URLs
-  //   " product._id": string;
+  productId: Product;
+}
+
+interface WishlistItem {
+  productId: Product;
+  _id: string;
+  // Add any other properties that might be in your wishlist items
 }
 
 interface WishlistData {

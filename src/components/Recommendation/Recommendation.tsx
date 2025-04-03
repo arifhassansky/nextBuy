@@ -45,7 +45,7 @@ const Recommendation = () => {
   };
 
   return (
-    <div className="rounded-lg">
+    <div className="rounded-lg mt-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 place-items-center">
         <div className=" rounded-lg">
           {isLoading && <ProductSkeleton />}
