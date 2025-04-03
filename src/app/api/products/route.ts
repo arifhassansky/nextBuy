@@ -111,7 +111,9 @@ export async function GET(req: Request) {
             { category: searchQuery },
           ],
         }
-      : {};
+      : {
+          status: "active",
+        };
 
     console.log(`Page: ${page}, Limit: ${limit}, Search: ${search}`);
 
