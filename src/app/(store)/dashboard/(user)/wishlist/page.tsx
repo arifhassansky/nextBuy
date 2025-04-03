@@ -5,17 +5,122 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
-interface WishlistItem {
-  productId: {
-    image: string;
-    title: string;
-    price: number;
-    status: string;
-    slug: string;
-  };
-  addedAt: string;
+// Define Product interface
+interface Product {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  quantity: number;
+  createdAt: string;
+  images: string[]; // Updated to string[] since images are URLs
+  //   " product._id": string;
 }
+
+const Wishlist = () => {
+  // console.log(user.email);
+  const { data: session } = useSession();
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const userEmails = session?.user?.email;
+
+  const handleAddToCart = async (cart: Product) => {
+    const response = await fetch(`/api/cart?userEmail=${userEmails}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userEmail: userEmails,
+        items: {
+          productId: cart?._id,
+          quantity: 1,
+        },
+      }),
+    });
+
+    await fetch(`http://localhost:3000/api/wishlist`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userEmail: userEmails,
+        productId: cart?.productId._id,
+      }),
+    });
+    setWishlistItems(
+      wishlistItems.filter((item) => item.productId._id !== cart.productId._id)
+    );
+
+    const data = await response.json();
+    // console.log(data);
+  };
+
+  const handleDelete = async (cart: Product) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Remove ${cart?.productId?.title} from your wishlist?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/wishlist`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userEmail: userEmails,
+            productId: cart?.productId._id,
+          }),
+        });
+        const data = response.json();
+        console.log(data);
+        // if (data.status === 200) {
+        Swal.fire(
+          "Deleted!",
+          "Item has been removed from your wishlist.",
+          "success"
+        );
+
+        // Update the UI by removing the deleted item
+        setWishlistItems(
+          wishlistItems.filter(
+            (item) => item.productId._id !== cart.productId._id
+          )
+        );
+        // }
+      } catch (error) {
+        // Show error message if deletion fails
+        Swal.fire("Error!", "Failed to remove item from wishlist.", "error");
+        console.error("Error deleting item:", error);
+      }
+    }
+
+    // const response = await fetch(`http://localhost:3000/api/wishlist`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     userEmail: userEmails,
+    //     productId: cart?.productId._id,
+    //   }),
+    // });
+  };
 
 interface WishlistData {
   _id: string;
@@ -43,8 +148,10 @@ const Wishlist: FC = () => {
           throw new Error("Failed to fetch wishlist");
         }
 
-        const wishListData: { data?: WishlistData } = await response.json();
-        setWishlistItems(wishListData.data?.items || []);
+        const wishListData = await response.json();
+        const items = wishListData?.data?.items || [];
+
+        setWishlistItems(items);
       } catch (err) {
         setError(
           err instanceof Error
@@ -58,6 +165,8 @@ const Wishlist: FC = () => {
 
     fetchWishlist();
   }, [session]);
+
+  console.log(wishlistItems);
 
   return (
     <div>
@@ -84,7 +193,8 @@ const Wishlist: FC = () => {
       )}
 
       <div className="overflow-x-auto mt-12">
-        <table className="table table-zebra w-full border-collapse">
+        <table className="table  w-full border-collapse">
+          {/* head */}
           <thead>
             <tr className="bg-gray-300 text-black text-center">
               <th className="py-2">Product Image</th>
@@ -114,10 +224,16 @@ const Wishlist: FC = () => {
                   <Link href={`/products/${item.productId.slug}`}>Link</Link>
                 </td>
                 <td>
-                  <button className="text-green-600 cursor-pointer">
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                    className="text-green-600 cursor-pointer"
+                  >
                     <FaCartPlus size={20} />
                   </button>
-                  <button className="text-red-600 ml-4 cursor-pointer">
+                  <button
+                    onClick={() => handleDelete(item)}
+                    className=" text-red-600 ml-4 cursor-pointer"
+                  >
                     <FaTrash size={18} />
                   </button>
                 </td>
