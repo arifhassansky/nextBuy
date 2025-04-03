@@ -288,16 +288,19 @@ const ProductsPage = ({ search }: { search: string[] }) => {
           className="absolute top-48 left-0 w-full z-20 hidden lg:flex justify-center mt-10"
           // style={{ top: "15%", zIndex: 50 }}
         >
-          <div className="flex items-center gap-24 ">
+          <div className="flex items-center gap-24">
             {categories.map((category) => (
-              <div key={category._id} className="flex items-center gap-2">
-                <Image
-                  src={category.image}
-                  width={50}
-                  height={50}
-                  className="object-cover bg-transparent"
-                  alt="category"
-                />
+              <div key={category._id} className="flex items-center gap-2 ">
+                <div className="h-full w-full">
+                  <Image
+                    src={category.image}
+                    width={100}
+                    height={100}
+                    className="object-cover bg-transparent p-3 rounded-full "
+                    alt="category"
+                  />
+                </div>
+
                 <h2 className="text-white">{category.name}</h2>
               </div>
             ))}

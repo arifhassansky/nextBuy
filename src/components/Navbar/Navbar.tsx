@@ -22,13 +22,17 @@ import { MdEmail } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useGetProductsQuery } from "@/redux/ProductApi";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const { data: session } = useSession();
+  // const { data, error, isLoading } = useGetProductsQuery();
+  // console.log(data);
 
   const router = useRouter();
 
@@ -61,6 +65,50 @@ const Navbar = () => {
     router.push("/");
     toast.success("Logged out successfully");
     signOut({ redirect: false });
+  };
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Handle search submission
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      try {
+        // Fetch search results from API
+        const response = await fetch(
+          `/api/products?search=${searchTerm.trim()}`
+        );
+
+        const data = response.json();
+        console.log(data);
+
+        if (response.ok) {
+          // Redirect to products page with search term (which will be used by the products page to display results)
+          router.push(
+            `/products?search=${encodeURIComponent(searchTerm.trim())}`
+          );
+
+          // Close mobile search overlay if open
+          if (isSearchOpen) {
+            setIsSearchOpen(false);
+          }
+        } else {
+          toast.error("Error searching products");
+        }
+      } catch (error) {
+        console.error("Search error:", error);
+        toast.error("Error searching products");
+      }
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(e);
+    }
   };
 
   useEffect(() => {
@@ -149,7 +197,7 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="relative md:flex hidden flex-1 mr-5">
+          {/* <div className="relative md:flex hidden flex-1 mr-5">
             <input
               className="py-1 pr-4 border border-gray-400 border-text pl-10 rounded-full  outline-none focus:border-green-600  px-5 w-[80%] "
               placeholder="Search..."
@@ -158,7 +206,27 @@ const Navbar = () => {
             <button className="bg-[#3C9E26] hover:bg-black  text-white py-2 px-6 rounded-full cursor-pointer -ml-24">
               Search
             </button>
-          </div>
+          </div> */}
+
+          <form
+            onSubmit={handleSearch}
+            className="relative md:flex hidden flex-1 mr-5"
+          >
+            <input
+              className="py-1 pr-4 border border-gray-400 border-text pl-10 rounded-full outline-none focus:border-green-600 px-5 w-[80%]"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={handleKeyPress}
+            />
+            <IoIosSearch className="absolute top-[9px] left-3 text-green-600 font-bold text-[1.3rem]" />
+            <button
+              type="submit"
+              className="bg-[#3C9E26] hover:bg-black text-white py-2 px-6 rounded-full cursor-pointer -ml-24"
+            >
+              Search
+            </button>
+          </form>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6 font-medium relative flex-1">
@@ -197,9 +265,13 @@ const Navbar = () => {
                 >
                   <div className="grid grid-cols-2 gap-[30px]">
                     {shops.map((shop) => (
-                      <h3 key={shop.slug} className="text-md font-semibold">
+                      <Link
+                        href={`/shops/${shop.slug}`}
+                        key={shop.slug}
+                        className="text-md font-semibold"
+                      >
                         {shop.slug}
-                      </h3>
+                      </Link>
                     ))}
                   </div>
                 </div>

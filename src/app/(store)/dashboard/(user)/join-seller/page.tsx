@@ -1,8 +1,14 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import React from "react";
 
 const JoinAsSeller = () => {
+
+  const { data: session } = useSession();
+
+  const user = session?.user;
+  console.log(user)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -38,20 +44,23 @@ const JoinAsSeller = () => {
       </div>
       {/* Join As Seller form */}
 
-      <form onSubmit={handleSubmit}>
+      {user.role == "user" ? (
+        <button className="btn bg-[#3C9E26] hover:bg-black">Request as a seller</button>
+      ) : (
+        <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
             {/* Name */}
             <div className="space-y-1 text-sm">
               <label htmlFor="name" className="block text-gray-600">
-                Name
+                Store Name
               </label>
               <input
                 className="w-full px-4 py-3 text-gray-800 border border-[#3C9E26] focus:outline-[#3C9E26]/60 rounded-md bg-white"
                 name="name"
                 id="name"
                 type="text"
-                placeholder="Name"
+                placeholder="Store Name"
                 required
               />
             </div>
@@ -83,15 +92,15 @@ const JoinAsSeller = () => {
             </div>
             {/* seller id */}
             <div className="space-y-1 text-sm">
-                <label htmlFor="sellerId" className="block text-gray-600">
-                  Seller Id
+                <label htmlFor="userId" className="block text-gray-600">
+                  User Id
                 </label>
                 <input
                   className="w-full px-4 py-3 text-gray-800 border border-[#3C9E26] focus:outline-[#3C9E26]/60 rounded-md bg-white"
-                  name="sellerId"
-                  id="sellerId"
+                  name="userId"
+                  id="userId"
                   type="text"
-                  placeholder="Seller Id"
+                  placeholder="User Id"
                   required
                 />
               </div>
@@ -197,6 +206,7 @@ const JoinAsSeller = () => {
           </div>
         </div>
       </form>
+      )}
     </div>
   );
 };

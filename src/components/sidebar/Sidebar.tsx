@@ -580,7 +580,7 @@ const Sidebar = () => {
 
             {/* Add Package */}
             <Link
-              href="/dashboard/add-package"
+              href="/dashboard/manage-orders"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -595,7 +595,7 @@ const Sidebar = () => {
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  Add Package
+                  Manage Orders
                 </p>
               </div>
 
@@ -606,7 +606,7 @@ const Sidebar = () => {
                 } absolute top-0 right-[-130px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Add Package
+                  Manage Orders
                 </p>
               </div>
             </Link>
@@ -646,7 +646,7 @@ const Sidebar = () => {
 
             {/* Manage Candidates */}
             <Link
-              href="/dashboard/manage-candidates"
+              href="/dashboard/manage-products"
               className={`
                 ${
                   isCollapse ? "justify-between" : "justify-center"
@@ -661,7 +661,7 @@ const Sidebar = () => {
                 <p
                   className={`${isCollapse ? "inline" : "hidden"} text-[1rem]`}
                 >
-                  Manage Candidates
+                  Manage Products
                 </p>
               </div>
 
@@ -672,7 +672,7 @@ const Sidebar = () => {
                 } absolute top-0 right-[-170px] translate-x-[20px] opacity-0 z-[-1] group-hover:translate-x-0 group-hover:opacity-100 group-hover:z-[1] transition-all duration-500`}
               >
                 <p className="text-[0.9rem] w-max bg-primary text-white rounded px-3 py-[5px]">
-                  Manage Candidates
+                  Manage Products
                 </p>
               </div>
             </Link>
