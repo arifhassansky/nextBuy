@@ -28,6 +28,7 @@ const Carts: React.FC = () => {
       try {
         const res = await fetch(`/api/cart?userEmail=${session.user.email}`);
         const data = await res.json();
+        console.log(data);
         setProducts(data?.data?.items || []);
       } catch (error) {
         console.error("Error fetching cart items:", error);
@@ -48,6 +49,8 @@ const Carts: React.FC = () => {
       console.error("Error deleting item:", error);
     }
   };
+
+  console.log(products);
 
   return (
     <div>
