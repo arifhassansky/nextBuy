@@ -349,6 +349,7 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
                   placeholder="Card number"
                   type="text"
                   id="cardNumber"
+                  name="cardNumber"
                   className="border border-gray-200 w-full py-2 px-4 rounded-md mt-1 outline-none focus:border-[#0FABCA]"
                 />
               </div>
@@ -364,6 +365,7 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
                     type="text"
                     id="expireDate"
                     placeholder="MM/YY"
+                    name="date"
                     className="border border-gray-200 w-full py-2 px-4 rounded-md mt-1 outline-none focus:border-[#0FABCA]"
                   />
                 </div>
@@ -378,6 +380,7 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
                     placeholder="CVC"
                     type="text"
                     id="cvc"
+                    name="cvc"
                     className="border border-gray-200 w-full py-2 px-4 rounded-md mt-1 outline-none focus:border-[#0FABCA]"
                   />
                 </div>
@@ -432,7 +435,9 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
                 </p>
                 <div className="flex items-center gap-[5px] mt-0.5">
                   <p className="text-sm text-gray-500">1 x </p>
-                  <p className="text-sm text-[#0FABCA] font-[600]">$100</p>
+                  <p className="text-sm text-[#0FABCA] font-[600]">
+                    ${product?.price}
+                  </p>
                 </div>
               </div>
             </div>
@@ -440,7 +445,9 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
             <div className="pt-4 space-y-4">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Sub-total</span>
-                <span className="font-medium text-gray-800">$670</span>
+                <span className="font-medium text-gray-800">
+                  ${product?.price}
+                </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Shipping</span>
@@ -448,12 +455,14 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Discount</span>
-                <span className="font-medium text-gray-800">$20</span>
+                <span className="font-medium text-gray-800">
+                  {product?.discount ? product.discount : "Not Available"}
+                </span>
               </div>
-              <div className="flex justify-between text-sm">
+              {/* <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Tax</span>
                 <span className="font-medium text-gray-800">$650</span>
-              </div>
+              </div> */}
             </div>
 
             <div className="border-t border-gray-200 pt-4">
@@ -462,7 +471,9 @@ const CheckoutPage = ({ params }: CheckoutPageProps) => {
                   Total
                 </span>
                 <span className="text-base font-medium text-gray-800">
-                  $357.99 USD
+                  {product?.discount
+                    ? `$${product?.price - product?.discount}`
+                    : `$${product?.price}`}
                 </span>
               </div>
             </div>
