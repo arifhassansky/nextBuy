@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -90,6 +90,27 @@ const Contact = () => {
             Send Message
           </button>
         </form>
+
+        {/* Contact Details */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-800">Get in Touch</h2>
+          
+          <div className="flex items-center gap-4">
+            <FaPhone className="text-blue-600 text-xl" />
+            <p>+1 234 567 890</p>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <FaEnvelope className="text-blue-600 text-xl" />
+            <p>support@yourstore.com</p>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <FaMapMarkerAlt className="text-blue-600 text-xl" />
+            <p>123 E-commerce St, Business City, USA</p>
+          </div>
+
+      </div>
       </div>
     </div>
   );
