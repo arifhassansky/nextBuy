@@ -32,7 +32,7 @@ export default function Newsletter() {
   const onSubmit = async (data: NewsletterFormData) => {
     try {
       setIsSubmitting(true);
-      // TODO: Replace with your actual API endpoint
+      // Demo
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: {
@@ -58,7 +58,7 @@ export default function Newsletter() {
 
   return (
     <div
-      className="py-20 px-4 md:px-10 lg:px-20 flex justify-center bg-cover bg-center"
+      className="py-20 mt-40 px-4 md:px-10 lg:px-20 flex justify-center bg-cover bg-center"
       style={{
         backgroundImage: "url('/assets/bg-newsletter.jpg')",
       }}
@@ -118,7 +118,7 @@ export default function Newsletter() {
           <p className="text-xs text-gray-500 mt-4">
             We respect your privacy. Read our{" "}
             <a
-              href="/privacy-policy"
+             
               className="text-[#3C9E26] font-semibold hover:underline"
             >
               Privacy Policy
