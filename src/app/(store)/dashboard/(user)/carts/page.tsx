@@ -27,8 +27,7 @@ const Carts: React.FC = () => {
       if (!session?.user?.email) return;
       try {
         const res = await fetch(
-          // `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=${session.user.email}`
-          `{http://localhost:3000/api/cart?userEmail=${session?.user?.email}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=${session.user.email}`
         );
         const data = await res.json();
         console.log(data);
