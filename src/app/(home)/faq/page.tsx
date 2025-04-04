@@ -9,7 +9,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="bg-white dark:bg-gray-900 mt-30">
       <div className="container px-6 py-12 mx-auto">
       <div className="text-center">
           <h1 className="text-3xl font-extrabold text-gray-800 dark:text-white md:text-4xl">
