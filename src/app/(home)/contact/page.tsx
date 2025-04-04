@@ -111,6 +111,23 @@ const Contact = () => {
           </div>
 
       </div>
+
+      <div className="flex gap-4 text-blue-600 text-2xl">
+            <a href="#" aria-label="Facebook"><FaFacebook /></a>
+            <a href="#" aria-label="Instagram"><FaInstagram /></a>
+            <a href="#" aria-label="Twitter"><FaTwitter /></a>
+            <a href="#" aria-label="WhatsApp"><FaWhatsapp /></a>
+          </div>
+
+
+          <iframe
+            className="w-full h-52 rounded-lg border"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509368!2d144.9559251158458!3d-37.81720974202124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d5df1f695f5%3A0x47c9a4e3e3d643b1!2sVictoria%20Harbour%20Promenade%2C%20Docklands%20VIC%203008%2C%20Australia!5e0!3m2!1sen!2sbd!4v1618456827703!5m2!1sen!2sbd"
+            loading="lazy"
+          ></iframe>
+
+
+
       </div>
     </div>
   );
