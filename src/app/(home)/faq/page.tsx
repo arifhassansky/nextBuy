@@ -22,7 +22,7 @@ const FAQ = () => {
               onClick={() => toggleAnswer(0)}
             >
               <h1 className="font-semibold text-gray-700 dark:text-white">
-              What types of apartments are available at Skyline Haven?
+              What is NextBuy?
               </h1>
               {
                 activeIndex === 0? <span className="text-gray-400 bg-gray-200 rounded-full">
@@ -43,7 +43,7 @@ const FAQ = () => {
               </span>: <span className="text-white bg-primary rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
+                  className="w-6 h-6 "
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -61,7 +61,7 @@ const FAQ = () => {
             </button>
             {activeIndex === 0 && (
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
-                Skyline Haven offers a range of modern one, two, and three-bedroom apartments designed for both comfort and luxury. Each unit is built with high-end finishes and optimized for contemporary living.
+               NextBuy is an online shopping platform that offers a wide range of products, including electronics, fashion, home essentials, and more, at competitive prices.
               </p>
             )}
           </div>
@@ -72,7 +72,7 @@ const FAQ = () => {
               onClick={() => toggleAnswer(1)}
             >
               <h1 className="font-semibold text-gray-700 dark:text-white">
-              What amenities are included in the Skyline Haven apartments?
+              How do I create an account on NextBuy?
               </h1>
               {
                 activeIndex === 1? <span className="text-gray-400 bg-gray-200 rounded-full">
@@ -110,7 +110,7 @@ const FAQ = () => {
             </button>
             {activeIndex === 1 && (
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
-                Our apartments come with top-notch amenities, including a fully-equipped gym, swimming pool, 24/7 security, parking spaces, high-speed internet, and access to common areas like a lounge and rooftop garden.
+                You can sign up for a NextBuy account by clicking the "Sign Up" button on the homepage. You’ll need to provide your email address, create a password, and verify your account.
               </p>
             )}
           </div>
@@ -121,7 +121,7 @@ const FAQ = () => {
               onClick={() => toggleAnswer(2)}
             >
               <h1 className="font-semibold text-gray-700 dark:text-white">
-              Are the apartments at Skyline Haven pet-friendly?
+              What is NextBuy’s return and refund policy?
               </h1>
               {
                 activeIndex === 2? <span className="text-gray-400 bg-gray-200 rounded-full">
@@ -159,7 +159,7 @@ const FAQ = () => {
             </button>
             {activeIndex === 2 && (
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
-                Yes! We understand that pets are family, and Skyline Haven is a pet-friendly community. We provide designated pet areas and parks within the premises.
+               We offer a 7-day return policy for most items. If you receive a damaged, defective, or incorrect product, you can request a return or replacement. Refunds are processed within 5-10 business days after the returned item is received.
               </p>
             )}
           </div>
@@ -170,7 +170,7 @@ const FAQ = () => {
               onClick={() => toggleAnswer(3)}
             >
               <h1 className="font-semibold text-gray-700 dark:text-white">
-              How can I schedule a viewing for an apartment at Skyline Haven?
+              How can I track my order?
               </h1>
               {
                 activeIndex === 3? <span className="text-gray-400 bg-gray-200 rounded-full">
@@ -208,7 +208,7 @@ const FAQ = () => {
             </button>
             {activeIndex === 3 && (
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
-              To schedule a viewing, simply visit our website and fill out the contact form, or call our office directly. We’ll be happy to arrange a tour of the apartments at your convenience.
+              After placing an order, you will receive a tracking link via email/SMS. You can also track your order by logging into your NextBuy account and visiting the “Orders” section.
               </p>
             )}
           </div>
@@ -219,7 +219,7 @@ const FAQ = () => {
               onClick={() => toggleAnswer(4)}
             >
               <h1 className="font-semibold text-gray-700 dark:text-white">
-              Is there parking available for residents at Skyline Haven?
+              How can I track my order?
               </h1>
               {
                 activeIndex === 4? <span className="text-gray-400 bg-gray-200 rounded-full">
@@ -257,7 +257,7 @@ const FAQ = () => {
             </button>
             {activeIndex === 4 && (
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
-              Yes, Skyline Haven offers ample parking spaces for residents. There are both indoor and outdoor parking options available, as well as electric vehicle charging stations.
+              After placing an order, you will receive a tracking link via email/SMS. You can also track your order by logging into your NextBuy account and visiting the “Orders” section.
               </p>
             )}
           </div>
