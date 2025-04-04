@@ -11,9 +11,15 @@ const FAQ = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container px-6 py-12 mx-auto">
-        <h1 className="text-2xl font-semibold text-gray-800 text-center lg:text-3xl dark:text-white">
-          Frequently <span className="text-primary">Asked </span> Questions
-        </h1>
+      <div className="text-center">
+          <h1 className="text-3xl font-extrabold text-gray-800 dark:text-white md:text-4xl">
+            Frequently <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">Asked Questions</span>
+          </h1>
+          <p className="mt-4 text-gray-600 dark:text-gray-300 md:text-lg">
+            Find answers to the most commonly asked questions about NextBuy.
+          </p>
+          <div className="w-24 h-1 mx-auto mt-4 bg-primary rounded-full"></div>
+        </div>
 
         <div className="mt-8 space-y-8 lg:mt-12">
           <div className="p-8 bg-gray-100 rounded-lg dark:bg-gray-800">
