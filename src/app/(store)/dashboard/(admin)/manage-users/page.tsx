@@ -4,13 +4,18 @@ import Image from "next/image";
 import { AiFillInteraction } from "react-icons/ai";
 import { AiOutlineDelete, AiOutlineSchedule } from "react-icons/ai";
 import { LuSaveAll } from "react-icons/lu";
+import toast from "react-hot-toast";
 
 const ManageUsers = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Dropdown state for each user
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+
+  // Dropdown state
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [userActions, setUserActions] = useState<{ [userId: string]: string }>({});
 
@@ -29,10 +34,11 @@ const ManageUsers = () => {
     },
   ];
 
-  const fetchUsers = async (role: string) => {
+  // Fetch users from the backend
+  const fetchUsers = async (role: string, page: number, limit: number) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/manage-user");
+      const res = await fetch(`/api/admin/manage-user?page=${page}&limit=${limit}`);
       const data = await res.json();
       const filteredUsers = data.data.filter((user: any) => user.role === role);
       setUsers(filteredUsers);
@@ -44,8 +50,8 @@ const ManageUsers = () => {
   };
 
   useEffect(() => {
-    fetchUsers(selectedRole);
-  }, [selectedRole]);
+    fetchUsers(selectedRole, currentPage, usersPerPage);
+  }, [selectedRole, currentPage]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -62,9 +68,49 @@ const ManageUsers = () => {
     };
   }, []);
 
-  const handleSendButtonClick = (userId: string, label: string) => {
+  const handleSendButtonClick = async (userId: string, label: string) => {
+    // Show the selected action in the button
     setUserActions((prev) => ({ ...prev, [userId]: label }));
     setActiveDropdown(null);
+
+    //  update the role in the frontend 
+    const updatedUsers = users.map((user) =>
+      user._id === userId ? { ...user, role: label.toLowerCase() } : user
+    );
+    setUsers(updatedUsers);
+
+    // Get the user details
+    const user = users.find((u) => u._id === userId);
+    if (!user) return;
+
+    try {
+      // Update the role in the backend
+      const res = await fetch("/api/admin/manage-user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: user.email,
+          role: label.toLowerCase(), 
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("User role updated successfully!");
+        console.log("User role updated successfully", data)
+      } else {
+        toast.error("Failed to update user role:", data.message);
+        console.log("Failed to update user role:", data.message)
+        setUsers(users);  
+      }
+    } catch (error) {
+      console.error("Error updating user role:", error);
+     
+      setUsers(users); 
+    }
   };
 
   return (
@@ -74,7 +120,7 @@ const ManageUsers = () => {
         <h3 className="text-4xl font-bold mb-2">Manage Users</h3>
         <p>
           Easily store and manage your favorite products in one place. Revisit,
-          organize, and shop whenever you&apos;re ready.
+          organize, and shop whenever you're ready.
         </p>
       </div>
 
@@ -107,7 +153,6 @@ const ManageUsers = () => {
                 <th className="py-2">User Name</th>
                 <th className="py-2">Email</th>
                 <th className="py-2">Role</th>
-                <th className="py-2">Status</th>
                 <th className="py-2">Actions</th>
               </tr>
             </thead>
@@ -126,10 +171,9 @@ const ManageUsers = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  <td>{user.status}</td>
                   <td>
                     <div className="flex items-center rounded bg-green-600 border-none outline-none text-white justify-center relative">
-                      <button className="text-[1rem]  py-1.5 transition-all duration-500 cursor-auto">
+                      <button className="text-[1rem] py-1.5 transition-all duration-500 cursor-auto">
                         {userActions[user._id] || "Actions"}
                       </button>
 
@@ -173,6 +217,23 @@ const ManageUsers = () => {
             </tbody>
           </table>
         )}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="px-4 py-2 bg-green-600 text-white rounded"
+        >
+          Prev
+        </button>
+        <span className="px-4 py-2">{currentPage}</span>
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          className="px-4 py-2 bg-green-600 text-white rounded"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
