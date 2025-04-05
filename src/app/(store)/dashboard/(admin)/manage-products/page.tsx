@@ -2,8 +2,9 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-import { MdDone, MdKeyboardArrowDown } from "react-icons/md";
-import { BiCopy, BiEdit } from "react-icons/bi";
+import { MdDone, MdKeyboardArrowDown, MdPending } from "react-icons/md";
+import { SiStockx } from "react-icons/si";
+import { TbPlayerEject } from "react-icons/tb";
 
 // Define TypeScript interfaces for our data
 interface Product {
@@ -59,15 +60,15 @@ const ManageProducts = () => {
     },
     {
       label: "pending",
-      icon: <BiCopy />,
+      icon: <MdPending />,
     },
     {
       label: "rejected",
-      icon: <BiEdit />,
+      icon: <TbPlayerEject />,
     },
     {
       label: "out of stock",
-      icon: <BiEdit />,
+      icon: <SiStockx />,
     },
   ];
 
