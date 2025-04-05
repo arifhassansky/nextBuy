@@ -17,50 +17,18 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+// Reusable Card Component
+const StatCard = ({ icon: Icon, label, count }: { icon: any; label: string; count: number }) => (
+  <div className="flex items-center gap-4 bg-white text-gray-800 p-5 shadow-lg rounded-2xl transition-transform transform hover:scale-105 border border-gray-200">
+    <div className="text-green-600">
+      <Icon size={40} />
+    </div>
+    <div>
+      <h4 className="text-xl font-semibold">{count}</h4>
+      <span className="text-sm capitalize text-gray-500">{label}</span>
+    </div>
+  </div>
+);
 
 const Stats = () => {
   const [productsCount, setProductsCount] = useState(0);
@@ -68,153 +36,91 @@ const Stats = () => {
   const [ordersCount, setOrdersCount] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         setLoading(true);
-        const productResponse = await fetch(
-          "http://localhost:3000/api/admin/manage-products"
-        );
 
-        if (!productResponse.ok) {
-          throw new Error("Failed to fetch product stats");
+        const [productRes, storeRes, orderRes, userRes] = await Promise.all([
+          fetch("http://localhost:3000/api/admin/manage-products"),
+          fetch("http://localhost:3000/api/admin/manage-stores"),
+          fetch("http://localhost:3000/api/admin/manage-orders"),
+          fetch("http://localhost:3000/api/admin/manage-user"),
+        ]);
+
+        if (!productRes.ok || !storeRes.ok || !orderRes.ok || !userRes.ok) {
+          throw new Error("Failed to fetch all stats");
         }
 
-        const data = await productResponse.json();
-        // console.log(data.data);
-        setProductsCount(data.data.length);
+        const [productData, storeData, orderData, userData] = await Promise.all([
+          productRes.json(),
+          storeRes.json(),
+          orderRes.json(),
+          userRes.json(),
+        ]);
 
-        // Fetch stores data
-        const storesResponse = await fetch(
-          "http://localhost:3000/api/admin/manage-stores"
-        );
-
-        if (!storesResponse.ok) {
-          throw new Error("Failed to fetch stores stats");
-        }
-
-        const storesData = await storesResponse.json();
-        setStoresCount(storesData.data.length);
-
-        const ordersResponse = await fetch(
-          "http://localhost:3000/api/admin/manage-orders"
-        );
-
-        if (!ordersResponse.ok) {
-          throw new Error("Failed to fetch stores stats");
-        }
-
-        const ordersData = await ordersResponse.json();
-        setOrdersCount(ordersData.data.length);
-
-        const userResponse = await fetch(
-          "http://localhost:3000/api/admin/manage-user"
-        );
-
-        if (!userResponse.ok) {
-          throw new Error("Failed to fetch user stats");
-        }
-
-        const userData = await userResponse.json();
-        console.log(userData);
+        setProductsCount(productData.data.length);
+        setStoresCount(storeData.data.length);
+        setOrdersCount(orderData.data.length);
         setUsersCount(userData.data.length);
-      } catch (err) {
+
+        // Set data for chart
+        setChartData([
+          { name: "Products", count: productData.data.length },
+          { name: "Stores", count: storeData.data.length },
+          { name: "Orders", count: orderData.data.length },
+          { name: "Users", count: userData.data.length },
+        ]);
+      } catch (err: any) {
         console.error("Error fetching stats:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchStats();
   }, []);
 
-  //   console.log(stats);
-
-  if (loading) return <div>Loading stats...</div>;
-  if (error) return <div>Error loading stats: {error}</div>;
+  if (loading) return <div className="text-center text-lg mt-10">Loading stats...</div>;
+  if (error) return <div className="text-center text-red-600 mt-10">Error: {error}</div>;
 
   return (
-    <div>
-      <h2 className="text-3xl mt-10">Stats</h2>
+    <div className="p-5 md:p-10">
+      <h2 className="text-3xl font-bold text-gray-800 mb-8">Dashboard Stats</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
-        <div className="flex items-center gap-2 bg-[#43b02a] text-white p-5 border border-black rounded-2xl">
-          <div>
-            <AiOutlineProduct size={40} />
-          </div>
-
-          <div className="">
-            <h4>{productsCount}</h4>
-            <span>products</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 bg-[#43b02a] text-white p-5 border border-black rounded-2xl">
-          <div>
-            <FaUserAlt size={40} />
-          </div>
-
-          <div className="">
-            <h4>{usersCount}</h4>
-
-            <span>Users</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 bg-[#43b02a] text-white p-5 border border-black rounded-2xl">
-          <div>
-            <MdStore size={45} />
-          </div>
-
-          <div className="">
-            <h4>{storesCount}</h4>
-            <span>stores</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 bg-[#43b02a] text-white p-5 border border-black rounded-2xl">
-          <div>
-            <BiPurchaseTag size={40} />
-          </div>
-
-          <div className="">
-            <h4>{ordersCount}</h4>
-            <span>orders</span>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <StatCard icon={AiOutlineProduct} label="products" count={productsCount} />
+        <StatCard icon={FaUserAlt} label="users" count={usersCount} />
+        <StatCard icon={MdStore} label="stores" count={storesCount} />
+        <StatCard icon={BiPurchaseTag} label="orders" count={ordersCount} />
       </div>
 
-      <div className="overflow-x-auto">
-        <BarChart
-          className="mt-10"
-          width={800}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar
-            dataKey="pv"
-            fill="#8884d8"
-            activeBar={<Rectangle fill="pink" stroke="blue" />}
-          />
-          <Bar
-            dataKey="uv"
-            fill="#82ca9d"
-            activeBar={<Rectangle fill="gold" stroke="purple" />}
-          />
-        </BarChart>
+      <div className="bg-white shadow-xl rounded-2xl p-5">
+        <h3 className="text-xl font-semibold mb-5 text-gray-700">Overview Chart</h3>
+        <div className="w-full h-[300px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartData}
+              margin={{ top: 10, right: 30, left: 0, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              <Bar
+                dataKey="count"
+                fill="#43b02a"
+                activeBar={<Rectangle fill="#9eff9e" stroke="#2d8a2d" />}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
