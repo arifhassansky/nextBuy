@@ -73,12 +73,13 @@ export async function PUT(req: Request) {
       );
     }
 
-    const { userEmail, role } = await req.json();
+    const { userEmail, role, status } = await req.json();
 
     // Fetch products with pagination and sorting
     const users = await User.findOne({ email: userEmail });
 
     users.role = role;
+    user.status = status;
 
     await users.save();
 

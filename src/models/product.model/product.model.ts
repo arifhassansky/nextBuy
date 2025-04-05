@@ -33,7 +33,7 @@ const productSchema = new Schema(
     },
     status: {
       type: String,
-      default: "active",
+      default: "pending",
     },
     sellerId: {
       type: Schema.Types.ObjectId,

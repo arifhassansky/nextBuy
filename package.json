@@ -12,6 +12,8 @@
     "@google/generative-ai": "^0.24.0",
     "@radix-ui/react-slot": "^1.1.2",
     "@reduxjs/toolkit": "^2.6.1",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.0.0",
     "@tailwindcss/postcss": "^4.0.15",
     "@types/mongoose": "^5.11.97",
     "autoprefixer": "^10.4.21",
@@ -35,10 +37,12 @@
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "slugify": "^1.6.6",
+    "stripe": "^18.0.0",
     "sweetalert2": "^11.17.2",
     "swiper": "^11.2.6",
     "tailwind-merge": "^3.0.2",
-    "tw-animate-css": "^1.2.4"
+    "tw-animate-css": "^1.2.4",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.9",

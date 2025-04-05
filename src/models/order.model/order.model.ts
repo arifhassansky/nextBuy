@@ -46,6 +46,7 @@ export interface Orders {
 // For Mongoose schema (if using MongoDB)
 // models/Order.ts
 import { Schema, model, models } from "mongoose";
+import { v4 as uuid } from "uuid";
 
 const orderSchema = new Schema(
   {
@@ -103,18 +104,19 @@ const orderSchema = new Schema(
     payment: {
       method: {
         type: String,
-        enum: ["sslcommerz", "strip", , "cod"],
+        enum: ["sslcommerz", "stripe", , "cod"],
         required: true,
       },
       status: {
         type: String,
-        enum: ["pending", "paid", "failed"],
-        default: "pending",
       },
       transactionId: String,
       amount: { type: Number, required: true },
     },
-    trackingNumber: String,
+    trackingNumber: {
+      type: String,
+      default: uuid(),
+    },
     notes: String,
   },
   {
