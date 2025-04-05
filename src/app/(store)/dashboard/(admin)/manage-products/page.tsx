@@ -2,37 +2,57 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-import { AiFillCheckCircle } from "react-icons/ai";
-import { AiFillCloseCircle } from "react-icons/ai";
 import { MdDone, MdKeyboardArrowDown } from "react-icons/md";
 import { BiCopy, BiEdit } from "react-icons/bi";
 
+// Define TypeScript interfaces for our data
+interface Product {
+  _id: string;
+  title: string;
+  price: number;
+  image: string;
+  status: string;
+}
+
+interface UpdateStatus {
+  loading: boolean;
+  error: string | null;
+  success: boolean;
+}
+
+interface ActionContent {
+  label: string;
+  icon: React.ReactNode;
+}
+
 const ManageProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [updateStatus, setUpdateStatus] = useState({
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     loading: false,
     error: null,
     success: false,
   });
 
   // Pagination states
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [productsPerPage] = useState<number>(10);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   // Track which dropdown is active using product ID
-  const [activeDropdownId, setActiveDropdownId] = useState(null);
+  const [activeDropdownId, setActiveDropdownId] = useState<string | null>(null);
 
   // Track selected action for each product
-  const [productActions, setProductActions] = useState({});
+  const [productActions, setProductActions] = useState<Record<string, string>>(
+    {}
+  );
 
   //drop down buttons
   // const [actionButtonActive, setActionButtonActive] = useState(false);
   // const [actionButtonText, setActionButtonText] = useState("Mark as read");
 
-  const actionContents = [
+  const actionContents: ActionContent[] = [
     {
       label: "active",
       icon: <MdDone />,
@@ -51,13 +71,13 @@ const ManageProducts = () => {
     },
   ];
 
-  const toggleDropdown = (productId) => {
+  const toggleDropdown = (productId: string) => {
     setActiveDropdownId(activeDropdownId === productId ? null : productId);
   };
 
   //update status
 
-  const updateProductStatus = async (productId, status) => {
+  const updateProductStatus = async (productId: string, status: string) => {
     try {
       setUpdateStatus({ loading: true, error: null, success: false });
 
@@ -78,7 +98,7 @@ const ManageProducts = () => {
         );
       }
 
-      const data = await response.json();
+      // const data = await response.json();
 
       // Update the local products state with the new status
       setProducts(
@@ -90,19 +110,26 @@ const ManageProducts = () => {
       setUpdateStatus({ loading: false, error: null, success: true });
 
       // Display success message (optional)
-      console.log(`Product ${productId} status updated to ${status}`);
+      // console.log(`Product ${productId} status updated to ${status}`);
 
       // Clear success status after a delay
-      setTimeout(() => {
-        setUpdateStatus((prev) => ({ ...prev, success: false }));
-      }, 3000);
+      // setTimeout(() => {
+      //   setUpdateStatus((prev) => ({ ...prev, success: false }));
+      // }, 3000);
     } catch (err) {
       console.error("Error updating product status:", err);
-      setUpdateStatus({ loading: false, error: err.message, success: false });
+      setUpdateStatus({
+        loading: false,
+        error: err instanceof Error ? err.message : "Unknown error",
+        success: false,
+      });
     }
   };
 
-  const handleActionButtonClick = async (productId, actionLabel) => {
+  const handleActionButtonClick = async (
+    productId: string,
+    actionLabel: string
+  ) => {
     setProductActions({
       ...productActions,
       [productId]: actionLabel,
@@ -127,16 +154,17 @@ const ManageProducts = () => {
 
         const data = await productResponse.json();
         // console.log(data.data);
-        setProducts(data.data);
+        setProducts(data.data as Product[]);
 
-        const initialActions = {};
-        data.data.forEach((product) => {
+        const initialActions: Record<string, string> = {};
+        data.data.forEach((product: Product) => {
           initialActions[product._id] = "Actions";
         });
+
         setProductActions(initialActions);
 
         setTotalPages(Math.ceil(data.data.length / productsPerPage));
-      } catch (err) {
+      } catch (err: any) {
         console.error("Error fetching stats:", err);
         setError(err.message);
       } finally {
@@ -148,10 +176,11 @@ const ManageProducts = () => {
   }, [productsPerPage]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
       if (
-        !event.target.closest(".publishButtonOptions") &&
-        !event.target.closest(".publishButton")
+        !target.closest(".publishButtonOptions") &&
+        !target.closest(".publishButton")
       ) {
         setActiveDropdownId(null);
       }
@@ -172,7 +201,7 @@ const ManageProducts = () => {
   );
 
   //change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   //go to prev page
 
@@ -265,12 +294,6 @@ const ManageProducts = () => {
                       ))}
                     </ul>
                   </div>
-                  {/* <button className="text-green-600 cursor-pointer">
-                    <AiFillCheckCircle size={40} />
-                  </button> */}
-                  {/* <button className=" text-red-600 ml-4 cursor-pointer">
-                    <AiFillCloseCircle size={40} />
-                  </button> */}
                 </td>
               </tr>
             ))}
