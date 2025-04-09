@@ -32,6 +32,9 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Store",
     },
+    status: {
+      type: String,
+    },
   },
   {
     timestamps: true,

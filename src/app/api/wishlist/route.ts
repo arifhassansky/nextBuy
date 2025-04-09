@@ -125,21 +125,20 @@ export async function GET(req: Request) {
     const session = await getServerSession();
     const user = session?.user;
 
-    if (!user) {
-      return NextResponse.json(
-        {
-          status: 401,
-          success: false,
-          message: "Unauthorized",
-        },
-        { status: 401 }
-      );
-    }
+    // if (!user) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 401,
+    //       success: false,
+    //       message: "Unauthorized",
+    //     },
+    //     { status: 401 }
+    //   );
+    // }
 
     // Parse the URL
     const { searchParams } = new URL(req.url);
     const userEmail = searchParams.get("userEmail") || "";
-    console.log("Received productId:", userEmail);
 
     const wishlist = await Wishlist.findOne({
       userEmail,

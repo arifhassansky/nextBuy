@@ -27,9 +27,10 @@ const Carts: React.FC = () => {
       if (!session?.user?.email) return;
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=${session.user.email}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cart?userEmail=${session?.user?.email}`
         );
         const data = await res.json();
+        console.log(data);
         setProducts(data?.data?.items || []);
       } catch (error) {
         console.error("Error fetching cart items:", error);
@@ -37,6 +38,8 @@ const Carts: React.FC = () => {
     };
     fetchProducts();
   }, [session?.user?.email]);
+
+  console.log(products);
 
   const handleDelete = async (id: string) => {
     const deleteData = { id, action: "remove" };
@@ -53,6 +56,8 @@ const Carts: React.FC = () => {
       console.error("Error deleting item:", error);
     }
   };
+
+  console.log(products);
 
   return (
     <div>
@@ -81,34 +86,36 @@ const Carts: React.FC = () => {
           </thead>
           <tbody>
             {products && products.length > 0 ? (
-              products.map((item) => (
-                <tr key={item.productId._id} className="text-center">
+              products?.map((item) => (
+                <tr key={item.productId?._id} className="text-center">
                   <td className="flex justify-center">
                     <Image
-                      src={item.productId.image}
-                      alt={item.productId.title}
+                      src={item?.productId?.image}
+                      alt={item?.productId?.title}
                       width={50}
                       height={40}
                       className="rounded mt-1"
                     />
                   </td>
-                  <td>{item.productId.title}</td>
-                  <td>${item.productId.price}</td>
+                  <td>{item.productId?.title}</td>
+                  <td>${item.productId?.price}</td>
                   <td>
-                    {item.productId.quantity <= 0 ? "Out Of Stock" : "In Stock"}
+                    {item.productId?.quantity <= 0
+                      ? "Out Of Stock"
+                      : "In Stock"}
                   </td>
                   <td className="text-green-700 font-semibold hover:underline cursor-pointer">
-                    <Link href={`/products/${item.productId.slug}`}>Link</Link>
+                    <Link href={`/products/${item.productId?.slug}`}>Link</Link>
                   </td>
                   <td>
                     <Link
-                      href={`carts/payment/${item.productId.slug}`}
+                      href={`carts/payment/${item.productId?.slug}`}
                       className="btn btn-sm btn-success text-black cursor-pointer"
                     >
                       Pay
                     </Link>
                     <button
-                      onClick={() => handleDelete(item.productId._id)}
+                      onClick={() => handleDelete(item.productId?._id)}
                       className="btn btn-sm text-red-600 ml-4 cursor-pointer"
                     >
                       <FaTrash size={18} />

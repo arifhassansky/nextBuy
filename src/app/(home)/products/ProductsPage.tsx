@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import sb5 from "../../../../public/assets/sb5.jpg";
+import Link from "next/link";
 // import Category from "@/components/Category/Category";
 
 interface Product {
@@ -288,16 +289,19 @@ const ProductsPage = ({ search }: { search: string[] }) => {
           className="absolute top-48 left-0 w-full z-20 hidden lg:flex justify-center mt-10"
           // style={{ top: "15%", zIndex: 50 }}
         >
-          <div className="flex items-center gap-24 ">
+          <div className="flex items-center gap-24">
             {categories.map((category) => (
-              <div key={category._id} className="flex items-center gap-2">
-                <Image
-                  src={category.image}
-                  width={50}
-                  height={50}
-                  className="object-cover bg-transparent"
-                  alt="category"
-                />
+              <div key={category._id} className="flex items-center gap-2 ">
+                <div className="h-full w-full">
+                  <Image
+                    src={category.image}
+                    width={100}
+                    height={100}
+                    className="object-cover bg-transparent p-3 rounded-full "
+                    alt="category"
+                  />
+                </div>
+
                 <h2 className="text-white">{category.name}</h2>
               </div>
             ))}
@@ -310,34 +314,6 @@ const ProductsPage = ({ search }: { search: string[] }) => {
         {/* left column */}
         <div className="w-full lg:w-1/4 flex flex-col items-start ">
           <h3>Filter by price</h3>
-          {/* slider */}
-          {/* <div className="flex items-center justify-center mt-4">
-            <div
-              className="relative w-64 h-3 bg-gray-300 rounded-full cursor-pointer"
-              onClick={handleClick}
-            >
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={value}
-                onChange={sliderChange}
-                className="absolute w-full h-3 top-0 z-20 opacity-0 cursor-pointer"
-              />
-              <div
-                className="absolute top-0 h-3 bg-[#108476] rounded-full"
-                style={{
-                  width: `${value}%`,
-                }}
-              />
-              <div
-                className="absolute top-[50%] w-[22px] h-[22px] transform bg-[#108476] rounded-full -translate-x-1/2 translate-y-[-50%] cursor-pointer transition-transform duration-150 ease-in-out border-2 border-white"
-                style={{
-                  left: `${value}%`,
-                }}
-              />
-            </div>
-          </div> */}
 
           {/* Dual Range Slider */}
           <div className="flex flex-col items-start w-full mt-4 mb-6">
@@ -525,14 +501,18 @@ const ProductsPage = ({ search }: { search: string[] }) => {
         <div className="w-full lg:w-3/4 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-5 mt-10">
           {inStockOnly
             ? inStockProducts.map((product) => (
-                <div className="w-full" key={product._id}>
-                  <Card product={product} />
-                </div>
+                <Link key={product._id} href={`/products/${product.slug}`}>
+                  <div className="w-full" key={product._id}>
+                    <Card product={product} />
+                  </div>
+                </Link>
               ))
             : filteredProducts.map((product) => (
-                <div className="w-full" key={product._id}>
-                  <Card product={product} />
-                </div>
+                <Link key={product._id} href={`/products/${product.slug}`}>
+                  <div className="w-full" key={product._id}>
+                    <Card product={product} />
+                  </div>
+                </Link>
               ))}
         </div>
       </div>

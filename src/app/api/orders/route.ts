@@ -1,6 +1,7 @@
 import connectDB from "@/config/db/connectDB";
 import Order from "@/models/order.model/order.model";
 import { NextRequest, NextResponse } from "next/server";
+import { v4 as uuid } from "uuid";
 
 // Interface for request body validation
 interface OrderRequestBody {
@@ -33,6 +34,7 @@ interface OrderRequestBody {
   };
   payment: {
     method: "sslcommerz" | "strip" | "cod";
+    status: "pending" | "paid" | "failed";
     amount: number;
   };
   notes?: string;
@@ -44,6 +46,7 @@ export async function POST(req: NextRequest) {
 
     const body: OrderRequestBody = await req.json();
 
+    console.log(body);
     // Validation
     const requiredFields = [
       body.customer?.userId,
@@ -59,16 +62,16 @@ export async function POST(req: NextRequest) {
       body.payment?.amount,
     ];
 
-    if (requiredFields.some((field) => !field)) {
-      return NextResponse.json(
-        {
-          status: 400,
-          success: false,
-          message: "Missing required fields",
-        },
-        { status: 400 }
-      );
-    }
+    // if (requiredFields.some((field) => !field)) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 400,
+    //       success: false,
+    //       message: "Missing required fields",
+    //     },
+    //     { status: 400 }
+    //   );
+    // }
 
     // Validate items
     for (const item of body.items) {
@@ -131,21 +134,22 @@ export async function POST(req: NextRequest) {
       status: "pending",
       payment: {
         method: body.payment.method,
-        status: "pending",
+        status: body.payment.status,
         amount: body.payment.amount,
       },
       notes: body.notes,
     });
+    console.log(order);
 
     // Save order to database
-    const savedOrder = await order.save();
+    await order.save();
 
     return NextResponse.json(
       {
         status: 201,
         success: true,
         message: "Order created successfully",
-        data: savedOrder,
+        data: order,
       },
       { status: 201 }
     );
