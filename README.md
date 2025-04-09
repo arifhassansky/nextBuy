@@ -136,12 +136,28 @@ ai-ecommerce/
    pnpm install
    ```
 3. Set up environment variables (create `.env.local`):
+
    ```
-   MONGODB_URI=your_mongodb_uri
-   NEXTAUTH_SECRET=your_secret
-   OPENAI_API_KEY=your_openai_key
-   STRIPE_SECRET_KEY=your_stripe_key
+    # FORNTEND ENV
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=*******************
+    NEXT_PUBLIC_API_URL=http://localhost:3000
+    NEXT_PUBLIC_IMAGEBB_API=******************************
+    NEXT_PUBLIC_MONGODB_URI=******************************
+
+    # BACKEND ENV
+    DB_USER=******************************
+    DB_PASSWORD=******************************
+    NEXTAUTH_URL=http://localhost:3000/
+    JWT_SECRET=******************************
+    NEXTAUTH_SECRET=******************************
+    GOOGLE_CLIENT_SECRET=******************************
+    GOOGLE_CLIENT_ID=******************************
+    GEMINI_API_KEY=******************************
+    GITHUB_ID=******************************
+    GITHUB_SECRET=******************************
+    STRIPE_SECRET_KEY=******************************
    ```
+
 4. Run the development server:
    ```bash
    pnpm run dev
@@ -173,17 +189,6 @@ ai-ecommerce/
 - **Platform**: Vercel (Frontend & Backend)
 - **Database**: MongoDB Atlas
 - **Live URL**: _(Add after deployment)_
-
----
-
-## Inspiration
-
-This project draws inspiration from modern e-commerce platforms like:
-
-- [CitiMart](https://example.com)
-- [Renoxa Shopify Theme](https://themeforest.net)
-- [GreenMart](https://example.com)
-- [WoodMart](https://woodmart.xtemos.com)
 
 ---
 
