@@ -57,7 +57,7 @@ const Wishlist: FC = () => {
         }),
       });
 
-      await fetch(`http://localhost:3000/api/wishlist`, {
+      await fetch(`/api/wishlist?userEmail=${userEmails}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const Wishlist: FC = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:3000/api/wishlist`, {
+        const response = await fetch(`/api/wishlist?userEmail=${userEmails}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -149,9 +149,9 @@ const Wishlist: FC = () => {
 
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://localhost:3000/api/wishlist?userEmail=${session.user.email}`
-        );
+        const response = await fetch(`/api/wishlist?userEmail=${userEmails}`);
+
+        console.log(response);
 
         if (!response.ok) {
           throw new Error("Failed to fetch wishlist");
