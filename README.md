@@ -1,10 +1,5 @@
-Below is a well-structured and visually appealing GitHub README file for the "NextBuy" AI-Driven E-commerce Platform based on the provided requirement specification. It’s designed to be clear, professional, and easy to understand for anyone exploring the repository.
-
----
-
 # NextBuy - AI-Driven E-commerce Platform
 
-![NextBuy Banner](https://via.placeholder.com/1200x300.png?text=NextBuy+-+AI-Powered+Shopping)  
 _A full-stack e-commerce platform powered by AI for an enhanced shopping experience._
 
 ---
@@ -14,7 +9,7 @@ _A full-stack e-commerce platform powered by AI for an enhanced shopping experie
 **NextBuy** is an innovative e-commerce platform built to revolutionize online shopping. With AI-powered features like personalized product recommendations, an intelligent chatbot, image-based product search, and demand forecasting, NextBuy offers a seamless and futuristic shopping experience for users and robust management tools for admins.
 
 - **Website Name**: NextBuy
-- **Website URL**: [NextBuy - E-commerce Platform](#) _(Update with live URL after deployment)_
+- **Website URL**: [NextBuy - E-commerce Platform](https://next-buy-five.vercel.app) _(Update with live URL after deployment)_
 - **Repository**: You're here!
 
 ---
@@ -133,12 +128,12 @@ ai-ecommerce/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/nextbuy.git
-   cd nextbuy
+   git clone https://github.com/arifhassansky/nextBuy.git
+   cd nextBuy
    ```
 2. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 3. Set up environment variables (create `.env.local`):
    ```
@@ -149,7 +144,7 @@ ai-ecommerce/
    ```
 4. Run the development server:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
